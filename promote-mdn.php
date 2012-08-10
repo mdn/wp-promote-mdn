@@ -56,19 +56,12 @@ class PromoteMDN {
 
         if (!empty($options['customkey_url']))
         {
-            $now = time();
-            if ($options['customkey_url_datetime']){
-                $last_update = $options['customkey_url_datetime'];
-            } else {
-                $last_update = 0;
-            }
-            if ($now - $last_update > 86400) {
+            if (false === ($customkey_url_value = get_transient('promote_mdn_url_value'))){
                 $body = wp_remote_retrieve_body(wp_remote_get($options['customkey_url']));
-                $options['customkey_url_value'] = strip_tags($body);
-                $options['customkey_url_datetime'] = $now;
-                update_option($this->PromoteMDN_DB_option, $options);
+                $customkey_url_value = strip_tags($body);
+                set_transient('promote_mdn_url_value', $customkey_url_value, 86400);
             }
-            $options['customkey'] = $options['customkey'] . "\n" . $options['customkey_url_value'];
+            $options['customkey'] = $options['customkey'] . "\n" . $customkey_url_value;
         }
         // custom keywords
         if (!empty($options['customkey'])) {		
@@ -158,9 +151,8 @@ class PromoteMDN {
          'maxsingle' => 1,
          'minusage' => 1,
          'customkey' => '',
-         'customkey_url' => '',
-         'customkey_url_value' => '',
-         'customkey_url_datetime' => '',
+         'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
+         'customkey_url_expire' => 60*60*24,
          'blankn' =>'',
          'blanko' =>'',
          'allowfeed' => '',
@@ -202,6 +194,7 @@ class PromoteMDN {
 			$options['minusage']=(int) $_POST['minusage'];			// credit to Dominik Deobald		
 			$options['customkey']=$_POST['customkey'];	
             $options['customkey_url']=$_POST['customkey_url'];
+            $options['customkey_url_expire']=$_POST['customkey_url_expire'];
 			$options['blankn']=$_POST['blankn'];	
 			$options['blanko']=$_POST['blanko'];	
 			$options['allowfeed']=$_POST['allowfeed'];	
@@ -229,6 +222,7 @@ class PromoteMDN {
 		$minusage=$options['minusage'];
 		$customkey=stripslashes($options['customkey']);
         $customkey_url=stripslashes($options['customkey_url']);
+        $customkey_url_expire=stripslashes($options['customkey_url_expire']);
 		$nofoln=$options['nofoln']=='on'?'checked':'';
 		$nofolo=$options['nofolo']=='on'?'checked':'';
 		$blankn=$options['blankn']=='on'?'checked':'';
@@ -254,7 +248,8 @@ class PromoteMDN {
 					<p>Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.</p>
 					
                     <p>Load keywords from URL:<br/>
-                    <input type="text" name="customkey_url" size="90" value="$customkey_url" />
+                    <input type="text" name="customkey_url" size="90" value="$customkey_url" /><br/>
+                    <input type="text" name="customkey_url_expire" size="10" value="$customkey_url_expire"/> <label for="customkey_url_expire">Seconds between reloading</label>
                     </p>
 					<input type="checkbox" name="allowfeed" $allowfeed /> <label for="allowfeed">Add links to RSS feeds</label><br/>
 					<input type="checkbox" name="blanko" $blanko /> <label for="blanko">Open links in new window</label> <br/>
