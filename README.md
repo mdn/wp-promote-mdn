@@ -10,5 +10,5 @@ Installation & Configuration
 
 Credits
 -------
-Contributors: groovecoder, freediver
+Contributors: groovecoder, freediver  
 Tested on: 3.4.1
