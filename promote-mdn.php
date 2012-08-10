@@ -25,7 +25,6 @@ class PromoteMDN {
 
     function PromoteMDN_process_text($text)
     {
-        error_log("PromoteMDN_process_text");
         global $wpdb, $post;
         $options = $this->get_options();
         $links=0;
@@ -50,13 +49,11 @@ class PromoteMDN {
             $text = preg_replace('%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_insertspecialchars('\\2').'\\3'", $text);
         }
         
-        $reg_post		=	$options['casesens'] ? '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/msU' : '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';	
-        $reg			=	$options['casesens'] ? '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/msU' : '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
-        $strpos_fnc		=	$options['casesens'] ? 'strpos' : 'stripos';
+        $reg_post		=	'/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';	
+        $reg			=	'/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
         
         $text = " $text ";
 
-        error_log(var_export($options, true));
         if (!empty($options['customkey_url']))
         {
             $now = time();
@@ -76,25 +73,26 @@ class PromoteMDN {
         // custom keywords
         if (!empty($options['customkey'])) {		
             $kw_array = array();
-            // thanks PK for the suggestion
             foreach (explode("\n", $options['customkey']) as $line) {
-                $line = trim($line);
-                $lastDelimiterPos=strrpos($line, ',');
-                $url = substr($line, $lastDelimiterPos + 1 );
-                $keywords = substr($line, 0, $lastDelimiterPos);
-                
-                if(!empty($keywords) && !empty($url)){
-                    $kw_array[$keywords] = $url;
+                $chunks = array_map('trim', explode(",", $line));
+                $total_chuncks = count($chunks);
+                if($total_chuncks > 2) {
+                    $i = 0;
+                    $url = $chunks[$total_chuncks-1];
+                    while($i < $total_chuncks-1) {
+                        if (!empty($chunks[$i])) $kw_array[$chunks[$i]] = $url;
+                            $i++;
+                    }
+                } else {
+                        list($keyword, $url) = array_map('trim', explode(",", $line, 2));
+                        if (!empty($keyword)) $kw_array[$keyword] = $url;
                 }
-                
-                $keywords='';
-                $url='';
             }
             foreach ($kw_array as $name=>$url) 
             {
-                if ((!$maxlinks || ($links < $maxlinks)) && (trailingslashit($url)!=$thisurl) && !in_array( $options['casesens'] ? $name : strtolower($name), $arrignore) && (!$maxsingleurl || $urls[$url]<$maxsingleurl) )
+                if ((!$maxlinks || ($links < $maxlinks)) && (trailingslashit($url)!=$thisurl) && !in_array(strtolower($name), $arrignore) && (!$maxsingleurl || $urls[$url]<$maxsingleurl) )
                 {
-                    if (($options['customkey_preventduplicatelink'] == TRUE) || $strpos_fnc($text, $name) !== false) {		// credit to Dominik Deobald -- TODO: change string search for preg_match
+                    if (($options['customkey_preventduplicatelink'] == TRUE) || stripos($text, $name) !== false) {		// credit to Dominik Deobald -- TODO: change string search for preg_match
                         $name= preg_quote($name, '/');
                         
                         if($options['customkey_preventduplicatelink'] == TRUE) $name = str_replace(',','|',$name); //Modifying RegExp for count all grouped keywords as the same one
@@ -124,7 +122,6 @@ class PromoteMDN {
     } 
 
     function PromoteMDN_the_content_filter($text) {
-        error_log("PromoteMDN_the_content_filter");
         
         $result=$this->PromoteMDN_process_text($text);
         
@@ -152,9 +149,7 @@ class PromoteMDN {
 	
     // Handle our options
     function get_options() {
-        error_log("get_options");
      $options = array(
-         'post' => 'on',
          'page' => 'on',
          'excludeheading' => 'on', 
          'ignore' => 'about,', 
@@ -168,7 +163,6 @@ class PromoteMDN {
          'customkey_url_datetime' => '',
          'blankn' =>'',
          'blanko' =>'',
-         'casesens' =>'',
          'allowfeed' => '',
          'maxsingleurl' => '1',
          );
@@ -193,13 +187,10 @@ class PromoteMDN {
 	}
 	
 	function handle_options() {
-        error_log("handle_options");
 		$options = $this->get_options();
 		if ( isset($_POST['submitted']) ) {
 			check_admin_referer('seo-smart-links');		
 			
-			$options['post']=$_POST['post'];					
-			$options['postself']=$_POST['postself'];					
 			$options['page']=$_POST['page'];					
 			$options['pageself']=$_POST['pageself'];					
 			$options['excludeheading']=$_POST['excludeheading'];									
@@ -213,7 +204,6 @@ class PromoteMDN {
             $options['customkey_url']=$_POST['customkey_url'];
 			$options['blankn']=$_POST['blankn'];	
 			$options['blanko']=$_POST['blanko'];	
-			$options['casesens']=$_POST['casesens'];	
 			$options['allowfeed']=$_POST['allowfeed'];	
 			
 			update_option($this->PromoteMDN_DB_option, $options);
@@ -223,8 +213,6 @@ class PromoteMDN {
 
 		$action_url = $_SERVER['REQUEST_URI'];	
 
-		$post=$options['post']=='on'?'checked':'';
-		$postself=$options['postself']=='on'?'checked':'';
 		$page=$options['page']=='on'?'checked':'';
 		$pageself=$options['pageself']=='on'?'checked':'';
 		$comment=$options['comment']=='on'?'checked':'';
@@ -245,7 +233,6 @@ class PromoteMDN {
 		$nofolo=$options['nofolo']=='on'?'checked':'';
 		$blankn=$options['blankn']=='on'?'checked':'';
 		$blanko=$options['blanko']=='on'?'checked':'';
-		$casesens=$options['casesens']=='on'?'checked':'';
 		$allowfeed=$options['allowfeed']=='on'?'checked':'';
 
 		if (!is_numeric($minusage)) $minusage = 1;
@@ -314,15 +301,11 @@ END;
 	
 	function PromoteMDN_admin_menu()
 	{
-        error_log("PromoteMDN_admin_menu");
 		add_options_page('Promote MDN Options', 'Promote MDN', 8, basename(__FILE__), array(&$this, 'handle_options'));
 	}
 
     function PromoteMDN_delete_cache($id) {
         error_log("PromoteMDN_delete_cache");
-         wp_cache_delete( 'seo-links-categories', 'seo-smart-links' );
-         wp_cache_delete( 'seo-links-tags', 'seo-smart-links' );
-         wp_cache_delete( 'seo-links-posts', 'seo-smart-links' );
     }
 }
 
