@@ -152,7 +152,6 @@ class PromoteMDN {
          'customkey' => '',
          'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
          'customkey_url_expire' => 60 * 60 * 24,
-         'blankn' => '',
          'blanko' => '',
          'allowfeed' => '',
          'maxsingleurl' => '1',
@@ -184,7 +183,6 @@ class PromoteMDN {
         if ( isset( $_POST['submitted'] ) ) {
             check_admin_referer( 'seo-smart-links' );
 
-            $options['pageself'] = $_POST['pageself'];
             $options['excludeheading'] = $_POST['excludeheading'];
             $options['ignore'] = $_POST['ignore'];
             $options['ignorepost'] = $_POST['ignorepost'];
@@ -194,7 +192,6 @@ class PromoteMDN {
             $options['customkey'] = $_POST['customkey'];
             $options['customkey_url'] = $_POST['customkey_url'];
             $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
-            $options['blankn'] = $_POST['blankn'];
             $options['blanko'] = $_POST['blanko'];
             $options['allowfeed'] = $_POST['allowfeed'];
 
@@ -205,13 +202,8 @@ class PromoteMDN {
 
         $action_url = $_SERVER['REQUEST_URI'];
 
-        $pageself = $options['pageself'] == 'on' ? 'checked' : '';
         $comment = $options['comment'] == 'on' ? 'checked' : '';
         $excludeheading = $options['excludeheading'] == 'on' ? 'checked' : '';
-        $lposts = $options['lposts'] == 'on' ? 'checked' : '';
-        $lpages = $options['lpages'] == 'on' ? 'checked' : '';
-        $lcats = $options['lcats'] == 'on' ? 'checked' : '';
-        $ltags = $options['ltags'] == 'on' ? 'checked' : '';
         $ignore = $options['ignore'];
         $ignorepost = $options['ignorepost'];
         $maxlinks = $options['maxlinks'];
@@ -220,9 +212,6 @@ class PromoteMDN {
         $customkey = stripslashes( $options['customkey'] );
         $customkey_url = stripslashes( $options['customkey_url'] );
         $customkey_url_expire = stripslashes( $options['customkey_url_expire'] );
-        $nofoln = $options['nofoln'] == 'on' ? 'checked' : '';
-        $nofolo = $options['nofolo'] == 'on' ? 'checked' : '';
-        $blankn = $options['blankn'] == 'on' ? 'checked' : '';
         $blanko = $options['blanko'] == 'on' ? 'checked' : '';
         $allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
 
