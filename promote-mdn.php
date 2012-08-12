@@ -9,7 +9,7 @@ Description: Promote MDN automatically links keywords phrases to MDN docs
 */
 
 // Avoid name collisions.
-if ( !class_exists('PromoteMDN') ) :
+if ( !class_exists( 'PromoteMDN' ) ) :
 
 class PromoteMDN {
 	var $PromoteMDN_DB_option = 'PromoteMDN';
@@ -17,87 +17,89 @@ class PromoteMDN {
 	
 	// Initialize WordPress hooks
 	function PromoteMDN() {	
-        add_filter('the_content',  array(&$this, 'PromoteMDN_the_content_filter'), 10);	
+        add_filter( 'the_content' ,  array( &$this, 'promote_mdn_the_content_filter' ), 10 );	
         // Add Options Page
-        add_action('admin_menu',  array(&$this, 'PromoteMDN_admin_menu'));
+        add_action( 'admin_menu' ,  array( &$this, 'promote_mdn_admin_menu' ) );
 	}
 
 
-    function PromoteMDN_process_text($text)
+    function promote_mdn_process_text( $text )
     {
         global $wpdb, $post;
         $options = $this->get_options();
-        $links=0;
-        if (is_feed() && !$options['allowfeed'])
+        $links   = 0;
+        if ( is_feed() && !$options['allowfeed'] )
              return $text;
             
-        $arrignorepost=$this->explode_trim(",", ($options['ignorepost']));
-        if (is_page($arrignorepost) || is_single($arrignorepost)) {
+        $arrignorepost = $this->explode_trim( ',' , ( $options['ignorepost'] ) );
+        if ( is_page( $arrignorepost ) || is_single( $arrignorepost ) ) {
             return $text;
         }
         
-        $maxlinks=($options['maxlinks']>0) ? $options['maxlinks'] : 0;	
-        $maxsingle=($options['maxsingle']>0) ? $options['maxsingle'] : -1;
-        $maxsingleurl=($options['maxsingleurl']>0) ? $options['maxsingleurl'] : 0;
-        $minusage = ($options['minusage']>0) ? $options['minusage'] : 1;
+        $maxlinks     = ( $options['maxlinks'] > 0 ) ? $options['maxlinks'] : 0;	
+        $maxsingle    = ( $options['maxsingle'] > 0 ) ? $options['maxsingle'] : -1;
+        $maxsingleurl = ( $options['maxsingleurl'] > 0 ) ? $options['maxsingleurl'] : 0;
+        $minusage     = ( $options['minusage'] > 0 ) ? $options['minusage'] : 1;
 
         $urls = array();
             
-        $arrignore=$this->explode_trim(",", ($options['ignore']));
-        if ($options['excludeheading'] == "on") {
+        $arrignore = $this->explode_trim( ',' , ( $options['ignore'] ) );
+        if ( $options['excludeheading'] == 'on' ) {
             //Here insert special characters
-            $text = preg_replace('%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_insertspecialchars('\\2').'\\3'", $text);
+            $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie' , "'\\1'.wp_insertspecialchars('\\2').'\\3'" , $text );
         }
         
-        $reg_post		=	'/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';	
-        $reg			=	'/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
-        
-        $text = " $text ";
+        $reg_post = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';	
+        $reg      = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
+        $text     = " $text ";
 
-        if (!empty($options['customkey_url']))
+        if ( !empty( $options['customkey_url'] ) )
         {
-            if (false === ($customkey_url_value = get_transient('promote_mdn_url_value'))){
-                $body = wp_remote_retrieve_body(wp_remote_get($options['customkey_url']));
-                $customkey_url_value = strip_tags($body);
-                set_transient('promote_mdn_url_value', $customkey_url_value, 86400);
+            if ( false === ( $customkey_url_value = get_transient( 'promote_mdn_url_value' ) ) ){
+                $body = wp_remote_retrieve_body( wp_remote_get( $options['customkey_url'] ) );
+                $customkey_url_value = strip_tags( $body );
+                set_transient( 'promote_mdn_url_value', $customkey_url_value, 86400 );
             }
             $options['customkey'] = $options['customkey'] . "\n" . $customkey_url_value;
         }
         // custom keywords
-        if (!empty($options['customkey'])) {		
+        if ( !empty( $options['customkey'] ) ) {		
             $kw_array = array();
-            foreach (explode("\n", $options['customkey']) as $line) {
-                $chunks = array_map('trim', explode(",", $line));
-                $total_chuncks = count($chunks);
-                if($total_chuncks > 2) {
-                    $i = 0;
-                    $url = $chunks[$total_chuncks-1];
-                    while($i < $total_chuncks-1) {
-                        if (!empty($chunks[$i])) $kw_array[$chunks[$i]] = $url;
+            foreach ( explode( "\n" , $options['customkey'] ) as $line ) {
+                $chunks = array_map( 'trim', explode( ',' , $line ) );
+                $total_chuncks = count( $chunks );
+                if ( $total_chuncks > 2 ) {
+                    $i   = 0;
+                    $url = $chunks[$total_chuncks - 1];
+                    while ( $i < $total_chuncks - 1 ) {
+                        if ( !empty( $chunks[$i] ) ) $kw_array[$chunks[$i]] = $url;
                             $i++;
                     }
                 } else {
-                        list($keyword, $url) = array_map('trim', explode(",", $line, 2));
-                        if (!empty($keyword)) $kw_array[$keyword] = $url;
+                        list( $keyword, $url ) = array_map( 'trim', explode( ',' , $line, 2 ) );
+                        if ( !empty( $keyword ) ) $kw_array[$keyword] = $url;
                 }
             }
-            foreach ($kw_array as $name=>$url) 
+            foreach ( $kw_array as $name => $url ) 
             {
-                if ((!$maxlinks || ($links < $maxlinks)) && (trailingslashit($url)!=$thisurl) && !in_array(strtolower($name), $arrignore) && (!$maxsingleurl || $urls[$url]<$maxsingleurl) )
-                {
-                    if (($options['customkey_preventduplicatelink'] == TRUE) || stripos($text, $name) !== false) {		// credit to Dominik Deobald -- TODO: change string search for preg_match
-                        $name= preg_quote($name, '/');
+                if (   ( !$maxlinks || ( $links < $maxlinks ) )
+                    && ( trailingslashit( $url ) != $thisurl )
+                    && ( !in_array( strtolower( $name ), $arrignore ) )
+                    && ( !$maxsingleurl || $urls[$url] < $maxsingleurl ) ) {
+                   if (
+                       ( $options['customkey_preventduplicatelink'] == TRUE ) || stripos( $text, $name ) !== false ) {
+                        $name = preg_quote( $name, '/' );
                         
-                        if($options['customkey_preventduplicatelink'] == TRUE) $name = str_replace(',','|',$name); //Modifying RegExp for count all grouped keywords as the same one
+                        if( $options['customkey_preventduplicatelink'] == TRUE ) $name = str_replace( ',' , '|' , $name );
                         
-                        $replace="<a title=\"$1\" href=\"$url\">$1</a>";
-                        $regexp=str_replace('$name', $name, $reg);	
+                        $replace = "<a title=\"$1\" href=\"$url\">$1</a>";
+                        $regexp  = str_replace( '$name', $name, $reg );	
                         //$regexp="/(?!(?:[^<]+>|[^>]+<\/a>))(?<!\p{L})($name)(?!\p{L})/imsU";
-                        $newtext = preg_replace($regexp, $replace, $text, $maxsingle);			
-                        if ($newtext!=$text) {							
+                        $newtext = preg_replace( $regexp, $replace, $text, $maxsingle );			
+                        if ( $newtext != $text ) {							
                             $links++;
-                            $text=$newtext;
-                            if (!isset($urls[$url])) $urls[$url]=1; else $urls[$url]++;
+                            $text = $newtext;
+                            if ( !isset( $urls[$url] ) ) $urls[$url] = 1; else $urls[$url]++;
                         }	
                     }
                 }		
@@ -105,37 +107,36 @@ class PromoteMDN {
         }
         
         
-        if ($options['excludeheading'] == "on") {
+        if ( $options['excludeheading'] == 'on' ) {
             //Here insert special characters
-            $text = preg_replace('%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_removespecialchars('\\2').'\\3'", $text);
-            $text = stripslashes($text);
+            $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
+            $text = stripslashes( $text );
         }
         return trim( $text );
 
     } 
 
-    function PromoteMDN_the_content_filter($text) {
+    function promote_mdn_the_content_filter( $text ) {
         
-        $result=$this->PromoteMDN_process_text($text);
-        
+        $result  = $this->promote_mdn_process_text( $text );
         $options = $this->get_options();
-        $link=parse_url(get_bloginfo('wpurl'));
-        $host='http://'.$link['host'];
+        $link    = parse_url( get_bloginfo( 'wpurl' ) );
+        $host    = 'http://' . $link['host'];
         
-        if ($options['blanko'])
-            $result = preg_replace('%<a(\s+.*?href=\S(?!' . $host . '))%i', '<a target="_blank"\\1', $result); // credit to  Kaf Oseo
+        if ( $options['blanko'] )
+            $result = preg_replace( '%<a(\s+.*?href=\S(?!' . $host . '))%i', '<a target="_blank"\\1', $result );
         
         return $result;
     }
 	
-    function explode_trim($separator, $text)
+    function explode_trim( $separator, $text )
     {
-        $arr = explode($separator, $text);
+        $arr = explode( $separator, $text );
         
         $ret = array();
-        foreach($arr as $e)
+        foreach ( $arr as $e )
         {        
-          $ret[] = trim($e);        
+          $ret[] = trim( $e );        
         }
         return $ret;
     }
@@ -152,23 +153,23 @@ class PromoteMDN {
          'minusage' => 1,
          'customkey' => '',
          'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
-         'customkey_url_expire' => 60*60*24,
-         'blankn' =>'',
-         'blanko' =>'',
+         'customkey_url_expire' => 60 * 60 * 24,
+         'blankn' => '',
+         'blanko' => '',
          'allowfeed' => '',
          'maxsingleurl' => '1',
          );
          
-        $saved = get_option($this->PromoteMDN_DB_option);
+        $saved = get_option( $this->PromoteMDN_DB_option );
      
      
-         if (!empty($saved)) {
-             foreach ($saved as $key => $option)
+         if ( !empty( $saved ) ) {
+             foreach ( $saved as $key => $option )
                     $options[$key] = $option;
          }
         
-         if ($saved != $options)	
-            update_option($this->PromoteMDN_DB_option, $options);
+         if ( $saved != $options )	
+            update_option( $this->PromoteMDN_DB_option, $options );
         
          return $options;
     }
@@ -180,60 +181,60 @@ class PromoteMDN {
 	
 	function handle_options() {
 		$options = $this->get_options();
-		if ( isset($_POST['submitted']) ) {
-			check_admin_referer('seo-smart-links');		
+		if ( isset( $_POST['submitted'] ) ) {
+			check_admin_referer( 'seo-smart-links' );		
 			
-			$options['page']=$_POST['page'];					
-			$options['pageself']=$_POST['pageself'];					
-			$options['excludeheading']=$_POST['excludeheading'];									
-			$options['ignore']=$_POST['ignore'];	
-			$options['ignorepost']=$_POST['ignorepost'];					
-			$options['maxlinks']=(int) $_POST['maxlinks'];					
-			$options['maxsingle']=(int) $_POST['maxsingle'];					
-			$options['maxsingleurl']=(int) $_POST['maxsingleurl'];
-			$options['minusage']=(int) $_POST['minusage'];			// credit to Dominik Deobald		
-			$options['customkey']=$_POST['customkey'];	
-            $options['customkey_url']=$_POST['customkey_url'];
-            $options['customkey_url_expire']=$_POST['customkey_url_expire'];
-			$options['blankn']=$_POST['blankn'];	
-			$options['blanko']=$_POST['blanko'];	
-			$options['allowfeed']=$_POST['allowfeed'];	
+			$options['page'] = $_POST['page'];					
+			$options['pageself'] = $_POST['pageself'];					
+			$options['excludeheading'] = $_POST['excludeheading'];									
+			$options['ignore'] = $_POST['ignore'];	
+			$options['ignorepost'] = $_POST['ignorepost'];					
+			$options['maxlinks'] = (int) $_POST['maxlinks'];					
+			$options['maxsingle'] = (int) $_POST['maxsingle'];					
+			$options['maxsingleurl'] = (int) $_POST['maxsingleurl'];
+			$options['minusage'] = (int) $_POST['minusage'];
+			$options['customkey'] = $_POST['customkey'];	
+            $options['customkey_url'] = $_POST['customkey_url'];
+            $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
+			$options['blankn'] = $_POST['blankn'];	
+			$options['blanko'] = $_POST['blanko'];	
+			$options['allowfeed'] = $_POST['allowfeed'];	
 			
-			update_option($this->PromoteMDN_DB_option, $options);
-			$this->PromoteMDN_delete_cache(0);
+			update_option( $this->PromoteMDN_DB_option, $options );
+			$this->promote_mdn_delete_cache( 0 );
 			echo '<div class="updated fade"><p>Plugin settings saved.</p></div>';
 		}
 
 		$action_url = $_SERVER['REQUEST_URI'];	
 
-		$page=$options['page']=='on'?'checked':'';
-		$pageself=$options['pageself']=='on'?'checked':'';
-		$comment=$options['comment']=='on'?'checked':'';
-		$excludeheading=$options['excludeheading']=='on'?'checked':'';
-		$lposts=$options['lposts']=='on'?'checked':'';
-		$lpages=$options['lpages']=='on'?'checked':'';
-		$lcats=$options['lcats']=='on'?'checked':'';
-		$ltags=$options['ltags']=='on'?'checked':'';
-		$ignore=$options['ignore'];
-		$ignorepost=$options['ignorepost'];
-		$maxlinks=$options['maxlinks'];
-		$maxsingle=$options['maxsingle'];
-		$maxsingleurl=$options['maxsingleurl'];
-		$minusage=$options['minusage'];
-		$customkey=stripslashes($options['customkey']);
-        $customkey_url=stripslashes($options['customkey_url']);
-        $customkey_url_expire=stripslashes($options['customkey_url_expire']);
-		$nofoln=$options['nofoln']=='on'?'checked':'';
-		$nofolo=$options['nofolo']=='on'?'checked':'';
-		$blankn=$options['blankn']=='on'?'checked':'';
-		$blanko=$options['blanko']=='on'?'checked':'';
-		$allowfeed=$options['allowfeed']=='on'?'checked':'';
+		$page = $options['page'] == 'on' ? 'checked' : '';
+		$pageself = $options['pageself'] == 'on' ? 'checked' : '';
+		$comment = $options['comment'] == 'on' ? 'checked' : '';
+		$excludeheading = $options['excludeheading'] == 'on' ? 'checked' : '';
+		$lposts = $options['lposts'] == 'on' ? 'checked' : '';
+		$lpages = $options['lpages'] == 'on' ? 'checked' : '';
+		$lcats = $options['lcats'] == 'on' ? 'checked' : '';
+		$ltags = $options['ltags'] == 'on' ? 'checked' : '';
+		$ignore = $options['ignore'];
+		$ignorepost = $options['ignorepost'];
+		$maxlinks = $options['maxlinks'];
+		$maxsingle = $options['maxsingle'];
+		$maxsingleurl = $options['maxsingleurl'];
+		$minusage = $options['minusage'];
+		$customkey = stripslashes( $options['customkey'] );
+        $customkey_url = stripslashes( $options['customkey_url'] );
+        $customkey_url_expire = stripslashes( $options['customkey_url_expire'] );
+		$nofoln = $options['nofoln'] == 'on' ? 'checked' : '';
+		$nofolo = $options['nofolo'] == 'on' ? 'checked' : '';
+		$blankn = $options['blankn'] == 'on' ? 'checked' : '';
+		$blanko = $options['blanko'] == 'on' ? 'checked' : '';
+		$allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
 
-		if (!is_numeric($minusage)) $minusage = 1;
+		if ( !is_numeric( $minusage ) ) $minusage = 1;
 		
-		$nonce=wp_create_nonce( 'seo-smart-links');
+		$nonce = wp_create_nonce( 'seo-smart-links' );
 		
-		$imgpath=trailingslashit(get_option('siteurl')). 'wp-content/plugins/seo-automatic-links/i';	
+		$imgpath = trailingslashit( get_option( 'siteurl' ) ). 'wp-content/plugins/seo-automatic-links/i';	
 		echo <<<END
 
 <div class="wrap" style="">
@@ -294,41 +295,41 @@ END;
 		
 	}
 	
-	function PromoteMDN_admin_menu()
+	function promote_mdn_admin_menu()
 	{
-		add_options_page('Promote MDN Options', 'Promote MDN', 8, basename(__FILE__), array(&$this, 'handle_options'));
+		add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
 	}
 
-    function PromoteMDN_delete_cache($id) {
-        error_log("PromoteMDN_delete_cache");
+    function promote_mdn_delete_cache( $id ) {
+        error_log( 'promote_mdn_delete_cache' );
     }
 }
 
 endif; 
 
-if ( class_exists('PromoteMDN') ) :
+if ( class_exists( 'PromoteMDN' ) ) :
 	
 	$PromoteMDN = new PromoteMDN();
-	if (isset($PromoteMDN)) {
-		register_activation_hook( __FILE__, array(&$PromoteMDN, 'install') );
+	if ( isset( $PromoteMDN ) ) {
+		register_activation_hook( __FILE__, array( &$PromoteMDN, 'install' ) );
 	}
 endif;
 
-function wp_insertspecialchars($str) {
-    $strarr = wp_str2arr($str);
-    $str = implode("<!---->", $strarr);
+function wp_insertspecialchars( $str ) {
+    $strarr = wp_str2arr( $str );
+    $str    = implode( '<!---->', $strarr );
     return $str;
 }
-function wp_removespecialchars($str) {
-    $strarr = explode("<!---->", $str);
-    $str = implode("", $strarr);
-    $str = stripslashes($str);
+function wp_removespecialchars( $str ) {
+    $strarr = explode( '<!---->', $str );
+    $str    = implode( '', $strarr );
+    $str    = stripslashes( $str );
     return $str;
 }
-function wp_str2arr($str) {
+function wp_str2arr( $str ) {
     $chararray = array();
-    for($i=0; $i < strlen($str); $i++){
-        array_push($chararray,$str{$i});
+    for ( $i = 0; $i < strlen( $str ); $i++ ) {
+        array_push( $chararray,$str{$i} );
     }
     return $chararray;
 }
