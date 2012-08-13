@@ -12,9 +12,13 @@ Automatically links keywords and phrases to MDN.
 
 == Description ==
 
-Based on freediver's SEO Smart Links, Promote MDN automatically links keywords
+Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/), Promote MDN automatically links keywords
 and phrases to MDN url's. They keywords, phrases, and url's are supplied by [a
-special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN)
+special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN?raw=1)
+
+MDN is the best online resource for web developers - by web developers. Promote MDN helps promote MDN to your site visitors and to improve MDN search results ranking.
+
+If you want to contribute to this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
 
 == Installation ==
 
@@ -26,7 +30,7 @@ special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN)
 
 = Why? =
 
-MDN makes the best docs on the web, for the web. Other sites get higher spots
+MDN makes the best docs on the web for the web. Other sites get higher spots
 in search results because they have more inbound links. This plugin helps to
 promote MDN in search results by automatically creating inbound links for it.
 
