@@ -146,13 +146,13 @@ class PromoteMDN {
      $options = array(
          'excludeheading' => 'on',
          'ignore' => 'about,',
-        'ignorepost' => 'contact',
+         'ignorepost' => 'contact,',
          'maxlinks' => 3,
          'maxsingle' => 1,
          'customkey' => '',
          'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
          'customkey_url_expire' => 60 * 60 * 24,
-         'blanko' => '',
+         'blanko' => 'on',
          'allowfeed' => '',
          'maxsingleurl' => '1',
          );
@@ -196,7 +196,6 @@ class PromoteMDN {
             $options['allowfeed'] = $_POST['allowfeed'];
 
             update_option( $this->PromoteMDN_DB_option, $options );
-            $this->promote_mdn_delete_cache( 0 );
             echo '<div class="updated fade"><p>Plugin settings saved.</p></div>';
         }
 
@@ -219,59 +218,66 @@ class PromoteMDN {
 
         $imgpath = trailingslashit( get_option( 'siteurl' ) ). 'wp-content/plugins/seo-automatic-links/i';
         echo <<<END
+<style type="text/css">
+    #mainblock { width:600px; }
+    #logo { float: right; margin-bottom: 1em; }
+    .full-width { width: 100% }
+    input { padding: .5em; }
+    h4 { color: white; background: black; clear: both; padding: .5em; }
+    pre { margin-bottom: -1em; }
+</style>
 
-<div class="wrap" style="">
-    <h2>Promote MDN</h2>
-
-     <div id="mainblock" style="width:710px">
-
+<div class="wrap">
+     <div id="mainblock">
         <div class="dbx-content">
+
+            <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" id="logo" alt="MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies." /></a>
+            <p>MDN is the best online resource - for web developers, by web developers.</p>
+            <p>Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.</p>
+
+
             <form name="PromoteMDN" action="$action_url" method="post">
-                    <input type="hidden" id="_wpnonce" name="_wpnonce" value="$nonce" />
-                    <input type="hidden" name="submitted" value="1" />
-                    <p>Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.</p>
+                <input type="hidden" id="_wpnonce" name="_wpnonce" value="$nonce" />
+                <input type="hidden" name="submitted" value="1" />
 
-                    <p>Load keywords from URL:<br/>
-                    <input type="text" name="customkey_url" size="90" value="$customkey_url" /><br/>
-                    <input type="text" name="customkey_url_expire" size="10" value="$customkey_url_expire"/> <label for="customkey_url_expire">Seconds between reloading</label>
-                    </p>
-                    <input type="checkbox" name="allowfeed" $allowfeed /> <label for="allowfeed">Add links to RSS feeds</label><br/>
-                    <input type="checkbox" name="blanko" $blanko /> <label for="blanko">Open links in new window</label> <br/>
 
-                    <h4>Exceptions</h4>
-                    <input type="checkbox" name="excludeheading"  $excludeheading/> <label for="excludeheading">Do not add links in heading tags (h1,h2,h3,h4,h5,h6).</label><br/>
-                    <p>Do not add links to the following posts or pages: (comma-separated id, slug, name)</p>
-                    <input type="text" name="ignorepost" size="90" value="$ignorepost"/>
-                    <br>
+                <h4>Settings</h4>
+                <p>Load keywords from URL (<em id="preview"><a href="$customkey_url" target="_blank">Preview</a></em>):
+                <input type="text" name="customkey_url" value="$customkey_url" class="full-width" />
+                Wait <input type="text" name="customkey_url_expire" size="10" value="$customkey_url_expire"/> <label for="customkey_url_expire">seconds between reloading</label>
+                </p>
+                <input type="checkbox" name="allowfeed" $allowfeed /> <label for="allowfeed">Add links to RSS feeds</label><br/>
+                <input type="checkbox" name="blanko" $blanko /> <label for="blanko">Open links in new window</label> <br/>
 
-                    <p>Do not add links on the following phrases: (comma-separated)</p>
-                    <input type="text" name="ignore" size="90" value="$ignore"/>
-                    <br><br>
 
-                    <h4>Limits</h4>
-                    Max links to generate per post: <input type="text" name="maxlinks" size="2" value="$maxlinks"/><br/>
-                    Max links to generate for a single keyword/phrase: <input type="text" name="maxsingle" size="2" value="$maxsingle"/><br/>
-                    Max links to generate for a single URL: <input type="text" name="maxsingleurl" size="2" value="$maxsingleurl"/>
+                <h4>Exceptions</h4>
+                <input type="checkbox" name="excludeheading"  $excludeheading/> <label for="excludeheading">Do not add links in heading tags (h1,h2,h3,h4,h5,h6).</label><br/>
+                <p>Do not add links to the following posts or pages (comma-separated id, slug, name):</p>
+                <input type="text" name="ignorepost" value="$ignorepost" class="full-width"/>
+                <p>Do not add links on the following phrases (comma-separated):</p>
+                <input type="text" name="ignore" class="full-width" value="$ignore"/>
 
-                    <h4>Custom Keywords</h4>
-                    <p>Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,<br/>
-                    <pre>addons, amo, http://addons.mozilla.org/
-support, sumo, http://support.mozilla.org/
-                    </pre>
-                    </p>
 
-                    <textarea name="customkey" id="customkey" rows="10" cols="90"  >$customkey</textarea>
-                    <br><br>
+                <h4>Limits</h4>
+                Max links to generate per post: <input type="text" name="maxlinks" size="2" value="$maxlinks"/><br/>
+                Max links to generate for a single keyword/phrase: <input type="text" name="maxsingle" size="2" value="$maxsingle"/><br/>
+                Max links to generate for a single URL: <input type="text" name="maxsingleurl" size="2" value="$maxsingleurl"/>
 
-                    <div class="submit"><input type="submit" name="Submit" value="Update options" class="button-primary" /></div>
+
+                <h4>Custom Keywords</h4>
+                <p>Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,<br/>
+                <pre>addons, amo, http://addons.mozilla.org/
+sumo, http://support.mozilla.org/
+                </pre>
+                </p>
+
+                <textarea name="customkey" id="customkey" rows="10" cols="90"  >$customkey</textarea>
+                <em>Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.</em>
+                <div class="submit"><input type="submit" name="Submit" value="Update options" class="button-primary" /></div>
             </form>
+
         </div>
-
-        <br/><br/><h3>&nbsp;</h3>
-     </div>
-
     </div>
-
 </div>
 END;
 
@@ -281,11 +287,6 @@ END;
     function promote_mdn_admin_menu()
     {
         add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
-    }
-
-    function promote_mdn_delete_cache( $id )
-    {
-        error_log( 'promote_mdn_delete_cache' );
     }
 }
 
