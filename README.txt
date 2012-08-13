@@ -23,8 +23,8 @@ If you want to contribute to this plugin, go to [Promote MDN on Github](https://
 == Installation ==
 
 1. Upload `promote-mdn.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Configure the plugin through the 'Settings' -> 'Promote MDN' page
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Configure the plugin through the 'Settings' -> 'Promote MDN' page
 
 == Frequently Asked Questions ==
 
