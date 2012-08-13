@@ -32,8 +32,7 @@ promote MDN in search results by automatically creating inbound links for it.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the directory of the stable readme.txt, so in this case, `/tags/4.3/screenshot-1.png` (or jpg, jpeg, gif)
+1. Settings, exceptions, limits, custom keywords
 
 == Changelog ==
 
