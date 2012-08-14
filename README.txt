@@ -4,7 +4,7 @@ Donate link:
 Tags: mdn, links
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: trunk
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,9 @@ promote MDN in search results by automatically creating inbound links for it.
 1. Settings, exceptions, limits, custom keywords
 
 == Changelog ==
+
+= 1.1 =
+* Add "Reload now" button and send Cache-Control: no-cache, must-revalidate to MDN
 
 = 1.0 =
 * Initial version based on SEO Smart Links.
