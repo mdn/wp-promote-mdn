@@ -55,9 +55,7 @@ class PromoteMDN {
         if ( !empty( $options['customkey_url'] ) )
         {
             if ( false === ( $customkey_url_value = get_transient( 'promote_mdn_url_value' ) ) ){
-                $body = wp_remote_retrieve_body( wp_remote_get( $options['customkey_url'] ) );
-                $customkey_url_value = strip_tags( $body );
-                set_transient( 'promote_mdn_url_value', $customkey_url_value, 86400 );
+                $customkey_url_value = $this->promote_mdn_reload_value( $options['customkey_url'] );
             }
             $options['customkey'] = $options['customkey'] . "\n" . $customkey_url_value;
         }
@@ -128,6 +126,22 @@ class PromoteMDN {
         return $result;
     }
 
+    function promote_mdn_reload_value( $url )
+    {
+        $body = wp_remote_retrieve_body(
+            wp_remote_get(
+                $url,
+                array(
+                    'headers' =>
+                        array( 'cache-control' => 'no-cache, must-revalidate' ) 
+                )
+            )
+        );
+        $customkey_url_value = strip_tags( $body );
+        set_transient( 'promote_mdn_url_value', $customkey_url_value, 86400 );
+        return $customkey_url_value;
+    }
+
     function explode_trim( $separator, $text )
     {
         $arr = explode( $separator, $text );
@@ -183,20 +197,27 @@ class PromoteMDN {
         if ( isset( $_POST['submitted'] ) ) {
             check_admin_referer( 'seo-smart-links' );
 
-            $options['excludeheading'] = $_POST['excludeheading'];
-            $options['ignore'] = $_POST['ignore'];
-            $options['ignorepost'] = $_POST['ignorepost'];
-            $options['maxlinks'] = (int) $_POST['maxlinks'];
-            $options['maxsingle'] = (int) $_POST['maxsingle'];
-            $options['maxsingleurl'] = (int) $_POST['maxsingleurl'];
-            $options['customkey'] = $_POST['customkey'];
-            $options['customkey_url'] = $_POST['customkey_url'];
-            $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
-            $options['blanko'] = $_POST['blanko'];
-            $options['allowfeed'] = $_POST['allowfeed'];
+            if ( isset( $_POST['reload_now'] ) ) {
+                $customkey_url = stripslashes( $options['customkey_url'] );
+                $customkey_url_value = $this->promote_mdn_reload_value( $customkey_url );
+                $box = '<div class="updated fade"><p>Reloaded values from <a href="%s">URL.</p></div>';
+                echo sprintf( $box, $customkey_url );
+            } else {
+                $options['excludeheading'] = $_POST['excludeheading'];
+                $options['ignore'] = $_POST['ignore'];
+                $options['ignorepost'] = $_POST['ignorepost'];
+                $options['maxlinks'] = (int) $_POST['maxlinks'];
+                $options['maxsingle'] = (int) $_POST['maxsingle'];
+                $options['maxsingleurl'] = (int) $_POST['maxsingleurl'];
+                $options['customkey'] = $_POST['customkey'];
+                $options['customkey_url'] = $_POST['customkey_url'];
+                $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
+                $options['blanko'] = $_POST['blanko'];
+                $options['allowfeed'] = $_POST['allowfeed'];
 
-            update_option( $this->PromoteMDN_DB_option, $options );
-            echo '<div class="updated fade"><p>Plugin settings saved.</p></div>';
+                update_option( $this->PromoteMDN_DB_option, $options );
+                echo '<div class="updated fade"><p>Plugin settings saved.</p></div>';
+            }
         }
 
         $action_url = $_SERVER['REQUEST_URI'];
@@ -245,6 +266,7 @@ class PromoteMDN {
                 <p>Load keywords from URL (<em id="preview"><a href="$customkey_url" target="_blank">Preview</a></em>):
                 <input type="text" name="customkey_url" value="$customkey_url" class="full-width" />
                 Wait <input type="text" name="customkey_url_expire" size="10" value="$customkey_url_expire"/> <label for="customkey_url_expire">seconds between reloading</label>
+                <button type="submit" name="reload_now">Reload now</button>
                 </p>
                 <input type="checkbox" name="allowfeed" $allowfeed /> <label for="allowfeed">Add links to RSS feeds</label><br/>
                 <input type="checkbox" name="blanko" $blanko /> <label for="blanko">Open links in new window</label> <br/>
