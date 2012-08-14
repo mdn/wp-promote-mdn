@@ -6,6 +6,7 @@ Plugin URI: http://github.com/groovecoder/wp-promote-mdn
 Author: Luke Crouch
 Author URI: http://groovecoder.com
 Description: Promote MDN automatically links keywords phrases to MDN docs
+Text Domain: promote-mdn
 */
 
 // Avoid name collisions.
@@ -21,6 +22,13 @@ class PromoteMDN {
         add_filter( 'the_content' ,  array( &$this, 'promote_mdn_the_content_filter' ), 10 );
         // Add Options Page
         add_action( 'admin_menu' ,  array( &$this, 'promote_mdn_admin_menu' ) );
+        load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
+        //add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+    }
+
+    function load_plugin_textdomain()
+    {
+        load_plugin_textdomain( 'promote-mdn', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
 
@@ -200,8 +208,9 @@ class PromoteMDN {
             if ( isset( $_POST['reload_now'] ) ) {
                 $customkey_url = stripslashes( $options['customkey_url'] );
                 $customkey_url_value = $this->promote_mdn_reload_value( $customkey_url );
-                $box = '<div class="updated fade"><p>Reloaded values from <a href="%s">URL.</p></div>';
-                echo sprintf( $box, $customkey_url );
+                $reloaded_message = __( 'Reloaded values from the URL.', 'promote-mdn' );
+                $message_box = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
+                echo $message_box;
             } else {
                 $options['excludeheading'] = $_POST['excludeheading'];
                 $options['ignore'] = $_POST['ignore'];
@@ -216,7 +225,8 @@ class PromoteMDN {
                 $options['allowfeed'] = $_POST['allowfeed'];
 
                 update_option( $this->PromoteMDN_DB_option, $options );
-                echo '<div class="updated fade"><p>Plugin settings saved.</p></div>';
+                $settings_message = __('Plugin settings saved.', 'promote-mdn' );
+                echo '<div class="updated fade"><p>' . $settings_message . '</p></div>';
             }
         }
 
@@ -236,9 +246,7 @@ class PromoteMDN {
         $allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
 
         $nonce = wp_create_nonce( 'seo-smart-links' );
-
-        $imgpath = trailingslashit( get_option( 'siteurl' ) ). 'wp-content/plugins/seo-automatic-links/i';
-        echo <<<END
+?>
 <style type="text/css">
     #mainblock { width:600px; }
     #logo { float: right; margin-bottom: 1em; }
@@ -252,57 +260,58 @@ class PromoteMDN {
      <div id="mainblock">
         <div class="dbx-content">
 
-            <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies."><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" id="logo" alt="MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies." /></a>
-            <p>MDN is the best online resource - for web developers, by web developers.</p>
-            <p>Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.</p>
-
+<?php
+        $top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn');
+?>
+        <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo $top_img_title ?>"><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" id="logo" alt="<?php echo $top_img_title ?>" /></a>
+        <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn') ?> </p>
+        <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn') ?></p>
 
             <form name="PromoteMDN" action="$action_url" method="post">
                 <input type="hidden" id="_wpnonce" name="_wpnonce" value="$nonce" />
                 <input type="hidden" name="submitted" value="1" />
 
 
-                <h4>Settings</h4>
-                <p>Load keywords from URL (<em id="preview"><a href="$customkey_url" target="_blank">Preview</a></em>):
-                <input type="text" name="customkey_url" value="$customkey_url" class="full-width" />
-                Wait <input type="text" name="customkey_url_expire" size="10" value="$customkey_url_expire"/> <label for="customkey_url_expire">seconds between reloading</label>
-                <button type="submit" name="reload_now">Reload now</button>
+                <h4><?php _e( 'Settings' , 'promote-mdn') ?></h4>
+                <p><?php _e( 'Load keywords from URL' , 'promote-mdn') ?> (<em id="preview"><a href="<?php echo $customkey_url ?>" target="_blank"><?php _e( 'Preview' , 'promote-mdn') ?></a></em>):
+                <input type="text" name="customkey_url" value="<?php echo $customkey_url ?>" class="full-width" />
+                <?php _e( 'Reload keywords after (seconds):' , 'promote-mdn') ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo $customkey_url_expire ?>"/>
+                <button type="submit" name="reload_now"><?php _e( 'Reload now' , 'promote-mdn') ?></button>
                 </p>
-                <input type="checkbox" name="allowfeed" $allowfeed /> <label for="allowfeed">Add links to RSS feeds</label><br/>
-                <input type="checkbox" name="blanko" $blanko /> <label for="blanko">Open links in new window</label> <br/>
+                <input type="checkbox" name="allowfeed" <?php echo $allowfeed ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn') ?></label><br/>
+                <input type="checkbox" name="blanko" <?php echo $blanko ?>/> <label for="blanko"><?php _e( 'Open links in new window' , 'promote-mdn') ?></label> <br/>
 
 
-                <h4>Exceptions</h4>
-                <input type="checkbox" name="excludeheading"  $excludeheading/> <label for="excludeheading">Do not add links in heading tags (h1,h2,h3,h4,h5,h6).</label><br/>
-                <p>Do not add links to the following posts or pages (comma-separated id, slug, name):</p>
-                <input type="text" name="ignorepost" value="$ignorepost" class="full-width"/>
-                <p>Do not add links on the following phrases (comma-separated):</p>
-                <input type="text" name="ignore" class="full-width" value="$ignore"/>
+                <h4><?php _e( 'Exceptions' , 'promote-mdn') ?></h4>
+                <input type="checkbox" name="excludeheading" <?php echo $excludeheading ?>/> <label for="excludeheading"><?php _e( 'Do not add links in heading tags (h1,h2,h3,h4,h5,h6).' , 'promote-mdn') ?></label><br/>
+                <p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):' , 'promote-mdn') ?></p>
+                <input type="text" name="ignorepost" value="<?php echo $ignorepost ?>" class="full-width"/>
+                <p><?php _e( 'Do not add links on the following phrases (comma-separated):' , 'promote-mdn') ?></p>
+                <input type="text" name="ignore" class="full-width" value="<?php echo $ignore ?>"/>
 
 
-                <h4>Limits</h4>
-                Max links to generate per post: <input type="text" name="maxlinks" size="2" value="$maxlinks"/><br/>
-                Max links to generate for a single keyword/phrase: <input type="text" name="maxsingle" size="2" value="$maxsingle"/><br/>
-                Max links to generate for a single URL: <input type="text" name="maxsingleurl" size="2" value="$maxsingleurl"/>
+                <h4><?php _e( 'Limits' , 'promote-mdn') ?></h4>
+                <?php _e( 'Max links to generate per post:' , 'promote-mdn') ?> <input type="text" name="maxlinks" size="2" value="<?php echo $maxlinks ?>"/><br/>
+                <?php _e( 'Max links to generate for a single keyword/phrase:' , 'promote-mdn') ?> <input type="text" name="maxsingle" size="2" value="<?php echo $maxsingle ?>"/><br/>
+                <?php _e( 'Max links to generate for a single URL:' , 'promote-mdn') ?> <input type="text" name="maxsingleurl" size="2" value="<?php echo $maxsingleurl ?>"/>
 
 
-                <h4>Custom Keywords</h4>
-                <p>Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,<br/>
+                <h4><?php _e( 'Custom Keywords' , 'promote-mdn') ?></h4>
+                <p><?php _e( 'Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,' , 'promote-mdn') ?><br/>
                 <pre>addons, amo, http://addons.mozilla.org/
 sumo, http://support.mozilla.org/
                 </pre>
                 </p>
 
-                <textarea name="customkey" id="customkey" rows="10" cols="90"  >$customkey</textarea>
-                <em>Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.</em>
-                <div class="submit"><input type="submit" name="Submit" value="Update options" class="button-primary" /></div>
+                <textarea name="customkey" id="customkey" rows="10" cols="90"  ><?php echo $customkey ?></textarea>
+                <em><?php _e( 'Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.' , 'promote-mdn') ?></em>
+                <div class="submit"><input type="submit" name="Submit" value="<?php _e( 'Update options' , 'promote-mdn') ?>" class="button-primary" /></div>
             </form>
 
         </div>
     </div>
 </div>
-END;
-
+<?php
 
     }
 
