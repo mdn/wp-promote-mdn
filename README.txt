@@ -18,11 +18,18 @@ special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN?raw
 
 MDN is the best online resource for web developers - by web developers. Promote MDN helps promote MDN to your site visitors and to improve MDN search results ranking.
 
-If you want to contribute to this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
+To help code on this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
+
+To help translate this plugin, go to the [MDN Verbatim](https://localize.mozilla.org/projects/mdn/) page.
 
 == Installation ==
+1. Go to "Plugins -> Add new"
+2. Search for "Promote MDN"
+3. Click "Install"
 
-1. Upload `promote-mdn.php` to the `/wp-content/plugins/` directory
+or manually:
+
+1. Upload `promote-mdn/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Configure the plugin through the 'Settings' -> 'Promote MDN' page
 
@@ -37,8 +44,11 @@ promote MDN in search results by automatically creating inbound links for it.
 == Screenshots ==
 
 1. Settings, exceptions, limits, custom keywords
+2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+= 1.2 =
+* Internationalization and initial translations - Polish, Dutch, Korean, German
 
 = 1.1 =
 * Add "Reload now" button and send Cache-Control: no-cache, must-revalidate to MDN
