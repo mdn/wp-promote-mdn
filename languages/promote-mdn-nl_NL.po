@@ -1,0 +1,137 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-promote-mdn\n"
+"POT-Creation-Date: 2012-08-14 05:49:22+00:00\n"
+"PO-Revision-Date: 2012-08-15 00:26+0200\n"
+"Last-Translator: Ton <tonnes.mb@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+#: promote-mdn.php:210
+msgid "Reloaded values from the URL."
+msgstr "Waarden uit de URL opnieuw geladen."
+
+#: promote-mdn.php:227
+msgid "Plugin settings saved."
+msgstr "Plug-in-instellingen opgeslagen."
+
+#: promote-mdn.php:263
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN is uw werkset voor webontwikkelaars voor documenten, demo’s en meer over "
+"HTML, CSS, JavaScript en andere webstandaarden en open technologieën."
+
+#: promote-mdn.php:266
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN is de beste online hulpbron - voor webontwikkelaars, door "
+"webontwikkelaars."
+
+#: promote-mdn.php:267
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Promote MDN koppelt automatisch trefwoorden en termen in uw berichten en "
+"pagina’s aan MDN-URL’s."
+
+#: promote-mdn.php:274
+msgid "Settings"
+msgstr "Instellingen"
+
+#: promote-mdn.php:275
+msgid "Load keywords from URL"
+msgstr "Trefwoorden uit URL laden"
+
+#: promote-mdn.php:275
+msgid "Preview"
+msgstr "Voorbeeld"
+
+#: promote-mdn.php:277
+msgid "Reload keywords after (seconds):"
+msgstr "Trefwoorden opnieuw laden na (seconden):"
+
+#: promote-mdn.php:278
+msgid "Reload now"
+msgstr "Nu opnieuw laden"
+
+#: promote-mdn.php:280
+msgid "Add links to RSS feeds"
+msgstr "Koppelingen aan RSS-feeds toevoegen"
+
+#: promote-mdn.php:281
+msgid "Open links in new window"
+msgstr "Koppelingen openen in nieuw venster"
+
+#: promote-mdn.php:284
+msgid "Exceptions"
+msgstr "Uitzonderingen"
+
+#: promote-mdn.php:285
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "Voeg geen koppelingen toe in koptags (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:286
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"Voeg geen koppelingen toe aan de volgende berichten of pagina’s "
+"(kommagescheiden id, identificator, naam):"
+
+#: promote-mdn.php:288
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "Voeg geen koppelingen toe aan de volgende termen (kommagescheiden):"
+
+#: promote-mdn.php:292
+msgid "Limits"
+msgstr "Beperkingen"
+
+#: promote-mdn.php:293
+msgid "Max links to generate per post:"
+msgstr "Max. aantal te genereren koppelingen per bericht:"
+
+#: promote-mdn.php:294
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr "Max. aantal te genereren koppelingen per trefwoord/term:"
+
+#: promote-mdn.php:295
+msgid "Max links to generate for a single URL:"
+msgstr "Max. aantal te genereren koppelingen per URL:"
+
+#: promote-mdn.php:298
+msgid "Custom Keywords"
+msgstr "Eigen trefwoorden"
+
+#: promote-mdn.php:299
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Extra trefwoorden voor automatisch koppelen. Gebruik komma om trefwoorden te "
+"scheiden en voeg doel-url aan einde toe. Gebruik een nieuwe regel en groep "
+"trefwoorden, zoals"
+
+#: promote-mdn.php:306
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"Noot: deze trefwoorden hebben voorrang boven de via de URL geladen "
+"trefwoorden. Als u hier te veel eigen trefwoorden hebt, mag u helemaal niet "
+"naar MDN verwijzen."
+
+#: promote-mdn.php:307
+msgid "Update options"
+msgstr "Updateopties"

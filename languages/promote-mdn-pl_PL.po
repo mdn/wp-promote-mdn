@@ -1,0 +1,140 @@
+# Copyright (C) 2012 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-promote-mdn\n"
+"POT-Creation-Date: 2012-08-14 05:49:22+00:00\n"
+"PO-Revision-Date: 2012-08-14 23:35+0200\n"
+"Last-Translator: Leszek <leszekz@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 2.1.6\n"
+
+#: promote-mdn.php:210
+msgid "Reloaded values from the URL."
+msgstr "Odświeżone wartości z internetu."
+
+#: promote-mdn.php:227
+msgid "Plugin settings saved."
+msgstr "Ustawienia wtyczki zostały zapisane."
+
+#: promote-mdn.php:263
+msgid ""
+"MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
+"JavaScript and other Web standards and open technologies."
+msgstr ""
+"MDN jest twoim przybornikiem programisty zawierającym dokumentację, dema i "
+"wiele więcej na temat HTML, CSS, JavaScriptu i innych standardów "
+"internetowych i otwartych technologii."
+
+#: promote-mdn.php:266
+msgid ""
+"MDN is the best online resource - for web developers, by web developers."
+msgstr ""
+"MDN jest najlepszym zasobem wiedzy online tworzonym dla programistów "
+"internetowych przez programistów."
+
+#: promote-mdn.php:267
+msgid ""
+"Promote MDN automatically links keywords and phrases in your posts and pages "
+"to MDN URLs."
+msgstr ""
+"Promuj MDN, automatycznie linkując słowa kluczowe i frazy adresami URL MDN w "
+"swoich postach i na stronach internetowych."
+
+#: promote-mdn.php:274
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: promote-mdn.php:275
+msgid "Load keywords from URL"
+msgstr "Wczytaj słowa kluczowe z internetu"
+
+#: promote-mdn.php:275
+msgid "Preview"
+msgstr "Podgląd"
+
+#: promote-mdn.php:277
+msgid "Reload keywords after (seconds):"
+msgstr "Odświeżaj słowa kluczowe po (s):"
+
+#: promote-mdn.php:278
+msgid "Reload now"
+msgstr "Odśwież teraz"
+
+#: promote-mdn.php:280
+msgid "Add links to RSS feeds"
+msgstr "Dodaj odnośniki do kanałów RSS"
+
+#: promote-mdn.php:281
+msgid "Open links in new window"
+msgstr "Otwieraj odnośniki w nowym oknie"
+
+#: promote-mdn.php:284
+msgid "Exceptions"
+msgstr "Wyjątki"
+
+#: promote-mdn.php:285
+msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+msgstr "Nie dodawaj odnośników w znacznikach nagłówków (h1,h2,h3,h4,h5,h6)."
+
+#: promote-mdn.php:286
+msgid ""
+"Do not add links to the following posts or pages (comma-separated id, slug, "
+"name):"
+msgstr ""
+"Nie dodawaj odnośników do następujących postów lub stron (oddzielane "
+"przecinkiem ID, ciąg wyrazów, nazwa):"
+
+#: promote-mdn.php:288
+msgid "Do not add links on the following phrases (comma-separated):"
+msgstr "Nie dodawaj odnośników do następujących fraz (oddzielane przecinkiem):"
+
+#: promote-mdn.php:292
+msgid "Limits"
+msgstr "Limity"
+
+#: promote-mdn.php:293
+msgid "Max links to generate per post:"
+msgstr "Maksymalna liczba odnośników generowana dla posta:"
+
+#: promote-mdn.php:294
+msgid "Max links to generate for a single keyword/phrase:"
+msgstr ""
+"Maksymalna liczba odnośników generowana dla jednego słowa kluczowego/frazy:"
+
+#: promote-mdn.php:295
+msgid "Max links to generate for a single URL:"
+msgstr "Maksymalna liczba odnośników generowana dla jednego adresu URL:"
+
+#: promote-mdn.php:298
+msgid "Custom Keywords"
+msgstr "Własne słowa kluczowe"
+
+#: promote-mdn.php:299
+msgid ""
+"Extra keywords to automaticaly link. Use comma to seperate keywords and add "
+"target url at the end. Use a new line for new url and set of keywords. e.g.,"
+msgstr ""
+"Dodatkowe słowa kluczowe do automatycznego linkowania. Użyj oddzielanych "
+"przecinkiem słów kluczowych i dodaj na końcu docelowy adres URL. Każdy nowy "
+"adres wstaw w nowym wierszu i określ słowo kluczowe, np."
+
+#: promote-mdn.php:306
+msgid ""
+"Note: These keywords will take priority over those loaded at the URL. If you "
+"have too many custom keywords here, you may not link to MDN at all."
+msgstr ""
+"Informacja. Te słowa kluczowe będą miały priorytet nad pobranymi z "
+"internetu. Jeśli masz za dużo własnych słów kluczowych, możesz ich nie "
+"linkować."
+
+#: promote-mdn.php:307
+msgid "Update options"
+msgstr "Aktualizuj ustawienia"
