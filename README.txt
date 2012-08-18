@@ -20,6 +20,7 @@ MDN is the best online resource for web developers - by web developers. Promote 
 
 To help code on this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
 
+Translations available: de_DE, nl_NL, pl_PL, pt_BR.
 To help translate this plugin, go to the [MDN Verbatim](https://localize.mozilla.org/projects/mdn/) page.
 
 == Installation ==
