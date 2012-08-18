@@ -13,33 +13,59 @@ Text Domain: promote-mdn
 if ( !class_exists( 'PromoteMDN' ) ) :
 
 class PromoteMDN {
-    var $PromoteMDN_DB_option = 'PromoteMDN';
-    var $PromoteMDN_options;
+    public $option_name = 'PromoteMDN';
+    public $options;
+    public $default_options = array(
+        'excludeheading' => 'on',
+        'ignore' => 'about,',
+        'ignorepost' => 'contact,',
+        'maxlinks' => 3,
+        'maxsingle' => 1,
+        'customkey' => '',
+        'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
+        'customkey_url_expire' => 86400,
+        'blanko' => 'on',
+        'allowfeed' => '',
+        'maxsingleurl' => '1',
+    );
 
-    // Initialize WordPress hooks
-    function PromoteMDN()
+    function __construct($options = null)
     {
+        if ( $options )
+            $this->options = $options;
+        else
+            $this->options = get_option( $this->option_name );
+
+        // WordPress hooks
         add_filter( 'the_content' ,  array( &$this, 'promote_mdn_the_content_filter' ), 10 );
-        // Add Options Page
         add_action( 'admin_menu' ,  array( &$this, 'promote_mdn_admin_menu' ) );
+
+        // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
-        //add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
     }
 
-    function load_plugin_textdomain()
+    function promote_mdn_the_content_filter( $text )
     {
-        load_plugin_textdomain( 'promote-mdn', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+        $result  = $this->process_text( $text );
+        $options = $this->options;
+        $link    = parse_url( get_bloginfo( 'wpurl' ) );
+        $host    = 'http://' . $link['host'];
+
+        // TODO: move this to process_text (See http://git.io/T6VIFg)
+        if ( $options['blanko'] )
+            $result = preg_replace( '%<a(\s+.*?href=\S(?!' . $host . '))%i', '<a target="_blank"\\1', $result );
+
+        return $result;
     }
 
-
-    function promote_mdn_process_text( $text )
+    function process_text( $text )
     {
-        $options = $this->get_options();
+        $options = $this->options;
         $links   = 0;
         if ( is_feed() && !$options['allowfeed'] )
             return $text;
 
-        $arrignorepost = $this->explode_trim( ',' , ( $options['ignorepost'] ) );
+        $arrignorepost = $this->explode_lower_trim( ',' , ( $options['ignorepost'] ) );
         if ( is_page( $arrignorepost ) || is_single( $arrignorepost ) ) {
             return $text;
         }
@@ -50,7 +76,7 @@ class PromoteMDN {
 
         $urls = array();
 
-        $arrignore = $this->explode_trim( ',' , ( $options['ignore'] ) );
+        $arrignore = $this->explode_lower_trim( ',' , ( $options['ignore'] ) );
         if ( $options['excludeheading'] == 'on' ) {
             //Here insert special characters
             $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie' , "'\\1'.wp_insertspecialchars('\\2').'\\3'" , $text );
@@ -87,6 +113,8 @@ class PromoteMDN {
             }
             foreach ( $kw_array as $name => $url )
             {
+                if ( in_array( strtolower( $name ), $arrignore ) )
+                    continue;
                 if (   ( !$maxlinks || ( $links < $maxlinks ) )
                     && ( trailingslashit( $url ) != $thisurl )
                     && ( !in_array( strtolower( $name ), $arrignore ) )
@@ -121,18 +149,6 @@ class PromoteMDN {
 
     }
 
-    function promote_mdn_the_content_filter( $text )
-    {
-        $result  = $this->promote_mdn_process_text( $text );
-        $options = $this->get_options();
-        $link    = parse_url( get_bloginfo( 'wpurl' ) );
-        $host    = 'http://' . $link['host'];
-
-        if ( $options['blanko'] )
-            $result = preg_replace( '%<a(\s+.*?href=\S(?!' . $host . '))%i', '<a target="_blank"\\1', $result );
-
-        return $result;
-    }
 
     function promote_mdn_reload_value( $url )
     {
@@ -150,58 +166,22 @@ class PromoteMDN {
         return $customkey_url_value;
     }
 
-    function explode_trim( $separator, $text )
+    function explode_lower_trim( $separator, $text )
     {
         $arr = explode( $separator, $text );
 
         $ret = array();
         foreach ( $arr as $e )
         {
-          $ret[] = trim( $e );
+          $ret[] = strtolower( trim( $e ) );
         }
         return $ret;
     }
 
-    // Handle our options
-    function get_options()
-    {
-     $options = array(
-         'excludeheading' => 'on',
-         'ignore' => 'about,',
-         'ignorepost' => 'contact,',
-         'maxlinks' => 3,
-         'maxsingle' => 1,
-         'customkey' => '',
-         'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
-         'customkey_url_expire' => 60 * 60 * 24,
-         'blanko' => 'on',
-         'allowfeed' => '',
-         'maxsingleurl' => '1',
-         );
-
-        $saved = get_option( $this->PromoteMDN_DB_option );
-
-
-         if ( !empty( $saved ) ) {
-             foreach ( $saved as $key => $option )
-                    $options[$key] = $option;
-         }
-
-         if ( $saved != $options )
-            update_option( $this->PromoteMDN_DB_option, $options );
-
-         return $options;
-    }
-
-    // Set up everything
-    function install()
-    {
-        $PromoteMDN_options = $this->get_options();
-    }
 
     function handle_options()
     {
-        $options = $this->get_options();
+        $options = $this->options;
         if ( isset( $_POST['submitted'] ) ) {
             check_admin_referer( 'seo-smart-links' );
 
@@ -267,8 +247,8 @@ class PromoteMDN {
         <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ) ?> </p>
         <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ) ?></p>
 
-            <form name="PromoteMDN" action="$action_url" method="post">
-                <input type="hidden" id="_wpnonce" name="_wpnonce" value="$nonce" />
+        <form name="PromoteMDN" action="<?php echo $action_url ?>" method="post">
+        <input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo $nonce ?>" />
                 <input type="hidden" name="submitted" value="1" />
 
 
@@ -319,14 +299,24 @@ sumo, http://support.mozilla.org/
     {
         add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
     }
+
+    // Set up everything
+    function install()
+    {
+        $options = get_option( $this->option_name );
+        if (!$options)
+            update_option( $this->option_name, $this->default_options );
+    }
 }
 
 endif;
 
 if ( class_exists( 'PromoteMDN' ) ) :
-    $PromoteMDN = new PromoteMDN();
-    if ( isset( $PromoteMDN ) ) {
-        register_activation_hook( __FILE__, array( &$PromoteMDN, 'install' ) );
+    if ( !$GLOBALS['argv'][1] == 'tests/PromoteMDNTest.php' ) {
+        $PromoteMDN = new PromoteMDN();
+        if ( isset( $PromoteMDN ) ) {
+            register_activation_hook( __FILE__, array( &$PromoteMDN, 'install' ) );
+        }
     }
 endif;
 
