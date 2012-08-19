@@ -37,25 +37,11 @@ class PromoteMDN {
             $this->options = get_option( $this->option_name );
 
         // WordPress hooks
-        add_filter( 'the_content' ,  array( &$this, 'promote_mdn_the_content_filter' ), 10 );
+        add_filter( 'the_content' ,  array( &$this, 'process_text' ), 10 );
         add_action( 'admin_menu' ,  array( &$this, 'promote_mdn_admin_menu' ) );
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
-    }
-
-    function promote_mdn_the_content_filter( $text )
-    {
-        $result  = $this->process_text( $text );
-        $options = $this->options;
-        $link    = parse_url( get_bloginfo( 'wpurl' ) );
-        $host    = 'http://' . $link['host'];
-
-        // TODO: move this to process_text (See http://git.io/T6VIFg)
-        if ( $options['blanko'] )
-            $result = preg_replace( '%<a(\s+.*?href=\S(?!' . $host . '))%i', '<a target="_blank"\\1', $result );
-
-        return $result;
     }
 
     function process_text( $text )
@@ -125,7 +111,9 @@ class PromoteMDN {
 
                         if( $options['customkey_preventduplicatelink'] == TRUE ) $name = str_replace( ',' , '|' , $name );
 
-                        $replace = "<a title=\"$1\" href=\"$url\">$1</a>";
+                        if( $options['blanko'] )
+                            $target = 'target="_blank"';
+                        $replace = "<a $target title=\"$1\" href=\"$url\">$1</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
                         //$regexp="/(?!(?:[^<]+>|[^>]+<\/a>))(?<!\p{L})($name)(?!\p{L})/imsU";
                         $newtext = preg_replace( $regexp, $replace, $text, $maxsingle );

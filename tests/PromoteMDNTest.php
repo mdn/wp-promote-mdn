@@ -72,9 +72,9 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $this->pm = new PromoteMDN( $options );
 
         $this->js_href = 'https://developer.mozilla.org/docs/JavaScript';
-        $this->js_linked = '<a title="JavaScript" href="' . $this->js_href . '">JavaScript</a>';
+        $this->js_linked = '<a target="_blank" title="JavaScript" href="' . $this->js_href . '">JavaScript</a>';
         $this->css_href = 'https://developer.mozilla.org/docs/CSS';
-        $this->css_linked = '<a title="CSS" href="' . $this->css_href . '">CSS</a>';
+        $this->css_linked = '<a target="_blank" title="CSS" href="' . $this->css_href . '">CSS</a>';
         $this->text = '<p>I like JavaScript.</p>';
         $this->linked_text = '<p>I like ' . $this->js_linked . '.</p>';
     }
@@ -102,7 +102,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
     public function testNewWindow()
     {
         $linked_text_new_window = '<p>I like <a target="_blank" title="JavaScript" href="' . $this->js_href . '">JavaScript</a>.</p>';
-        $this->assertEquals( $linked_text_new_window, $this->pm->promote_mdn_the_content_filter ( $this->text ) );
+        $this->assertEquals( $linked_text_new_window, $this->pm->process_text ( $this->text ) );
     }
 
     // TODO: Test for http://git.io/T6VIFg
@@ -146,7 +146,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( '<p>' . $this->js_linked . ' and JS</p>',
                              $this->pm->process_text( $text) );
         $this->pm->options['maxsingleurl'] = 2;
-        $this->assertEquals( '<p>' . $this->js_linked . ' and <a title="JS" href="' . $this->js_href . '">JS</a></p>',
+        $this->assertEquals( '<p>' . $this->js_linked . ' and <a target="_blank" title="JS" href="' . $this->js_href . '">JS</a></p>',
                              $this->pm->process_text( $text) );
     }
 
@@ -157,7 +157,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( '<p>' . $this->js_linked . ' and groovecoder</p>',
                              $this->pm->process_text( $text) );
         $this->pm->options['customkey'] = 'groovecoder, http://groovecoder.com';
-        $this->assertEquals( '<p>' . $this->js_linked . ' and <a title="groovecoder" href="http://groovecoder.com">groovecoder</a></p>',
+        $this->assertEquals( '<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com">groovecoder</a></p>',
                              $this->pm->process_text( $text) );
     }
 
