@@ -301,8 +301,10 @@ endif;
 
 if ( class_exists( 'PromoteMDN' ) ) :
     $in_phpunit = false;
-    if ( stripos($GLOBALS['_ENV']['_'], 'phpunit') !== false )
-        $in_phpunit = true;
+    foreach ($GLOBALS['argv'] as $arg) {
+        if ( stripos( $arg, 'phpunit' ) !== false )
+            $in_phpunit = true;
+    }
     if ( !$in_phpunit ) {
         $PromoteMDN = new PromoteMDN();
         if ( isset( $PromoteMDN ) ) {
