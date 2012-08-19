@@ -301,9 +301,11 @@ endif;
 
 if ( class_exists( 'PromoteMDN' ) ) :
     $in_phpunit = false;
-    foreach ($GLOBALS['argv'] as $arg) {
-        if ( stripos( $arg, 'phpunit' ) !== false )
-            $in_phpunit = true;
+    if ( array_key_exists( 'argv', $GLOBALS ) ) {
+        foreach ($GLOBALS['argv'] as $arg) {
+            if ( stripos( $arg, 'phpunit' ) !== false )
+                $in_phpunit = true;
+        }
     }
     if ( !$in_phpunit ) {
         $PromoteMDN = new PromoteMDN();
