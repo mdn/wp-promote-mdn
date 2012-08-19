@@ -300,7 +300,10 @@ sumo, http://support.mozilla.org/
 endif;
 
 if ( class_exists( 'PromoteMDN' ) ) :
-    if ( !$GLOBALS['argv'][1] == 'tests/PromoteMDNTest.php' ) {
+    $in_phpunit = false;
+    if ( stripos($GLOBALS['_ENV']['_'], 'phpunit') !== false )
+        $in_phpunit = true;
+    if ( !$in_phpunit ) {
         $PromoteMDN = new PromoteMDN();
         if ( isset( $PromoteMDN ) ) {
             register_activation_hook( __FILE__, array( &$PromoteMDN, 'install' ) );
