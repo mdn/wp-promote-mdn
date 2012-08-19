@@ -49,7 +49,7 @@ promote MDN in search results by automatically creating inbound links for it.
 
 == Changelog ==
 = 1.2 =
-* Internationalization and initial translations - Polish, Dutch, Korean, German
+* Internationalization and initial translations - Polish, Dutch, German, Portuguese (Brazil)
 
 = 1.1 =
 * Add "Reload now" button and send Cache-Control: no-cache, must-revalidate to MDN
