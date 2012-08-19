@@ -38,7 +38,7 @@ class PromoteMDN {
 
         // WordPress hooks
         add_filter( 'the_content' ,  array( &$this, 'process_text' ), 10 );
-        add_action( 'admin_menu' ,  array( &$this, 'promote_mdn_admin_menu' ) );
+        add_action( 'admin_menu' ,  array( &$this, 'admin_menu' ) );
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
@@ -75,7 +75,7 @@ class PromoteMDN {
         if ( !empty( $options['customkey_url'] ) )
         {
             if ( false === ( $customkey_url_value = get_transient( 'promote_mdn_url_value' ) ) ){
-                $customkey_url_value = $this->promote_mdn_reload_value( $options['customkey_url'] );
+                $customkey_url_value = $this->reload_value( $options['customkey_url'] );
             }
             $options['customkey'] = $options['customkey'] . "\n" . $customkey_url_value;
         }
@@ -138,7 +138,7 @@ class PromoteMDN {
     }
 
 
-    function promote_mdn_reload_value( $url )
+    function reload_value( $url )
     {
         $body = wp_remote_retrieve_body(
             wp_remote_get(
@@ -175,7 +175,7 @@ class PromoteMDN {
 
             if ( isset( $_POST['reload_now'] ) ) {
                 $customkey_url       = stripslashes( $options['customkey_url'] );
-                $customkey_url_value = $this->promote_mdn_reload_value( $customkey_url );
+                $customkey_url_value = $this->reload_value( $customkey_url );
                 $reloaded_message    = __( 'Reloaded values from the URL.', 'promote-mdn' );
                 $message_box         = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
                 echo $message_box;
@@ -283,7 +283,7 @@ sumo, http://support.mozilla.org/
 
     }
 
-    function promote_mdn_admin_menu()
+    function admin_menu()
     {
         add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
     }
