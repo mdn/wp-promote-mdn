@@ -29,7 +29,7 @@ class PromoteMDN {
         'maxsingleurl' => '1',
     );
 
-    function __construct($options = null)
+    function __construct( $options = null )
     {
         if ( $options )
             $this->options = $options;
@@ -39,6 +39,7 @@ class PromoteMDN {
         // WordPress hooks
         add_filter( 'the_content' ,  array( &$this, 'process_text' ), 10 );
         add_action( 'admin_menu' ,  array( &$this, 'admin_menu' ) );
+        add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
@@ -109,10 +110,11 @@ class PromoteMDN {
                        ( $options['customkey_preventduplicatelink'] == TRUE ) || stripos( $text, $name ) !== false ) {
                         $name = preg_quote( $name, '/' );
 
-                        if( $options['customkey_preventduplicatelink'] == TRUE ) $name = str_replace( ',' , '|' , $name );
+                        if ( $options['customkey_preventduplicatelink'] == TRUE ) $name = str_replace( ',' , '|' , $name );
 
-                        if( $options['blanko'] )
+                        if ( $options['blanko'] ) {
                             $target = 'target="_blank"';
+                        }
                         $replace = "<a $target title=\"$1\" href=\"$url\">$1</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
                         //$regexp="/(?!(?:[^<]+>|[^>]+<\/a>))(?<!\p{L})($name)(?!\p{L})/imsU";
@@ -299,10 +301,40 @@ sumo, http://support.mozilla.org/
 
 endif;
 
+if ( !class_exists( 'PromoteMDN_Widget' ) ) :
+    class PromoteMDN_Widget extends WP_Widget {
+
+        public function __construct() {
+            parent::__construct(
+                'promote_mdn_widget', // Base ID
+                __( 'Promote MDN', 'promote-mdn' ), // Name
+                array( 'description' => __( 'Sidebar image and links to MDN.', 'promote-mdn' ), ) // Args
+            );
+        }
+
+        public function widget( $args, $installstance ) {
+            extract( $args );
+            $title = apply_filters( __( 'Promote MDN', 'promote-mdn' ), $instance['title'] );
+
+            echo $before_widget;
+            if ( ! empty( $title ) )
+                echo $before_title . $title . $after_title;
+?>
+    <section style="text-align: center;">
+        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" /></a><br />
+        <a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></a><br />
+        <a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></a>
+    </section>
+<?php
+            echo $after_widget;
+        }
+    }
+endif;
+
 if ( class_exists( 'PromoteMDN' ) ) :
     $in_phpunit = false;
     if ( array_key_exists( 'argv', $GLOBALS ) ) {
-        foreach ($GLOBALS['argv'] as $arg) {
+        foreach ( $GLOBALS['argv'] as $arg ) {
             if ( stripos( $arg, 'phpunit' ) !== false )
                 $in_phpunit = true;
         }
