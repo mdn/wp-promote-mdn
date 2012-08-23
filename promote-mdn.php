@@ -15,7 +15,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 class PromoteMDN {
     public $option_name = 'PromoteMDN';
     public $options;
-    public $default_options = array(
+    public $install_options = array(
         'excludeheading' => 'on',
         'ignore' => 'about,',
         'ignorepost' => 'contact,',
@@ -27,18 +27,26 @@ class PromoteMDN {
         'blanko' => 'on',
         'allowfeed' => '',
         'maxsingleurl' => '1',
+        'hide_notices' => array(),
     );
 
     function __construct( $options = null )
     {
         if ( $options )
             $this->options = $options;
-        else
+        else {
             $this->options = get_option( $this->option_name );
+            // if the options were cleared in the db, reinstall defaults
+            if ( $this->options == '' ) {
+                update_option( $this->option_name, $this->install_options );
+                $this->options = get_option( $this->option_name );
+            }
+        }
 
         // WordPress hooks
         add_filter( 'the_content' ,  array( &$this, 'process_text' ), 10 );
         add_action( 'admin_menu' ,  array( &$this, 'admin_menu' ) );
+        add_action( 'admin_notices' , array(&$this,'admin_notices') );
         add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
 
         // Load translated strings
@@ -65,7 +73,7 @@ class PromoteMDN {
 
         $arrignore = $this->explode_lower_trim( ',' , ( $options['ignore'] ) );
         if ( $options['excludeheading'] == 'on' ) {
-            //Here insert special characters
+            //add salt to headings
             $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie' , "'\\1'.wp_insertspecialchars('\\2').'\\3'" , $text );
         }
 
@@ -131,7 +139,7 @@ class PromoteMDN {
 
 
         if ( $options['excludeheading'] == 'on' ) {
-            //Here insert special characters
+            //remove salt from headings
             $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
             $text = stripslashes( $text );
         }
@@ -173,7 +181,7 @@ class PromoteMDN {
     {
         $options = $this->options;
         if ( isset( $_POST['submitted'] ) ) {
-            check_admin_referer( 'seo-smart-links' );
+            check_admin_referer( 'promote-mdn' );
 
             if ( isset( $_POST['reload_now'] ) ) {
                 $customkey_url       = stripslashes( $options['customkey_url'] );
@@ -194,7 +202,7 @@ class PromoteMDN {
                 $options['blanko']               = $_POST['blanko'];
                 $options['allowfeed']            = $_POST['allowfeed'];
 
-                update_option( $this->PromoteMDN_DB_option, $options );
+                update_option( $this->option_name, $options );
                 $settings_message = __( 'Plugin settings saved.', 'promote-mdn' );
                 echo '<div class="updated fade"><p>' . $settings_message . '</p></div>';
             }
@@ -215,7 +223,7 @@ class PromoteMDN {
         $blanko = $options['blanko'] == 'on' ? 'checked' : '';
         $allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
 
-        $nonce = wp_create_nonce( 'seo-smart-links' );
+        $nonce = wp_create_nonce( 'promote-mdn' );
 ?>
 <style type="text/css">
     #mainblock { width:600px; }
@@ -285,17 +293,61 @@ sumo, http://support.mozilla.org/
 
     }
 
+    public function get_version_notices()
+    {
+        return array(
+        'new' => sprintf( __( "Thanks for installing! Go to the <a href=\"%s\">Promote MDN Settings</a> page to configure." ), 'options-general.php?page=promote-mdn.php'),
+        '1.3' => sprintf( __( "New <a href=\"%s\">sidebar widget</a>, version notifications, link directly to proper translations." ) , 'widgets.php' ),
+    );
+    }
+
     function admin_menu()
     {
         add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
     }
+
+    function hide_href( $version ) {
+        $param_char = '?';
+        if ( strpos($_SERVER['REQUEST_URI'], '?') !== false )
+            $param_char = '&';
+        return $_SERVER['REQUEST_URI'] . $param_char . 'hide=' . $version;
+    }
+
+	function admin_notices() {
+?>
+<style>
+.promote-mdn-notice {
+  background: url(https://developer.mozilla.org/media/img/mdn-logo-tiny.png) 0 0 no-repeat;
+  padding: 18px 20px 18px 62px !important;
+  display: inline-block;
+  color: #999;
+  font-family: arial;
+  font-size: 12px;
+}
+</style>
+<?php
+        $hide_notices = $this->options['hide_notices'] ? $this->options['hide_notices'] : array();
+        if ( isset( $_GET['hide'] ) ) {
+            $version = $_GET['hide'];
+            $this->options['hide_notices'][$version] = true;
+            update_option( $this->option_name, $this->options );
+            $hide_notices[$version] = true;
+        }
+        foreach ( $this->get_version_notices() as $version => $notice ) {
+            if ( !array_key_exists( $version, $hide_notices ) ) {
+?>
+    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href($version) ?>"><?php _e( 'hide' ) ?></a></div>
+<?php
+            }
+        }
+	}
 
     // Set up everything
     function install()
     {
         $options = get_option( $this->option_name );
         if (!$options)
-            update_option( $this->option_name, $this->default_options );
+            update_option( $this->option_name, $this->install_options );
     }
 }
 
