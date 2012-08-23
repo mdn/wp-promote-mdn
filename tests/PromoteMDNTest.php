@@ -6,6 +6,7 @@ $page = '';
 require_once(dirname(__FILE__) . '/../promote-mdn.php');
 
 // "mocks" for the wordpress stuff
+class WP_Widget {}
 function add_filter( $hook_point, $hook_callback, $mode ) { return true; }
 function add_action( $hook_point, $hook_callback ) { return true; }
 function get_bloginfo( $name ) { return 'http://hacks.mozilla.org'; }
