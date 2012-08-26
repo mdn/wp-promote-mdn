@@ -141,7 +141,6 @@ class PromoteMDN {
         if ( $options['excludeheading'] == 'on' ) {
             //remove salt from headings
             $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
-            $text = stripslashes( $text );
         }
         return trim( $text );
 

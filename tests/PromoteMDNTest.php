@@ -142,4 +142,9 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
     }
 
+    public function testLeaveEscapedQuotesAlone()
+    {
+        $text = 'strip("<img onerror=\'alert(\\"could run arbitrary JS here\\")\' src=bogus>")';
+        $this->assertEquals( $text, $this->pm->process_text( $text ) );
+    }
 }
