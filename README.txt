@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: groovecoder, freediver
 Donate link: 
-Tags: mdn, links
+Tags: mozilla, mdn, links
 Requires at least: 2.8
 Tested up to: 3.4.1
 Stable tag: 1.2.0
@@ -12,15 +12,16 @@ Automatically links keywords and phrases to MDN.
 
 == Description ==
 
-Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/), Promote MDN automatically links keywords
-and phrases to MDN url's. They keywords, phrases, and url's are supplied by [a
-special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN?raw=1)
+Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/),
+Promote MDN automatically links keywords and phrases to MDN pages. They keywords,
+phrases, and pages are supplied by [a special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN?raw=1)
 
-MDN is the best online resource for web developers - by web developers. Promote MDN helps promote MDN to your site visitors and to improve MDN search results ranking.
+MDN is the best online resource for web developers, by web developers. Promote MDN
+helps your readers discover and learn about web technologies on MDN.
 
 To help code on this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
 
-Translations available: de_DE, es_ES, nl_NL, pl_PL, pt_BR.
+Translations available: de_DE, es_ES, fr_FR, nl_NL, pl_PL, pt_BR.
 To help translate this plugin, go to the [MDN Verbatim](https://localize.mozilla.org/projects/mdn/) page.
 
 == Installation ==
@@ -38,9 +39,15 @@ or manually:
 
 = Why? =
 
-MDN makes the best docs on the web for the web. Other sites get higher spots
-in search results because they have more inbound links. This plugin helps to
-promote MDN in search results by automatically creating inbound links for it.
+MDN makes the best docs on the web, for the web.
+
+= What are locale-specific links? =
+
+By default, most links will go to a locale-agnostic url which will redirect
+to a translated page if one is avaialble. Ideally we want to avoid redirects.
+So, locale-specific links are maintained by the MDN community for some locales.
+
+Using locale-specific links will improve your readers' experience.
 
 == Screenshots ==
 
@@ -48,6 +55,13 @@ promote MDN in search results by automatically creating inbound links for it.
 2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+= 1.3 =
+* New Sidebar Widget
+* Install/upgrade notifications in admin pages
+* Use locale-specific URL for keywords/phrases links
+* Add French translation
+[GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=1&page=1&state=closed)
+
 = 1.2 =
 * Internationalization and initial translations - Polish, Dutch, German, Portuguese (Brazil)
 
@@ -58,6 +72,9 @@ promote MDN in search results by automatically creating inbound links for it.
 * Initial version based on SEO Smart Links.
 
 == Upgrade Notice ==
+= 1.3 =
+Be sure to click the "Use keywords and links specifically for ..." button if you
+run a site in language besides English.
 
 = 1.0 =
 To make it work.
