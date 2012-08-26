@@ -27,7 +27,7 @@ class PromoteMDN {
         'blanko' => 'on',
         'allowfeed' => '',
         'maxsingleurl' => '1',
-        'hide_notices' => array(),
+        'hide_notices' => array('1.3'),
     );
 
     function __construct( $options = null )
@@ -184,10 +184,12 @@ class PromoteMDN {
             check_admin_referer( 'promote-mdn' );
 
             if ( isset( $_POST['reload_now'] ) ) {
-                $customkey_url       = stripslashes( $options['customkey_url'] );
-                $customkey_url_value = $this->reload_value( $customkey_url );
-                $reloaded_message    = __( 'Reloaded values from the URL.', 'promote-mdn' );
-                $message_box         = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
+                $customkey_url            = stripslashes( $_POST['customkey_url'] );
+                $options['customkey_url'] = $customkey_url;
+                $customkey_url_value      = $this->reload_value( $customkey_url );
+                $reloaded_message         = __( 'Reloaded values from the URL.', 'promote-mdn' );
+                $message_box              = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
+                update_option( $this->option_name, $options);
                 echo $message_box;
             } else {
                 $options['excludeheading']       = $_POST['excludeheading'];
@@ -232,6 +234,7 @@ class PromoteMDN {
     input { padding: .5em; }
     h4 { color: white; background: black; clear: both; padding: .5em; }
     pre { margin-bottom: -1em; }
+    #use_local_url img { position: relative; top: 8px; }
 </style>
 
 <div class="wrap">
@@ -252,9 +255,9 @@ class PromoteMDN {
 
                 <h4><?php _e( 'Settings' , 'promote-mdn' ) ?></h4>
                 <p><?php _e( 'Load keywords from URL' , 'promote-mdn' ) ?> (<em id="preview"><a href="<?php echo $customkey_url ?>" target="_blank"><?php _e( 'Preview' , 'promote-mdn' ) ?></a></em>):
-                <input type="text" name="customkey_url" value="<?php echo $customkey_url ?>" class="full-width" />
+                <input type="text" name="customkey_url" id="customkey_url" value="<?php echo $customkey_url ?>" style="width: 95%" /><a id="use_local_url" href="#"><img src="https://wiki.mozilla.org/images/a/af/Localization.png" width="24" height="24" title="<?php echo sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ?>"/></a><br />
                 <?php _e( 'Reload keywords after (seconds):' , 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo $customkey_url_expire ?>"/>
-                <button type="submit" name="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
+                <button type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
                 <input type="checkbox" name="allowfeed" <?php echo $allowfeed ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn' ) ?></label><br/>
                 <input type="checkbox" name="blanko" <?php echo $blanko ?>/> <label for="blanko"><?php _e( 'Open links in new window' , 'promote-mdn' ) ?></label> <br/>
@@ -289,6 +292,16 @@ sumo, http://support.mozilla.org/
         </div>
     </div>
 </div>
+<script type="text/javascript">
+var localUrlEl = document.getElementById("use_local_url");
+localUrlEl.onclick = function() {
+    var urlInput = document.getElementById("customkey_url"),
+        reloadBtn = document.getElementById("reload_now"),
+        re = /([\w-]+)\/docs/;
+    urlInput.value = urlInput.value.replace(re, '<?php echo str_replace('_', '-', WPLANG); ?>/docs');
+    reloadBtn.click();
+}
+</script>
 <?php
 
     }
@@ -296,8 +309,8 @@ sumo, http://support.mozilla.org/
     public function get_version_notices()
     {
         return array(
-        'new' => sprintf( __( "Thanks for installing! Go to the <a href=\"%s\">Promote MDN Settings</a> page to configure." ), 'options-general.php?page=promote-mdn.php'),
-        '1.3' => sprintf( __( "New <a href=\"%s\">sidebar widget</a>, version notifications, link directly to proper translations." ) , 'widgets.php' ),
+        'new' => sprintf( __( "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure.", 'promote-mdn' ), 'options-general.php?page=promote-mdn.php'),
+        '1.3' => sprintf( __( "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords.", 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
     );
     }
 
@@ -336,7 +349,7 @@ sumo, http://support.mozilla.org/
         foreach ( $this->get_version_notices() as $version => $notice ) {
             if ( !array_key_exists( $version, $hide_notices ) ) {
 ?>
-    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href($version) ?>"><?php _e( 'hide' ) ?></a></div>
+    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href($version) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
             }
         }
