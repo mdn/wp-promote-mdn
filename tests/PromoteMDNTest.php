@@ -12,6 +12,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $page = 'great-page';
         $options = array(
             'excludeheading' => 'on',
+            'exclude_elems' => '',
             'ignore' => 'about,',
             'ignorepost' => 'contact,',
             'maxlinks' => 3,
@@ -74,12 +75,22 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
 
     public function testExcludeHeading()
     {
-        $this->pm->options['excludeheading'] = 'on';
+        $this->pm->options['exclude_elems'] = 'h,';
         $text = "<h2>The Code</h2><h3>JavaScript</h3>";
         $this->assertEquals( $text, $this->pm->process_text( $text ) );
-        $this->pm->options['excludeheading'] = 'off';
+        $this->pm->options['exclude_elems'] = '';
         $this->assertEquals( '<h2>The Code</h2><h3>' . $this->js_linked . '</h3>',
                              $this->pm->process_text( $text ) );
+    }
+
+    public function testExcludeOtherElements()
+    {
+        $text = "<h2>The Code</h2><pre>JavaScript</pre>";
+        $this->pm->options['exclude_elems'] = '';
+        $this->assertEquals( '<h2>The Code</h2><pre>' . $this->js_linked . '</pre>',
+                             $this->pm->process_text( $text ) );
+        $this->pm->options['exclude_elems'] = 'h, pre, code';
+        $this->assertEquals( $text, $this->pm->process_text( $text ) );
     }
 
     public function testMaxLinks()

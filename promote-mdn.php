@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Promote MDN
-Version: 1.3.0
+Version: 1.4.0
 Plugin URI: http://github.com/groovecoder/wp-promote-mdn
 Author: Luke Crouch
 Author URI: http://groovecoder.com
@@ -16,7 +16,7 @@ class PromoteMDN {
     public $option_name = 'PromoteMDN';
     public $options;
     public $install_options = array(
-        'excludeheading' => 'on',
+        'exclude_elems' => 'blockquote, code, h, pre, q',
         'ignore' => 'about,',
         'ignorepost' => 'contact,',
         'maxlinks' => 3,
@@ -27,7 +27,7 @@ class PromoteMDN {
         'blanko' => 'on',
         'allowfeed' => '',
         'maxsingleurl' => '1',
-        'hide_notices' => array('1.3'),
+        'hide_notices' => array( '1.3', '1.4' ),
     );
 
     function __construct( $options = null )
@@ -46,7 +46,7 @@ class PromoteMDN {
         // WordPress hooks
         add_filter( 'the_content' ,  array( &$this, 'process_text' ), 10 );
         add_action( 'admin_menu' ,  array( &$this, 'admin_menu' ) );
-        add_action( 'admin_notices' , array(&$this,'admin_notices') );
+        add_action( 'admin_notices' , array( &$this, 'admin_notices' ) );
         add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
 
         // Load translated strings
@@ -71,10 +71,14 @@ class PromoteMDN {
 
         $urls = array();
 
-        $arrignore = $this->explode_lower_trim( ',' , ( $options['ignore'] ) );
-        if ( $options['excludeheading'] == 'on' ) {
-            //add salt to headings
-            $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie' , "'\\1'.wp_insertspecialchars('\\2').'\\3'" , $text );
+        $arrignore     = $this->explode_lower_trim( ',' , ( $options['ignore'] ) );
+        $exclude_elems = $this->explode_lower_trim( ',', ( $options['exclude_elems'] ) );
+        if ( $exclude_elems ) {
+            // add salt to elements
+            foreach ( $exclude_elems as $el ) {
+                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|sie', $el, $el );
+                $text = preg_replace( $re, "'\\1'.wp_insertspecialchars('\\2').'\\3'", $text );
+            }
         }
 
         $reg_post = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';
@@ -137,10 +141,12 @@ class PromoteMDN {
             }
         }
 
-
-        if ( $options['excludeheading'] == 'on' ) {
-            //remove salt from headings
-            $text = preg_replace( '%(<h.*?>)(.*?)(</h.*?>)%sie', "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
+        if ( $exclude_elems ) {
+            // remove salt from elements
+            foreach ( $exclude_elems as $el ) {
+                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|sie', $el, $el );
+                $text = preg_replace( $re, "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
+            }
         }
         return trim( $text );
 
@@ -172,6 +178,10 @@ class PromoteMDN {
         {
           $ret[] = strtolower( trim( $e ) );
         }
+        // return empty array for single empty string element
+        // for simpler if-checks
+        if ( count( $ret ) == 1 && $ret[0] == '' )
+            $ret = array();
         return $ret;
     }
 
@@ -188,10 +198,10 @@ class PromoteMDN {
                 $customkey_url_value      = $this->reload_value( $customkey_url );
                 $reloaded_message         = __( 'Reloaded values from the URL.', 'promote-mdn' );
                 $message_box              = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
-                update_option( $this->option_name, $options);
+                update_option( $this->option_name, $options );
                 echo $message_box;
             } else {
-                $options['excludeheading']       = $_POST['excludeheading'];
+                $options['exclude_elems']       = $_POST['exclude_elems'];
                 $options['ignore']               = $_POST['ignore'];
                 $options['ignorepost']           = $_POST['ignorepost'];
                 $options['maxlinks']             = (int) $_POST['maxlinks'];
@@ -212,7 +222,7 @@ class PromoteMDN {
         $action_url = $_SERVER['REQUEST_URI'];
 
         $comment = $options['comment'] == 'on' ? 'checked' : '';
-        $excludeheading = $options['excludeheading'] == 'on' ? 'checked' : '';
+        $exclude_elems = $options['exclude_elems'];
         $ignore = $options['ignore'];
         $ignorepost = $options['ignorepost'];
         $maxlinks = $options['maxlinks'];
@@ -263,7 +273,9 @@ class PromoteMDN {
 
 
                 <h4><?php _e( 'Exceptions' , 'promote-mdn' ) ?></h4>
-                <input type="checkbox" name="excludeheading" <?php echo $excludeheading ?>/> <label for="excludeheading"><?php _e( 'Do not add links in heading tags (h1,h2,h3,h4,h5,h6).' , 'promote-mdn' ) ?></label><br/>
+
+                <p><?php _e( 'Do not add links inside the following HTML elements (comma-separated, partial-matching):' , 'promote-mdn' ) ?></p>
+                <input type="text" name="exclude_elems" value="<?php echo $exclude_elems ?>" class="full-width"/>
                 <p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):' , 'promote-mdn' ) ?></p>
                 <input type="text" name="ignorepost" value="<?php echo $ignorepost ?>" class="full-width"/>
                 <p><?php _e( 'Do not add links on the following phrases (comma-separated):' , 'promote-mdn' ) ?></p>
@@ -297,7 +309,7 @@ localUrlEl.onclick = function() {
     var urlInput = document.getElementById("customkey_url"),
         reloadBtn = document.getElementById("reload_now"),
         re = /([\w-]+)\/docs/;
-    urlInput.value = urlInput.value.replace(re, '<?php echo str_replace('_', '-', WPLANG); ?>/docs');
+    urlInput.value = urlInput.value.replace( re, '<?php echo str_replace( '_', '-', WPLANG ); ?>/docs' );
     reloadBtn.click();
 }
 </script>
@@ -308,8 +320,9 @@ localUrlEl.onclick = function() {
     public function get_version_notices()
     {
         return array(
-        'new' => sprintf( __( "Thanks for installing! Go to the <a href=\"%s\">settings</a> page to configure.", 'promote-mdn' ), 'options-general.php?page=promote-mdn.php'),
-        '1.3' => sprintf( __( "fr_FR translation, new sidebar <a href=\"%s\">widget</a>, <a href=\"%s\">setting</a> for a locale-specific URL for keywords.", 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
+        'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%s">settings</a> page to configure.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php' ),
+        '1.3' => sprintf( __( 'fr_FR translation, new sidebar <a href="%s">widget</a>, <a href="%s">setting</a> for a locale-specific URL for keywords.', 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
+        '1.4' => sprintf( __( 'Add <a href=\"%s\">setting</a> to exclude links from specific HTML elements, not just headers.', 'promote-mdn' ) , 'options-general.php?page=promote-mdn.php' ),
     );
     }
 
@@ -320,7 +333,7 @@ localUrlEl.onclick = function() {
 
     function hide_href( $version ) {
         $param_char = '?';
-        if ( strpos($_SERVER['REQUEST_URI'], '?') !== false )
+        if ( strpos( $_SERVER['REQUEST_URI'], '?' ) !== false )
             $param_char = '&';
         return $_SERVER['REQUEST_URI'] . $param_char . 'hide=' . $version;
     }
@@ -348,7 +361,7 @@ localUrlEl.onclick = function() {
         foreach ( $this->get_version_notices() as $version => $notice ) {
             if ( !array_key_exists( $version, $hide_notices ) ) {
 ?>
-    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href($version) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
+    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href( $version ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
             }
         }
