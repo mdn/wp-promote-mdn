@@ -28,7 +28,7 @@ function trailingslashit( $string ) {
     return rtrim( $string, '/' ) . '/';
 }
 function get_transient( $key ) {
-    return "JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
+    return 'JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
 DOM, https://developer.mozilla.org/docs/DOM
 WebGL, https://developer.mozilla.org/docs/WebGL
 WebSockets, WebSocket https://developer.mozilla.org/docs/WebSockets
@@ -46,5 +46,5 @@ Persona, BrowserID, https://developer.mozilla.org/docs/Persona
 IndexedDB, https://developer.mozilla.org/docs/IndexedDB
 Vibration API, https://developer.mozilla.org/docs/DOM/window.navigator.vibrate
 Geolocation, https://developer.mozilla.org/docs/Using_geolocation
-SVG, https://developer.mozilla.org/docs/SVG";
+SVG, https://developer.mozilla.org/docs/SVG';
 }

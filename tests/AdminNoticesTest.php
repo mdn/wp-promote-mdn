@@ -1,6 +1,6 @@
 <?php
-require_once(dirname(__FILE__) . '/doubles.php');
-require_once(dirname(__FILE__) . '/../promote-mdn.php');
+require_once( dirname( __FILE__ ) . '/doubles.php' );
+require_once( dirname( __FILE__ ) . '/../promote-mdn.php' );
 
 
 class AdminNoticesTest extends PHPUnit_Extensions_OutputTestCase
@@ -26,13 +26,13 @@ class AdminNoticesTest extends PHPUnit_Extensions_OutputTestCase
         $this->pm = new PromoteMDN( $options );
     }
 
-    public function testNoneHidden()
+    public function test_none_hidden()
     {
         $this->expectOutputRegex( '/<div class="updated">.*Thanks for installing/' );
         $this->pm->admin_notices();
     }
 
-    public function testHideNew()
+    public function test_hide_new()
     {
         $this->pm->options['hide_notices']['new'] = true;
         $this->expectOutputRegex( '/<div class="updated">.*(?!Thanks for installing)/' );
