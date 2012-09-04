@@ -25,9 +25,10 @@ class PromoteMDN {
         'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
         'customkey_url_expire' => 86400,
         'blanko' => 'on',
+        'add_src_param' => 'on',
         'allowfeed' => '',
         'maxsingleurl' => '1',
-        'hide_notices' => array( '1.3', '1.4' ),
+        'hide_notices' => array( '1.3'=>1, '1.4'=>1 ),
     );
 
     function __construct( $options = null )
@@ -66,7 +67,7 @@ class PromoteMDN {
         }
 
         $maxlinks     = ( $options['maxlinks'] > 0 ) ? $options['maxlinks'] : 0;
-        $maxsingle    = ( $options['maxsingle'] > 0 ) ? $options['maxsingle'] : -1;
+        $maxsingle    = ( $options['maxsingle'] > 0 ) ? $options['maxsingle'] : 0 - 1;
         $maxsingleurl = ( $options['maxsingleurl'] > 0 ) ? $options['maxsingleurl'] : 0;
 
         $urls = array();
@@ -115,7 +116,6 @@ class PromoteMDN {
                 if ( in_array( strtolower( $name ), $arrignore ) )
                     continue;
                 if (   ( !$maxlinks || ( $links < $maxlinks ) )
-                    && ( trailingslashit( $url ) != $thisurl )
                     && ( !in_array( strtolower( $name ), $arrignore ) )
                     && ( !$maxsingleurl || $urls[$url] < $maxsingleurl ) ) {
                    if (
@@ -127,7 +127,9 @@ class PromoteMDN {
                         if ( $options['blanko'] ) {
                             $target = 'target="_blank"';
                         }
-                        $replace = "<a $target title=\"$1\" href=\"$url\">$1</a>";
+                        $href = $url;
+                        if ( $options['add_src_param'] == TRUE ) $href .= '?src=wp-promote-mdn';
+                        $replace = "<a $target title=\"$1\" href=\"$href\">$1</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
                         //$regexp="/(?!(?:[^<]+>|[^>]+<\/a>))(?<!\p{L})($name)(?!\p{L})/imsU";
                         $newtext = preg_replace( $regexp, $replace, $text, $maxsingle );
@@ -201,7 +203,7 @@ class PromoteMDN {
                 update_option( $this->option_name, $options );
                 echo $message_box;
             } else {
-                $options['exclude_elems']       = $_POST['exclude_elems'];
+                $options['exclude_elems']        = $_POST['exclude_elems'];
                 $options['ignore']               = $_POST['ignore'];
                 $options['ignorepost']           = $_POST['ignorepost'];
                 $options['maxlinks']             = (int) $_POST['maxlinks'];
@@ -211,6 +213,7 @@ class PromoteMDN {
                 $options['customkey_url']        = $_POST['customkey_url'];
                 $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
                 $options['blanko']               = $_POST['blanko'];
+                $options['add_src_param']        = $_POST['add_src_param'];
                 $options['allowfeed']            = $_POST['allowfeed'];
 
                 update_option( $this->option_name, $options );
@@ -232,6 +235,7 @@ class PromoteMDN {
         $customkey_url = stripslashes( $options['customkey_url'] );
         $customkey_url_expire = stripslashes( $options['customkey_url_expire'] );
         $blanko = $options['blanko'] == 'on' ? 'checked' : '';
+        $add_src_param = $options['add_src_param'] == 'on' ? 'checked' : '';
         $allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
 
         $nonce = wp_create_nonce( 'promote-mdn' );
@@ -269,6 +273,7 @@ class PromoteMDN {
                 <button type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
                 <input type="checkbox" name="allowfeed" <?php echo $allowfeed ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn' ) ?></label><br/>
+                <input type="checkbox" name="add_src_param" <?php echo $add_src_param ?>/> <label for="add_src_param"><?php _e( 'Include src url param (Helps MDN measure effectiveness)' , 'promote-mdn' ) ?></label> <br/>
                 <input type="checkbox" name="blanko" <?php echo $blanko ?>/> <label for="blanko"><?php _e( 'Open links in new window' , 'promote-mdn' ) ?></label> <br/>
 
 

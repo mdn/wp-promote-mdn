@@ -11,7 +11,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $feed = false;
         $page = 'great-page';
         $options = array(
-            'excludeheading' => 'on',
+            'add_src_param' => 'on',
             'exclude_elems' => '',
             'ignore' => 'about,',
             'ignorepost' => 'contact,',
@@ -26,9 +26,9 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
         $this->pm = new PromoteMDN( $options );
 
-        $this->js_href     = 'https://developer.mozilla.org/docs/JavaScript';
+        $this->js_href     = 'https://developer.mozilla.org/docs/JavaScript?src=wp-promote-mdn';
         $this->js_linked   = '<a target="_blank" title="JavaScript" href="' . $this->js_href . '">JavaScript</a>';
-        $this->css_href    = 'https://developer.mozilla.org/docs/CSS';
+        $this->css_href    = 'https://developer.mozilla.org/docs/CSS?src=wp-promote-mdn';
         $this->css_linked  = '<a target="_blank" title="CSS" href="' . $this->css_href . '">CSS</a>';
         $this->text        = '<p>I like JavaScript.</p>';
         $this->linked_text = '<p>I like ' . $this->js_linked . '.</p>';
@@ -44,6 +44,16 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
     public function test_auto_link()
     {
         $this->assertEquals( $this->linked_text, $this->pm->process_text( $this->text ) );
+    }
+
+    public function test_link_src_url_param()
+    {
+        $linked_text = $this->pm->process_text( $this->text );
+        $this->assertEquals( $this->linked_text, $linked_text );
+        $this->assertContains( 'src=wp-promote-mdn', $linked_text );
+        $this->pm->options['add_src_param'] = false;
+        $linked_text = $this->pm->process_text( $this->text );
+        $this->assertEquals( $linked_text, $linked_text );
     }
 
     public function test_feed()
@@ -154,7 +164,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
         $this->pm->options['customkey'] = 'groovecoder, http://groovecoder.com';
         $this->assertEquals(
-            '<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com">groovecoder</a></p>',
+            '<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com?src=wp-promote-mdn">groovecoder</a></p>',
             $this->pm->process_text( $text )
         );
     }
