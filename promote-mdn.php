@@ -28,7 +28,7 @@ class PromoteMDN {
         'add_src_param' => 'on',
         'allowfeed' => '',
         'maxsingleurl' => '1',
-        'hide_notices' => array( '1.3'=>1, '1.4'=>1 ),
+        'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
     );
 
     function __construct( $options = null )
@@ -327,8 +327,8 @@ localUrlEl.onclick = function() {
         return array(
         'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%s">settings</a> page to configure.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php' ),
         '1.3' => sprintf( __( 'fr_FR translation, new sidebar <a href="%s">widget</a>, <a href="%s">setting</a> for a locale-specific URL for keywords.', 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
-        '1.4' => sprintf( __( 'Add <a href=\"%s\">setting</a> to exclude links from specific HTML elements, not just headers.', 'promote-mdn' ) , 'options-general.php?page=promote-mdn.php' ),
-    );
+        '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links', 'promote-mdn' ) ),
+        );
     }
 
     function admin_menu()
@@ -365,6 +365,10 @@ localUrlEl.onclick = function() {
         }
         foreach ( $this->get_version_notices() as $version => $notice ) {
             if ( !array_key_exists( $version, $hide_notices ) ) {
+                // overload notice action to call upgrade methods as necessary
+                $upgrade_method = 'upgrade_' . str_replace( '.', '', $version );
+                if ( method_exists( $this, $upgrade_method ) )
+                    $this->$upgrade_method();
 ?>
     <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo $version ?> - <?php echo $notice ?></p><a href="<?php echo $this->hide_href( $version ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
@@ -378,6 +382,15 @@ localUrlEl.onclick = function() {
         $options = get_option( $this->option_name );
         if (!$options)
             update_option( $this->option_name, $this->install_options );
+    }
+
+    function upgrade_14()
+    {
+        $options                  = get_option( $this->option_name );
+        $options['exclude_elems'] = 'blockquote, code, h, pre, q';
+        $options['add_src_param'] = 'on';
+        unset( $options['exclude_heading'] );
+        update_option( $this->option_name, $options );
     }
 }
 

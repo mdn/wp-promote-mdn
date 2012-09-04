@@ -27,6 +27,26 @@ function is_single( $arr_ignores ) {
 function trailingslashit( $string ) {
     return rtrim( $string, '/' ) . '/';
 }
+function get_option( $name ) {
+    return array(
+        'exclude_elems' => 'blockquote, code, h, pre, q',
+        'ignore' => 'about,',
+        'ignorepost' => 'contact,',
+        'maxlinks' => 3,
+        'maxsingle' => 1,
+        'customkey' => '',
+        'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
+        'customkey_url_expire' => 86400,
+        'blanko' => 'on',
+        'add_src_param' => 'on',
+        'allowfeed' => '',
+        'maxsingleurl' => '1',
+        'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
+    );
+}
+function update_option( $name, $options_array ) {
+    return true;
+}
 function get_transient( $key ) {
     return 'JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
 DOM, https://developer.mozilla.org/docs/DOM
