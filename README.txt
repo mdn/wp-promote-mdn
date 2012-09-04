@@ -4,7 +4,7 @@ Donate link:
 Tags: mozilla, mdn, links
 Requires at least: 2.8
 Tested up to: 3.4.1
-Stable tag: 1.2.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,12 +55,17 @@ Using locale-specific links will improve your readers' experience.
 2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+= 1.4 =
+* Exclude links from any HTML elements
+* src url param to help MDN measure effectiveness
+* See [GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=2&page=1&state=closed)
+
 = 1.3 =
 * New Sidebar Widget
 * Install/upgrade notifications in admin pages
 * Use locale-specific URL for keywords/phrases links
 * Add French translation
-[GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=1&page=1&state=closed)
+* See [GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=1&page=1&state=closed)
 
 = 1.2 =
 * Internationalization and initial translations - Polish, Dutch, German, Portuguese (Brazil)
@@ -72,6 +77,9 @@ Using locale-specific links will improve your readers' experience.
 * Initial version based on SEO Smart Links.
 
 == Upgrade Notice ==
+= 1.4 =
+You can exclude links from any HTML elements, not just headers; include a src url param on links to help MDN measure effectiveness
+
 = 1.3 =
 Be sure to click the "Use keywords and links specifically for ..." button if you
 run a site in language besides English.
