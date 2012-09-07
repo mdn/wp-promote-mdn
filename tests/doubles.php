@@ -1,4 +1,7 @@
 <?php
+
+error_reporting( E_ALL );
+
 $feed = false;
 $page = '';
 

@@ -107,7 +107,9 @@ class PromoteMDN {
                             $i++;
                     }
                 } else {
-                        list( $keyword, $url ) = array_map( 'trim', explode( ',' , $line, 2 ) );
+                        $pieces_array = explode( ',' , $line, 2 );
+                        if ( count( $pieces_array ) > 1)
+                            list( $keyword, $url ) = array_map( 'trim', $pieces_array  );
                         if ( !empty( $keyword ) ) $kw_array[$keyword] = $url;
                 }
             }
@@ -117,13 +119,16 @@ class PromoteMDN {
                     continue;
                 if (   ( !$maxlinks || ( $links < $maxlinks ) )
                     && ( !in_array( strtolower( $name ), $arrignore ) )
-                    && ( !$maxsingleurl || $urls[$url] < $maxsingleurl ) ) {
-                   if (
-                       ( $options['customkey_preventduplicatelink'] == TRUE ) || stripos( $text, $name ) !== false ) {
+                    && ( !$maxsingleurl || !isset( $urls[$url] ) || $urls[$url] < $maxsingleurl ) 
+                   ) {
+                       if ( !isset( $options['customkey_preventduplicatelink'] ) )
+                            $options['customkey_preventduplicatelink'] = FALSE;
+                       if ( $options['customkey_preventduplicatelink'] == TRUE || stripos( $text, $name ) !== false ) {
                         $name = preg_quote( $name, '/' );
 
                         if ( $options['customkey_preventduplicatelink'] == TRUE ) $name = str_replace( ',' , '|' , $name );
 
+                        $target = '';
                         if ( $options['blanko'] ) {
                             $target = 'target="_blank"';
                         }
@@ -338,9 +343,13 @@ localUrlEl.onclick = function() {
 
     function hide_href( $version ) {
         $param_char = '?';
-        if ( strpos( $_SERVER['REQUEST_URI'], '?' ) !== false )
-            $param_char = '&';
-        return $_SERVER['REQUEST_URI'] . $param_char . 'hide=' . $version;
+        if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+            if ( strpos( $_SERVER['REQUEST_URI'], '?' ) !== false )
+                $param_char = '&';
+            return $_SERVER['REQUEST_URI'] . $param_char . 'hide=' . $version;
+        } else {
+            return 'hide=' . $version;
+        }
     }
 
 	function admin_notices() {
@@ -356,7 +365,7 @@ localUrlEl.onclick = function() {
 }
 </style>
 <?php
-        $hide_notices = $this->options['hide_notices'] ? $this->options['hide_notices'] : array();
+        $hide_notices = isset( $this->options['hide_notices']) ? $this->options['hide_notices'] : array();
         if ( isset( $_GET['hide'] ) ) {
             $version = $_GET['hide'];
             $this->options['hide_notices'][$version] = true;
