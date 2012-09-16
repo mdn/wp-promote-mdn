@@ -417,10 +417,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
         }
 
         public function widget( $args, $instance ) {
-            extract( $args );
-            $title = apply_filters( __( 'Promote MDN', 'promote-mdn' ), $instance['title'] );
-
-            echo $before_widget;
+            $img = 'promobutton_mdn4.png';
             $img_array = array(
                 'gray_css'          => 'promobutton_mdn1.png',
                 'gray_html'         => 'promobutton_mdn2.png',
@@ -435,7 +432,11 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
                 'red_javascript'    => 'promobutton_mdn11.png',
                 'red_web'           => 'promobutton_mdn12.png',
             );
-            $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
+            extract( $args );
+            if ( isset( $before_widget ) )
+                echo $before_widget;
+            if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
+                $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
     <section style="text-align: center;">
         <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/<?php echo $img; ?>" /></a><br />
@@ -443,7 +444,8 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
         <a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></a>
     </section>
 <?php
-            echo $after_widget;
+            if ( isset( $after_widget ) )
+                echo $after_widget;
         }
 
         public function form( $instance ) {

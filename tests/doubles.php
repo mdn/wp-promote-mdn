@@ -6,7 +6,11 @@ $feed = false;
 $page = '';
 
 // "mocks" for the wordpress stuff
-class WP_Widget {}
+class WP_Widget {
+    public function __construct(){}
+    public function get_field_id( $field ) { return $field; }
+    public function get_field_name( $field ) { return $field; }
+}
 function __( $str ) { return $str; }
 function _e( $str ) { return $str; }
 function add_filter( $hook_point, $hook_callback, $mode ) { return true; }
