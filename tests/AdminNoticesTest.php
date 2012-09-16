@@ -3,7 +3,7 @@ require_once( dirname( __FILE__ ) . '/doubles.php' );
 require_once( dirname( __FILE__ ) . '/../promote-mdn.php' );
 
 
-class AdminNoticesTest extends PHPUnit_Extensions_OutputTestCase
+class AdminNoticesTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
