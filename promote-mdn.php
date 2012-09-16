@@ -330,9 +330,9 @@ localUrlEl.onclick = function() {
     public function get_version_notices()
     {
         return array(
-        'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%s">settings</a> page to configure.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php' ),
+        'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%s">settings</a> page to configure, and the <a href="%s">widgets</a> page to add widget.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php', 'widgets.php' ),
         '1.3' => sprintf( __( 'fr_FR translation, new sidebar <a href="%s">widget</a>, <a href="%s">setting</a> for a locale-specific URL for keywords.', 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
-        '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links', 'promote-mdn' ) ),
+        '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
         );
     }
 

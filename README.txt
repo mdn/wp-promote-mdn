@@ -58,6 +58,7 @@ Using locale-specific links will improve your readers' experience.
 = 1.4 =
 * Exclude links from any HTML elements
 * src url param to help MDN measure effectiveness
+* Color & Text options for widget
 * See [GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=2&page=1&state=closed)
 
 = 1.3 =
