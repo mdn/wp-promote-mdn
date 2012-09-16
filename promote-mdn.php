@@ -416,21 +416,79 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             );
         }
 
-        public function widget( $args, $installstance ) {
+        public function widget( $args, $instance ) {
             extract( $args );
             $title = apply_filters( __( 'Promote MDN', 'promote-mdn' ), $instance['title'] );
 
             echo $before_widget;
-            if ( ! empty( $title ) )
-                echo $before_title . $title . $after_title;
+            $img_array = array(
+                'gray_css'          => 'promobutton_mdn1.png',
+                'gray_html'         => 'promobutton_mdn2.png',
+                'gray_javascript'   => 'promobutton_mdn3.png',
+                'gray_web'          => 'promobutton_mdn4.png',
+                'orange_css'        => 'promobutton_mdn5.png',
+                'orange_html'       => 'promobutton_mdn6.png',
+                'orange_javascript' => 'promobutton_mdn7.png',
+                'orange_web'        => 'promobutton_mdn8.png',
+                'red_css'           => 'promobutton_mdn9.png',
+                'red_html'          => 'promobutton_mdn10.png',
+                'red_javascript'    => 'promobutton_mdn11.png',
+                'red_web'           => 'promobutton_mdn12.png',
+            );
+            $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
     <section style="text-align: center;">
-        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" /></a><br />
+        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/<?php echo $img; ?>" /></a><br />
         <a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></a><br />
         <a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></a>
     </section>
 <?php
             echo $after_widget;
+        }
+
+        public function form( $instance ) {
+            $colors = array(
+                'gray'      => __( 'Gray' ),
+                'red'       => __( 'Red' ),
+                'orange'    => __( 'Orange' ),
+            );
+            $texts          = array( 'HTML', 'CSS', 'JavaScript', 'Web' );
+            $selected_color = 'grey';
+            $selected_text  = 'Web';
+            if ( isset( $instance['color'] ) )
+                $selected_color = $instance['color'];
+            if ( isset( $instance['text'] ) )
+                $selected_text = $instance['text'];
+?>
+    <section>
+        <label for="<?php echo $this->get_field_id( 'color' ); ?>"><?php _e( 'Color:' ); ?></label>
+        <select id="<?php echo $this->get_field_id( 'color' ); ?>" name="<?php echo $this->get_field_name( 'color' ); ?>">
+<?php
+            foreach ( $colors as $value => $color ) {
+                $selected = ( $value == $selected_color ) ? 'selected' : '';
+?>
+            <option value="<?php echo $value ?>" <?php echo $selected ?>><?php echo $color ?></option>
+<?php
+            }
+?>
+        </select><br/>
+        <label for="<?php echo $this->get_field_id( 'text' ); ?>"><?php _e( 'Text:' ); ?></label>
+        <select id="<?php echo $this->get_field_id( 'text' ); ?>" name="<?php echo $this->get_field_name( 'text' ); ?>">
+<?php
+            foreach ( $texts as $text ) {
+                $selected = ( $text == $selected_text ) ? 'selected' : '';
+?>
+            <option value="<?php echo $text ?>" <?php echo $selected ?>><?php echo $text ?></option>
+<?php
+            }
+?>
+        </select>
+    </section>
+<?php
+        }
+
+        public function update( $new_instance ) {
+            return $new_instance;
         }
     }
 endif;
