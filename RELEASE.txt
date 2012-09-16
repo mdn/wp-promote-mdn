@@ -11,7 +11,7 @@ If successful:
 
 4) update version number in README.txt and promote-mdn.php
 5) git archive HEAD > promote-mdn/trunk/promote-mdn.tgz
-6) cd promote-mdn
+6) cd promote-mdn && tar zxvf promote-mdn.tgz
 7) svn ci -m "Release X code"
 8) svn cp trunk tags/X
 9) svn add tags/X
