@@ -78,9 +78,6 @@ Using locale-specific links will improve your readers' experience.
 * Initial version based on SEO Smart Links.
 
 == Upgrade Notice ==
-= 1.4 =
-You can exclude links from any HTML elements, not just headers; include a src url param on links to help MDN measure effectiveness
-
 = 1.3 =
 Be sure to click the "Use keywords and links specifically for ..." button if you
 run a site in language besides English.
