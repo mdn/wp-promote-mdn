@@ -16,7 +16,7 @@ class PromoteMDN {
     public $option_name = 'PromoteMDN';
     public $options;
     public $install_options = array(
-        'exclude_elems' => 'blockquote, code, h, pre, q',
+        'exclude_elems' => 'blockquote, code, h, pre, q, script',
         'ignore' => 'about,',
         'ignorepost' => 'contact,',
         'maxlinks' => 3,
