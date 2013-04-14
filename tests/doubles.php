@@ -6,6 +6,7 @@ $feed = false;
 $page = '';
 
 // "mocks" for the wordpress stuff
+// these are mostly no-op functions to avoid "Undefined function" errors
 class WP_Widget {
     public function __construct(){}
     public function get_field_id( $field ) { return $field; }
@@ -33,6 +34,9 @@ function is_single( $arr_ignores ) {
 }
 function trailingslashit( $string ) {
     return rtrim( $string, '/' ) . '/';
+}
+function esc_html( $string ) {
+    return $string;
 }
 function get_option( $name ) {
     return array(
