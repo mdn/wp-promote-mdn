@@ -54,6 +54,15 @@ class PromoteMDN {
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
     }
 
+    function linkify_match( $matches )
+    {
+        if ( $this->options['blanko'] ) {
+            $target = 'target="_blank"';
+        }
+        $link = "<a $target title=\"%s\" href=\"$href\">%s</a>";
+        return sprintf($link, $matches[1], $matches[1]);
+    }
+
     function process_text( $text )
     {
         $options = $this->options;
@@ -77,8 +86,8 @@ class PromoteMDN {
         if ( $exclude_elems ) {
             // add salt to elements
             foreach ( $exclude_elems as $el ) {
-                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|sie', $el, $el );
-                $text = preg_replace( $re, "'\\1'.wp_insertspecialchars('\\2').'\\3'", $text );
+                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
+                $text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_insertspecialchars($matches[2]) . $matches[3];' ), $text );
             }
         }
 
@@ -134,10 +143,10 @@ class PromoteMDN {
                         }
                         $href = $url;
                         if ( $options['add_src_param'] == TRUE ) $href .= '?src=wp-promote-mdn';
-                        $replace = "<a $target title=\"$1\" href=\"$href\">$1</a>";
+                        $link = "<a $target title=\"%s\" href=\"$href\">%s</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
-                        //$regexp="/(?!(?:[^<]+>|[^>]+<\/a>))(?<!\p{L})($name)(?!\p{L})/imsU";
-                        $newtext = preg_replace( $regexp, $replace, $text, $maxsingle );
+                        $replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
+                        $newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $maxsingle );
                         if ( $newtext != $text ) {
                             $links++;
                             $text = $newtext;
@@ -151,8 +160,8 @@ class PromoteMDN {
         if ( $exclude_elems ) {
             // remove salt from elements
             foreach ( $exclude_elems as $el ) {
-                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|sie', $el, $el );
-                $text = preg_replace( $re, "'\\1'.wp_removespecialchars('\\2').'\\3'", $text );
+                $re   = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
+                $text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_removespecialchars($matches[2]) . $matches[3];' ), $text );
             }
         }
         return trim( $text );
