@@ -11,7 +11,6 @@ Text Domain: promote-mdn
 
 // Avoid name collisions.
 if ( !class_exists( 'PromoteMDN' ) ) :
-
 class PromoteMDN {
     public $option_name = 'PromoteMDN';
     public $options;
@@ -52,15 +51,6 @@ class PromoteMDN {
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
-    }
-
-    function linkify_match( $matches )
-    {
-        if ( $this->options['blanko'] ) {
-            $target = 'target="_blank"';
-        }
-        $link = "<a $target title=\"%s\" href=\"$href\">%s</a>";
-        return sprintf($link, $matches[1], $matches[1]);
     }
 
     function process_text( $text )
@@ -411,7 +401,6 @@ localUrlEl.onclick = function() {
         update_option( $this->option_name, $options );
     }
 }
-
 endif;
 
 if ( !class_exists( 'PromoteMDN_Widget' ) ) :
