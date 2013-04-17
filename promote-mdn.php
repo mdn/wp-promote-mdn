@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Promote MDN
-Version: 1.4.0
+Version: 1.5.0
 Plugin URI: http://github.com/groovecoder/wp-promote-mdn
 Author: Luke Crouch
 Author URI: http://groovecoder.com
@@ -332,6 +332,7 @@ localUrlEl.onclick = function() {
         'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%s">settings</a> page to configure, and the <a href="%s">widgets</a> page to add widget.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php', 'widgets.php' ),
         '1.3' => sprintf( __( 'fr_FR translation, new sidebar <a href="%s">widget</a>, <a href="%s">setting</a> for a locale-specific URL for keywords.', 'promote-mdn' ) , 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
         '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
+        '1.5' => __( 'Security fixes.', 'promote-mdn' ),
         );
     }
 
