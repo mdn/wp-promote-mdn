@@ -3,8 +3,8 @@ Contributors: groovecoder, freediver
 Donate link: 
 Tags: mozilla, mdn, links
 Requires at least: 2.8
-Tested up to: 3.4.1
-Stable tag: 1.4.0
+Tested up to: 3.5.1
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Using locale-specific links will improve your readers' experience.
 2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+= 1.5 =
+* Security fixes
+
 = 1.4 =
 * Exclude links from any HTML elements
 * src url param to help MDN measure effectiveness
