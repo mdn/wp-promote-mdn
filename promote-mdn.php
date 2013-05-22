@@ -252,6 +252,7 @@ class PromoteMDN {
     h4 { color: white; background: black; clear: both; padding: .5em; }
     pre { margin-bottom: -1em; }
     #use_local_url img { position: relative; top: 8px; }
+    textarea { resize:vertical; }
 </style>
 
 <div class="wrap">
@@ -271,10 +272,12 @@ class PromoteMDN {
 
 
                 <h4><?php _e( 'Settings' , 'promote-mdn' ) ?></h4>
-                <p><?php _e( 'Load keywords from URL' , 'promote-mdn' ) ?> (<em id="preview"><a href="<?php echo esc_html( $customkey_url ) ?>" target="_blank"><?php _e( 'Preview' , 'promote-mdn' ) ?></a></em>):
-                <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ) ?>" style="width: 95%" /><a id="use_local_url" href="#"><img src="https://wiki.mozilla.org/images/a/af/Localization.png" width="24" height="24" title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ) ?>"/></a><br />
+                <p><?php _e( 'Load keywords from URL:' , 'promote-mdn' ) ?>
+                <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ) ?>" style="width: 75%" />
+                <a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank"><?php _e( 'Preview' , 'promote-mdn' ) ?></a>
+                <a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ) ?>"><?php _e( 'Switch to locale-specific list' , 'promote-mdn' ) ?></a><br />
                 <?php _e( 'Reload keywords after (seconds):' , 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
-                <button type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
+                <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
                 <input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn' ) ?></label><br/>
                 <input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url param (Helps MDN measure effectiveness)' , 'promote-mdn' ) ?></label> <br/>
@@ -304,7 +307,7 @@ sumo, http://support.mozilla.org/
                 </pre>
                 </p>
 
-                <textarea name="customkey" id="customkey" rows="10" cols="90"  ><?php echo esc_html( $customkey ) ?></textarea>
+                <textarea class="full-width" name="customkey" id="customkey" rows="10" cols="90"  ><?php echo esc_html( $customkey ) ?></textarea>
                 <em><?php _e( 'Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.' , 'promote-mdn' ) ?></em>
                 <div class="submit"><input type="submit" name="Submit" value="<?php _e( 'Update options' , 'promote-mdn' ) ?>" class="button-primary" /></div>
             </form>
