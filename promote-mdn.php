@@ -383,7 +383,7 @@ localUrlEl.onclick = function() {
                 if ( method_exists( $this, $upgrade_method ) )
                     $this->$upgrade_method();
 ?>
-    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo esc_html( $notice ) ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
+    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
             }
         }
