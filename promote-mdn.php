@@ -29,6 +29,7 @@ class PromoteMDN {
         'maxsingleurl' => '1',
         'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
     );
+    public $tracking_querystring = "?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn";
 
     function __construct( $options = null )
     {
@@ -132,7 +133,7 @@ class PromoteMDN {
                             $target = 'target="_blank"';
                         }
                         $href = $url;
-                        if ( $options['add_src_param'] == TRUE ) $href .= '?src=wp-promote-mdn';
+                        if ( $options['add_src_param'] == TRUE ) $href .= $this->tracking_querystring;
                         $link = "<a $target title=\"%s\" href=\"$href\">%s</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
                         $replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
@@ -280,7 +281,7 @@ class PromoteMDN {
                 <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
                 <input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn' ) ?></label><br/>
-                <input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url param (Helps MDN measure effectiveness)' , 'promote-mdn' ) ?></label> <br/>
+                <input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url params (Helps MDN measure effectiveness)' , 'promote-mdn' ) ?></label> <br/>
                 <input type="checkbox" name="blanko" <?php echo esc_html( $blanko ) ?>/> <label for="blanko"><?php _e( 'Open links in new window' , 'promote-mdn' ) ?></label> <br/>
 
 
