@@ -29,7 +29,7 @@ class PromoteMDN {
         'maxsingleurl' => '1',
         'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
     );
-    public $tracking_querystring = "?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn";
+    public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn';
 
     function __construct( $options = null )
     {
@@ -86,8 +86,7 @@ class PromoteMDN {
         $reg      = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
         $text     = " $text ";
 
-        if ( !empty( $options['customkey_url'] ) )
-        {
+        if ( !empty( $options['customkey_url'] ) ) {
             if ( false === ( $customkey_url_value = get_transient( 'promote_mdn_url_value' ) ) ){
                 $customkey_url_value = $this->reload_value( $options['customkey_url'] );
             }
@@ -113,8 +112,7 @@ class PromoteMDN {
                         if ( !empty( $keyword ) ) $kw_array[$keyword] = $url;
                 }
             }
-            foreach ( $kw_array as $name => $url )
-            {
+            foreach ( $kw_array as $name => $url ) {
                 if ( in_array( strtolower( $name ), $arrignore ) )
                     continue;
                 if (   ( !$maxlinks || ( $links < $maxlinks ) )
@@ -181,8 +179,7 @@ class PromoteMDN {
         $arr = explode( $separator, $text );
 
         $ret = array();
-        foreach ( $arr as $e )
-        {
+        foreach ( $arr as $e ) {
           $ret[] = strtolower( trim( $e ) );
         }
         // return empty array for single empty string element
@@ -204,9 +201,8 @@ class PromoteMDN {
                 $options['customkey_url'] = $customkey_url;
                 $customkey_url_value      = $this->reload_value( $customkey_url );
                 $reloaded_message         = __( 'Reloaded values from the URL.', 'promote-mdn' );
-                $message_box              = '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
                 update_option( $this->option_name, $options );
-                echo $message_box;
+                echo '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
             } else {
                 $options['exclude_elems']        = $_POST['exclude_elems'];
                 $options['ignore']               = $_POST['ignore'];
@@ -437,7 +433,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             );
             extract( $args );
             if ( isset( $before_widget ) )
-                echo $before_widget;
+                echo esc_html( $before_widget );
             if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
                 $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
@@ -448,7 +444,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
     </section>
 <?php
             if ( isset( $after_widget ) )
-                echo $after_widget;
+                echo esc_html( $after_widget );
         }
 
         public function form( $instance ) {

@@ -26,7 +26,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
         $this->pm = new PromoteMDN( $options );
 
-        $this->expected_tracking_querystring = sprintf($this->pm->tracking_querystring);
+        $this->expected_tracking_querystring = sprintf( $this->pm->tracking_querystring );
         $this->js_href     = 'https://developer.mozilla.org/docs/JavaScript' . $this->expected_tracking_querystring;
         $this->js_linked   = '<a target="_blank" title="JavaScript" href="' . $this->js_href . '">JavaScript</a>';
         $this->css_href    = 'https://developer.mozilla.org/docs/CSS' . $this->expected_tracking_querystring;
