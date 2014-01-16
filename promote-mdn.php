@@ -494,6 +494,66 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
     }
 endif;
 
+if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
+    class PromoteMDN_Notifier {
+
+        public function __construct() {
+            add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+            add_action( 'publish_post', array( $this, 'notify_mozilla' ) );
+        }
+
+        public function add_meta_box( $post_type ) {
+            $post_types = array( 'post' ); // limit meta box to certain types
+            if ( in_array( $post_type, $post_types ) ) {
+                add_meta_box(
+                    'major-publishing-actions'
+                    ,__( 'Promote MDN', 'promote-mdn' )
+                    ,array( $this, 'render_meta_box_content' )
+                    ,$post_type
+                    ,'side'
+                    ,'high'
+                );
+            }
+        }
+
+        public function render_meta_box_content( $post ) {
+?>
+    <input name="notify_mozilla" type="checkbox" value="1" /><?php echo esc_html( __( 'Notify Mozilla of this post', 'promote-mdn' ) ); ?>
+<?php
+        }
+
+        public function notify_mozilla( $post_id ) {
+            if(    ( $_POST['post_status'] == 'publish' )
+                && ( $_POST['original_post_status'] != 'publish' )
+                && ( $_POST['notify_mozilla'] == '1' ) ) {
+                $post = get_post($post_id);
+                $author = get_userdata($post->post_author);
+                $author_email = $author->user_email;
+                $recipients = ['devrel@mozilla.com', 'press@mozilla.com'];
+                $email_subject = $author_email . ' published post "' . get_the_title( $post ) . '" to ' . get_bloginfo( 'name' );
+
+                ob_start();
+?>
+View post at: <?php echo get_permalink( $post ); ?> \n
+Email author at: <?php echo $author_email; ?>
+<?php
+
+                $message = ob_get_contents();
+
+                ob_end_clean();
+
+                error_log( "Mail:" );
+                error_log( "Recipients: " . var_export( $recipients, true ) );
+                error_log( "Subject: " . $email_subject );
+                error_log( "Message: " . $message );
+
+                wp_mail( $recipients, $email_subject, $message );
+            }
+        }
+
+    }
+endif;
+
 if ( class_exists( 'PromoteMDN' ) ) :
     $in_phpunit = false;
     if ( array_key_exists( 'argv', $GLOBALS ) ) {
@@ -507,6 +567,17 @@ if ( class_exists( 'PromoteMDN' ) ) :
         if ( isset( $PromoteMDN ) ) {
             register_activation_hook( __FILE__, array( &$PromoteMDN, 'install' ) );
         }
+    }
+endif;
+
+function call_notifier() {
+    new PromoteMDN_Notifier();
+}
+
+if ( class_exists( 'PromoteMDN_Notifier' ) ) :
+    if ( is_admin() ) {
+        add_action( 'load-post.php', 'call_notifier' );
+        add_action( 'load-post-new.php', 'call_notifier' );
     }
 endif;
 
