@@ -32,6 +32,9 @@ function is_single( $arr_ignores ) {
     global $page;
     return in_array( $page, $arr_ignores );
 }
+function is_admin() {
+    return null;
+}
 function trailingslashit( $string ) {
     return rtrim( $string, '/' ) . '/';
 }
