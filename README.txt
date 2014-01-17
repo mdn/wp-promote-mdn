@@ -3,8 +3,8 @@ Contributors: groovecoder, freediver
 Donate link: 
 Tags: mozilla, mdn, links
 Requires at least: 2.8
-Tested up to: 3.5.1
-Stable tag: 1.5.0
+Tested up to: 3.8
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,13 @@ Using locale-specific links will improve your readers' experience.
 2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+= 1.6 =
+* Option to notify Mozilla Press and DevRel when publishing post
+* Fix HTML bug in admin notices
+* Update GA campaign tracking parameters
+* Update logos to redesign
+https://github.com/groovecoder/wp-promote-mdn/compare/596cea7...9a6aa13
+
 = 1.5 =
 * Security fixes
 
