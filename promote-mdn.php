@@ -29,7 +29,7 @@ class PromoteMDN {
         'maxsingleurl' => '1',
         'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1 ),
     );
-    public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn';
+public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn';
 
     function __construct( $options = null )
     {
@@ -158,7 +158,7 @@ class PromoteMDN {
     }
 
 
-    function reload_value( $url )
+function reload_value( $url )
     {
         $body = wp_remote_retrieve_body(
             wp_remote_get(
@@ -169,6 +169,8 @@ class PromoteMDN {
                 )
             )
         );
+        $tmp = explode('.', $customkey_url_value);
+        $endtmp = end($tmp);
         $customkey_url_value = strip_tags( $body );
         set_transient( 'promote_mdn_url_value', $customkey_url_value, 86400 );
         return $customkey_url_value;
@@ -223,9 +225,18 @@ class PromoteMDN {
             }
         }
 
+        
+        
+
         $action_url = $_SERVER['REQUEST_URI'];
 
-        $comment = $options['comment'] == 'on' ? 'checked' : '';
+        $comment = get_option( 'comment' );
+
+        $checked = '';
+
+        if ( isset($options['comment'])) 
+        if ($options['comment'] == 1) { $checked = 'checked="checked"';}
+
         $exclude_elems = $options['exclude_elems'];
         $ignore = $options['ignore'];
         $ignorepost = $options['ignorepost'];
@@ -241,38 +252,25 @@ class PromoteMDN {
 
         $nonce = wp_create_nonce( 'promote-mdn' );
 ?>
-<style type="text/css">
-    #mainblock { width:600px; }
-    #logo { width: 100%; }
-    .full-width { width: 100% }
-    input { padding: .5em; }
-    h4 { color: white; background: black; clear: both; padding: .5em; }
-    pre { margin-bottom: -1em; }
-    #use_local_url img { position: relative; top: 8px; }
-    textarea { resize:vertical; }
-</style>
 
-<div class="wrap">
-     <div id="mainblock">
         <div class="dbx-content">
-
-<?php
-        $top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn' );
-?>
-        <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://developer.cdn.mozilla.net/media/redesign/img/mdn_logo-wordmark-full_color.svg" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a>
-        <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ) ?> </p>
-        <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ) ?></p>
+            <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn' ); ?>">
+            <img src="https://developer.cdn.mozilla.net/media/redesign/img/mdn_logo-wordmark-full_color.svg" id="logo" alt="<?php echo __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn' ); ?>" />
+            <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ); ?> </p>
+            <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ); ?></p>
+            </a>
+          </div>
 
         <form name="PromoteMDN" action="<?php echo esc_html( $action_url ) ?>" method="post">
-        <input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ) ?>" />
+        <input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ); ?>" />
                 <input type="hidden" name="submitted" value="1" />
 
 
                 <h4><?php _e( 'Settings' , 'promote-mdn' ) ?></h4>
                 <p><?php _e( 'Load keywords from URL:' , 'promote-mdn' ) ?>
-                <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ) ?>" style="width: 75%" />
-                <a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank"><?php _e( 'Preview' , 'promote-mdn' ) ?></a>
-                <a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ) ?>"><?php _e( 'Switch to locale-specific list' , 'promote-mdn' ) ?></a><br />
+                <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ); ?>" />
+                <a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank;\"><?php _e( 'Preview' , 'promote-mdn' ) ?></a>
+                <a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ); ?>"><?php echo _( 'Switch to locale-specific list' , 'promote-mdn' ) ?></a><br />
                 <?php _e( 'Reload keywords after (seconds):' , 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
                 <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
@@ -339,7 +337,7 @@ localUrlEl.onclick = function() {
 
     function admin_menu()
     {
-        add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
+        add_options_page( 'Promote MDN Options', 'Promote MDN', 'manage_options', basename( __FILE__ ), array( &$this, 'handle_options' ) );
     }
 
     function hide_href( $version ) {
@@ -352,20 +350,13 @@ localUrlEl.onclick = function() {
             return 'hide=' . $version;
         }
     }
-
+    
+    function register_mdn_styles() {
+        wp_register_style( 'promote-mdn', plugins_url( 'wp-promote-mdn/promote-mdn-styles.css' ) );
+        wp_enqueue_style( 'promote-mdn' );
+    }
+    
 	function admin_notices() {
-?>
-<style>
-.promote-mdn-notice {
-  background: url(https://developer.cdn.mozilla.net/media/redesign/img/MDNLogo.png) 0 0 no-repeat;
-  padding: 18px 20px 18px 62px !important;
-  display: inline-block;
-  color: #999;
-  font-family: arial;
-  font-size: 12px;
-}
-</style>
-<?php
         $hide_notices = isset( $this->options['hide_notices']) ? $this->options['hide_notices'] : array();
         if ( isset( $_GET['hide'] ) ) {
             $version = $_GET['hide'];
@@ -380,7 +371,7 @@ localUrlEl.onclick = function() {
                 if ( method_exists( $this, $upgrade_method ) )
                     $this->$upgrade_method();
 ?>
-    <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
+<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
             }
         }
@@ -438,11 +429,11 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
                 $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
-    <section style="text-align: center;">
-        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/<?php echo esc_html( $img ); ?>" /></a><br />
-        <a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></a><br />
-        <a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></a>
-    </section>
+    <div class="promote-mdn">
+        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/<?php echo esc_html( $img ); ?>" />
+        <p><a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></p>
+        <p><a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></p></a>
+    </div>
 <?php
             if ( isset( $after_widget ) )
                 echo esc_html( $after_widget );
@@ -489,7 +480,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 <?php
         }
 
-        public function update( $new_instance ) {
+        public function update( $new_instance, $old_instance ) {
             return $new_instance;
         }
     }
