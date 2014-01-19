@@ -60,7 +60,7 @@ Using locale-specific links will improve your readers' experience.
 * Fix HTML bug in admin notices
 * Update GA campaign tracking parameters
 * Update logos to redesign
-https://github.com/groovecoder/wp-promote-mdn/compare/596cea7...9a6aa13
+https://github.com/groovecoder/wp-promote-mdn/compare/596cea7...0edcb0e
 
 = 1.5 =
 * Security fixes
