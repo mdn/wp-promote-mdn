@@ -243,7 +243,7 @@ class PromoteMDN {
 ?>
 <style type="text/css">
     #mainblock { width:600px; }
-    #logo { float: right; margin-bottom: 1em; }
+    #logo { width: 100%; }
     .full-width { width: 100% }
     input { padding: .5em; }
     h4 { color: white; background: black; clear: both; padding: .5em; }
@@ -259,7 +259,7 @@ class PromoteMDN {
 <?php
         $top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn' );
 ?>
-        <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://developer.mozilla.org/media/img/promote/promobutton_mdn37.png" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a>
+        <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://developer.cdn.mozilla.net/media/redesign/img/mdn_logo-wordmark-full_color.svg" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a>
         <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ) ?> </p>
         <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ) ?></p>
 
@@ -356,7 +356,7 @@ localUrlEl.onclick = function() {
 ?>
 <style>
 .promote-mdn-notice {
-  background: url(https://developer.mozilla.org/media/img/mdn-logo-tiny.png) 0 0 no-repeat;
+  background: url(https://developer.cdn.mozilla.net/media/redesign/img/MDNLogo.png) 0 0 no-repeat;
   padding: 18px 20px 18px 62px !important;
   display: inline-block;
   color: #999;
