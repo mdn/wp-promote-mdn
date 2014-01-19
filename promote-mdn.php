@@ -530,7 +530,7 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
                 $post = get_post($post_id);
                 $author = get_userdata($post->post_author);
                 $author_email = $author->user_email;
-                $recipients = ['devrel@mozilla.com', 'press@mozilla.com'];
+                $recipients = array('devrel@mozilla.com', 'press@mozilla.com');
                 $email_subject = $author_email . ' published post "' . get_the_title( $post ) . '" to ' . get_bloginfo( 'name' );
 
                 ob_start();
