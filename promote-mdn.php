@@ -588,10 +588,22 @@ function wp_str2arr( $str ) {
     return $chararray;
 }
 
-function plugin_add_settings_link( $links ) {
-    $settings_link = '<a href="options-general.php?page=promote-mdn.php">Settings</a>';
-    array_push( $links, $settings_link );
+add_filter( 'plugin_action_links', 'promote_mdn_settings_plugin_link', 10, 2 );
+
+function promote_mdn_settings_plugin_link( $links, $file ) 
+{
+    if ( $file == plugin_basename(dirname(__FILE__) . '/promote-mdn.php') ) 
+    {
+        /*
+         * Insert the link at the beginning
+         */
+        $in = '<a href="options-general.php?page=promote-mdn.php">' . __('Settings','promote-mdn') . '</a>';
+        array_unshift($links, $in);
+
+        /*
+         * Insert at the end
+         */
+        // $links[] = '<a href="options-general.php?page=many-tips-together">'.__('Settings','mtt').'</a>';
+    }
     return $links;
 }
-$plugin = plugin_basename( __FILE__ );
-add_filter( "plugin_action_links_$plugin", 'plugin_add_settings_link' );
