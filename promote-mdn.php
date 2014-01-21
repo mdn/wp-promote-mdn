@@ -217,6 +217,8 @@ function reload_value( $url )
                 $options['customkey_url_expire'] = $_POST['customkey_url_expire'];
                 $options['blanko']               = $_POST['blanko'];
                 $options['add_src_param']        = $_POST['add_src_param'];
+
+            if (isset($options['allowfeed'] ))
                 $options['allowfeed']            = $_POST['allowfeed'];
 
                 update_option( $this->option_name, $options );
@@ -230,12 +232,7 @@ function reload_value( $url )
 
         $action_url = $_SERVER['REQUEST_URI'];
 
-        $comment = get_option( 'comment' );
-
         $checked = '';
-
-        if ( isset($options['comment'])) 
-        if ($options['comment'] == 1) { $checked = 'checked="checked"';}
 
         $exclude_elems = $options['exclude_elems'];
         $ignore = $options['ignore'];
@@ -270,7 +267,7 @@ function reload_value( $url )
                 <p><?php _e( 'Load keywords from URL:' , 'promote-mdn' ) ?>
                 <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ); ?>" />
                 <a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank;\"><?php _e( 'Preview' , 'promote-mdn' ) ?></a>
-                <a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ); ?>"><?php echo _( 'Switch to locale-specific list' , 'promote-mdn' ) ?></a><br />
+                <a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ); ?>"><?php echo __( 'Switch to locale-specific list' , 'promote-mdn' ) ?></a><br />
                 <?php _e( 'Reload keywords after (seconds):' , 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
                 <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
@@ -371,7 +368,6 @@ localUrlEl.onclick = function() {
                 if ( method_exists( $this, $upgrade_method ) )
                     $this->$upgrade_method();
 ?>
-<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 <?php
             }
         }
@@ -424,8 +420,9 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
                 'red_web'           => 'promobutton_mdn12.png',
             );
             extract( $args );
-            if ( isset( $before_widget ) )
-                echo esc_html( $before_widget );
+           
+           echo $before_widget;
+
             if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
                 $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
@@ -435,8 +432,8 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
         <p><a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></p></a>
     </div>
 <?php
-            if ( isset( $after_widget ) )
-                echo esc_html( $after_widget );
+
+                echo $after_widget;
         }
 
         public function form( $instance ) {
@@ -453,7 +450,6 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             if ( isset( $instance['text'] ) )
                 $selected_text = $instance['text'];
 ?>
-    <section>
         <label for="<?php echo esc_html( $this->get_field_id( 'color' ) ); ?>"><?php _e( 'Color:' ); ?></label>
         <select id="<?php echo esc_html( $this->get_field_id( 'color' ) ); ?>" name="<?php echo esc_html( $this->get_field_name( 'color' ) ); ?>">
 <?php
@@ -476,12 +472,12 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             }
 ?>
         </select>
-    </section>
 <?php
         }
 
         public function update( $new_instance, $old_instance ) {
-            return $new_instance;
+            $instance = $old_instance;
+            return $instance;
         }
     }
 endif;
@@ -591,3 +587,11 @@ function wp_str2arr( $str ) {
     }
     return $chararray;
 }
+
+function plugin_add_settings_link( $links ) {
+    $settings_link = '<a href="options-general.php?page=promote-mdn.php">Settings</a>';
+    array_push( $links, $settings_link );
+    return $links;
+}
+$plugin = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_$plugin", 'plugin_add_settings_link' );
