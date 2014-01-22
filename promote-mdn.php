@@ -52,6 +52,14 @@ public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
+
+        // Register style sheet.
+        add_action( 'wp_enqueue_scripts', array( $this, 'mdn_register_styles' ) );
+}
+
+  function mdn_register_styles() {
+        wp_register_style( 'promote-mdn', plugins_url( 'wp-promote-mdn/css/promote-mdn-styles.css' ) );
+        wp_enqueue_style( 'promote-mdn' );
     }
 
     function process_text( $text )
@@ -117,7 +125,7 @@ public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content
                     continue;
                 if (   ( !$maxlinks || ( $links < $maxlinks ) )
                     && ( !in_array( strtolower( $name ), $arrignore ) )
-                    && ( !$maxsingleurl || !isset( $urls[$url] ) || $urls[$url] < $maxsingleurl ) 
+                    && ( !$maxsingleurl || !isset( $urls[$url] ) || $urls[$url] < $maxsingleurl )
                    ) {
                        if ( !isset( $options['customkey_preventduplicatelink'] ) )
                             $options['customkey_preventduplicatelink'] = FALSE;
@@ -165,7 +173,7 @@ function reload_value( $url )
                 $url,
                 array(
                     'headers' =>
-                        array( 'cache-control' => 'no-cache, must-revalidate' ) 
+                        array( 'cache-control' => 'no-cache, must-revalidate' )
                 )
             )
         );
@@ -227,8 +235,8 @@ function reload_value( $url )
             }
         }
 
-        
-        
+
+
 
         $action_url = $_SERVER['REQUEST_URI'];
 
@@ -347,12 +355,7 @@ localUrlEl.onclick = function() {
             return 'hide=' . $version;
         }
     }
-    
-    function register_mdn_styles() {
-        wp_register_style( 'promote-mdn', plugins_url( 'wp-promote-mdn/promote-mdn-styles.css' ) );
-        wp_enqueue_style( 'promote-mdn' );
-    }
-    
+
 	function admin_notices() {
         $hide_notices = isset( $this->options['hide_notices']) ? $this->options['hide_notices'] : array();
         if ( isset( $_GET['hide'] ) ) {
@@ -368,6 +371,7 @@ localUrlEl.onclick = function() {
                 if ( method_exists( $this, $upgrade_method ) )
                     $this->$upgrade_method();
 ?>
+
 <?php
             }
         }
@@ -420,15 +424,16 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
                 'red_web'           => 'promobutton_mdn12.png',
             );
             extract( $args );
-           
+
            echo $before_widget;
 
             if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
                 $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
-    <div class="promote-mdn">
-        <a href="https://developer.mozilla.org" target="_blank"><img src="https://developer.mozilla.org/media/img/promote/<?php echo esc_html( $img ); ?>" />
-        <p><a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></p>
+    <div id="promote-mdn">
+        <a href="https://developer.mozilla.org" target="_blank">
+        <h4><a href="https://developer.mozilla.org/promote" target="_blank"><?php _e( 'Help Promote MDN!', 'promote-mdn' ) ?></h4>
+        <img src="https://developer.mozilla.org/media/img/promote/<?php echo esc_html( $img ); ?>" />
         <p><a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></p></a>
     </div>
 <?php
@@ -590,9 +595,9 @@ function wp_str2arr( $str ) {
 
 add_filter( 'plugin_action_links', 'promote_mdn_settings_plugin_link', 10, 2 );
 
-function promote_mdn_settings_plugin_link( $links, $file ) 
+function promote_mdn_settings_plugin_link( $links, $file )
 {
-    if ( $file == plugin_basename(dirname(__FILE__) . '/promote-mdn.php') ) 
+    if ( $file == plugin_basename(dirname(__FILE__) . '/promote-mdn.php') )
     {
         /*
          * Insert the link at the beginning
