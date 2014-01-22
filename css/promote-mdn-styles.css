@@ -1,0 +1,43 @@
+#promote-mdn p {
+	display: block;
+	margin-top: 1em !important;
+}
+.promote-mdn-notice {
+  background: url(https://developer.cdn.mozilla.net/media/redesign/img/MDNLogo.png) 0 0 no-repeat;
+  padding: 18px 20px 18px 62px !important;
+  display: inline-block;
+  color: #999;
+  font-family: inherit;
+  font-size: 90%;
+}
+#promote-mdn h4{
+	background: inherit;
+}
+#mainblock { 
+	width:600px; 
+}
+#logo { 
+	width: 100%; 
+}
+.full-width { 
+	width: 100% 
+}
+input { 
+	padding: .5em; 
+}
+h4 { 
+	color: white; 
+	background: black; 
+	clear: both; 
+	padding: .5em; 
+}
+pre { 
+	margin-bottom: -1em; 
+}
+#use_local_url img { 
+	position: relative; 
+	top: 8px; 
+}
+textarea { 
+	resize:vertical; 
+}
