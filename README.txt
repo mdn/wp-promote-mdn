@@ -8,13 +8,13 @@ Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically links keywords and phrases to MDN.
+Automatically links your WordPress blog with MDN.
 
 == Description ==
 
-Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/),
-Promote MDN automatically links keywords and phrases to MDN pages. They keywords,
-phrases, and pages are supplied by [a special page on MDN](https://developer.mozilla.org/docs/Template:Promote-MDN?raw=1)
+* Automatically links [special keywords and phrases](https://developer.mozilla.org/en-US/docs/Project:MDN/Promote#Web_site_banner_images) to MDN.
+* Provides a widget with images and links to promote MDN
+* Allows you to notify Mozilla DevEngage and Communications when publishing posts
 
 MDN is the best online resource for web developers, by web developers. Promote MDN
 helps your readers discover and learn about web technologies on MDN.
@@ -23,6 +23,8 @@ To help code on this plugin, go to [Promote MDN on Github](https://github.com/gr
 
 Translations available: de_DE, es_ES, fr_FR, nl_NL, pl_PL, pt_BR.
 To help translate this plugin, go to the [MDN Verbatim](https://localize.mozilla.org/projects/mdn/) page.
+
+Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/)
 
 == Installation ==
 1. Go to "Plugins -> Add new"
