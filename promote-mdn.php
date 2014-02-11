@@ -243,13 +243,13 @@ class PromoteMDN {
 ?>
 <style type="text/css">
     #mainblock { width:600px; }
-    #logo { width: 100%; }
     .full-width { width: 100% }
     input { padding: .5em; }
     h4 { color: white; background: black; clear: both; padding: .5em; }
     pre { margin-bottom: -1em; }
     #use_local_url img { position: relative; top: 8px; }
     textarea { resize:vertical; }
+    .dbx-content #top_banner { float: right; }
 </style>
 
 <div class="wrap">
@@ -259,9 +259,15 @@ class PromoteMDN {
 <?php
         $top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.' , 'promote-mdn' );
 ?>
-        <a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://developer.cdn.mozilla.net/media/redesign/img/mdn_logo-wordmark-full_color.svg" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a>
+        <div id="top_banner"><a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://mdn.mozillademos.org/files/7093/MDN_promoBanner_120x120px.png" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a></div>
         <p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ) ?> </p>
-        <p><?php _e( 'Promote MDN automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ) ?></p>
+        <p><?php _e( 'Promote MDN:', 'promote-mdn' ) ?>
+            <ul>
+                <li><?php _e( 'Automatically links keywords and phrases in your posts and pages to MDN URLs.' , 'promote-mdn' ) ?></li>
+                <li><?php _e( 'Provides a widget with images and links to promote MDN.' , 'promote-mdn' ) ?></li>
+                <li><?php _e( 'Allows you to notify Mozilla DevEngage and Communications when publishing posts' , 'promote-mdn' ) ?></li>
+            </ul>
+        </p>
 
         <form name="PromoteMDN" action="<?php echo esc_html( $action_url ) ?>" method="post">
         <input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ) ?>" />
