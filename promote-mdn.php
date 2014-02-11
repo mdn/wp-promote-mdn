@@ -434,7 +434,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
             );
             extract( $args );
             if ( isset( $before_widget ) )
-                echo esc_html( $before_widget );
+                echo $before_widget;
             if ( isset( $instance['color'] ) && isset( $instance['text'] ) )
                 $img = $img_array[$instance['color'].'_'.strtolower( $instance['text'] )];
 ?>
@@ -445,7 +445,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
     </section>
 <?php
             if ( isset( $after_widget ) )
-                echo esc_html( $after_widget );
+                echo $after_widget;
         }
 
         public function form( $instance ) {
