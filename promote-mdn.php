@@ -508,7 +508,7 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
             if ( in_array( $post_type, $post_types ) ) {
                 add_meta_box(
                     'major-publishing-actions'
-                    ,__( 'Promote MDN', 'promote-mdn' )
+                    ,__( 'Notify Mozilla', 'promote-mdn' )
                     ,array( $this, 'render_meta_box_content' )
                     ,$post_type
                     ,'side'
