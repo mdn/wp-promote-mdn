@@ -253,6 +253,7 @@ class PromoteMDN {
 </style>
 
 <div class="wrap">
+<a href="https://github.com/groovecoder/wp-promote-mdn"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
      <div id="mainblock">
         <div class="dbx-content">
 
@@ -268,6 +269,7 @@ class PromoteMDN {
                 <li><?php _e( 'Allows you to notify Mozilla DevEngage and Communications when publishing posts' , 'promote-mdn' ) ?></li>
             </ul>
         </p>
+        <p><?php _e( 'Promote MDN is open source. <a href="https://github.com/groovecoder/wp-promote-mdn">Contribute on GitHub</a>' , 'promote-mdn' ) ?></p>
 
         <form name="PromoteMDN" action="<?php echo esc_html( $action_url ) ?>" method="post">
         <input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ) ?>" />
