@@ -11,6 +11,8 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         $feed = false;
         $page = 'great-page';
         $options = array(
+            'ignoreallpages' => '',
+            'ignoreallposts' => '',
             'add_src_param' => 'on',
             'exclude_elems' => '',
             'ignore' => 'about,',
@@ -183,6 +185,29 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         global $page;
         $page = 'about';
         $this->pm->options['ignorepost'] = 'about, ';
+        $this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
+    }
+
+    public function test_ignore_all_pages()
+    {
+        global $page;
+        $page = 'is-page';
+        $this->pm->options['ignoreallpages'] = 'on';
+        $this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
+    }
+
+    public function test_ignore_all_posts()
+    {
+        global $page;
+        // single-post to trigger is_single() stub to return true
+        $page = 'single-post';
+        $this->pm->options['ignoreallposts'] = 'on';
+        $this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
+
+        $page = 'other-post';
+        $this->pm->options['ignoreallposts'] = 'off';
+        $this->assertEquals( $this->linked_text, $this->pm->process_text( $this->text ) );
+        $this->pm->options['ignorepost'] = 'other-post,';
         $this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
     }
 
