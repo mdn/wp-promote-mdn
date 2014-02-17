@@ -15,6 +15,8 @@ class PromoteMDN {
     public $option_name = 'PromoteMDN';
     public $options;
     public $install_options = array(
+        'ignoreallpages' => '',
+        'ignoreallposts' => '',
         'exclude_elems' => 'blockquote, code, h, pre, q, script',
         'ignore' => 'about,',
         'ignorepost' => 'contact,',
@@ -59,6 +61,12 @@ class PromoteMDN {
         $options = $this->options;
         $links   = 0;
         if ( is_feed() && !$options['allowfeed'] )
+            return $text;
+
+        if ( is_page() && $options['ignoreallpages'] )
+            return $text;
+
+        if ( is_single() && $options['ignoreallposts'] )
             return $text;
 
         $arrignorepost = $this->explode_lower_trim( ',' , ( $options['ignorepost'] ) );
@@ -204,6 +212,8 @@ class PromoteMDN {
                 update_option( $this->option_name, $options );
                 echo '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
             } else {
+                $options['ignoreallpages']       = $_POST['ignoreallpages'];
+                $options['ignoreallposts']       = $_POST['ignoreallposts'];
                 $options['exclude_elems']        = $_POST['exclude_elems'];
                 $options['ignore']               = $_POST['ignore'];
                 $options['ignorepost']           = $_POST['ignorepost'];
@@ -226,6 +236,8 @@ class PromoteMDN {
         $action_url = $_SERVER['REQUEST_URI'];
 
         $comment = $options['comment'] == 'on' ? 'checked' : '';
+        $ignoreallpages = $options['ignoreallpages'] == 'on' ? 'checked' : '';
+        $ignoreallposts = $options['ignoreallposts'] == 'on' ? 'checked' : '';
         $exclude_elems = $options['exclude_elems'];
         $ignore = $options['ignore'];
         $ignorepost = $options['ignorepost'];
@@ -291,10 +303,12 @@ class PromoteMDN {
 
                 <h4><?php _e( 'Exceptions' , 'promote-mdn' ) ?></h4>
 
+                <input type="checkbox" name="ignoreallpages" class="ignore-all" <?php echo esc_html( $ignoreallpages ) ?>/> <label for="ignoreallpages"><?php _e( 'Do not add links to any <em>pages</em>.' , 'promote-mdn' ) ?></label><br/>
+                <input type="checkbox" name="ignoreallposts" class="ignore-all" <?php echo esc_html( $ignoreallposts ) ?>/> <label for="ignoreallposts"><?php _e( 'Do not add links to any <em>posts</em>.' , 'promote-mdn' ) ?></label><br/>
+                <p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):' , 'promote-mdn' ) ?></p>
+                <input type="text" name="ignorepost" id="ignorepost" value="<?php echo esc_html( $ignorepost ) ?>" class="full-width"/>
                 <p><?php _e( 'Do not add links inside the following HTML elements (comma-separated, partial-matching):' , 'promote-mdn' ) ?></p>
                 <input type="text" name="exclude_elems" value="<?php echo esc_html( $exclude_elems ) ?>" class="full-width"/>
-                <p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):' , 'promote-mdn' ) ?></p>
-                <input type="text" name="ignorepost" value="<?php echo esc_html( $ignorepost ) ?>" class="full-width"/>
                 <p><?php _e( 'Do not add links on the following phrases (comma-separated):' , 'promote-mdn' ) ?></p>
                 <input type="text" name="ignore" class="full-width" value="<?php echo esc_html( $ignore ) ?>"/>
 
@@ -329,6 +343,14 @@ localUrlEl.onclick = function() {
     urlInput.value = urlInput.value.replace( re, '<?php echo esc_html( str_replace( '_', '-', WPLANG  ) ); ?>/docs' );
     reloadBtn.click();
 }
+var ignoreAlls = jQuery('.ignore-all');
+ignoreAlls.change(function(){
+    if (jQuery('.ignore-all:checked').length == 2) {
+        jQuery('#ignorepost').prop('disabled', true);
+    } else {
+        jQuery('#ignorepost').prop('disabled', false);
+    }
+});
 </script>
 <?php
 

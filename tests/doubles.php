@@ -24,12 +24,17 @@ function is_feed() {
     if ( $feed ) return true;
     return false;
 }
-function is_page( $arr_ignores ) {
+function is_page( $arr_ignores = array() ) {
     global $page;
+    // single-post is used to trigger post, not a page
+    if ( $page == 'single-post' ) return false;
+    if ( $page == 'is-page' ) return true;
+    if ( $arr_ignores == array() ) return true;
     return in_array( $page, $arr_ignores );
 }
-function is_single( $arr_ignores ) {
+function is_single( $arr_ignores = array() ) {
     global $page;
+    if ( $page == 'single-post' ) return true;
     return in_array( $page, $arr_ignores );
 }
 function is_admin() {
@@ -43,6 +48,8 @@ function esc_html( $string ) {
 }
 function get_option( $name ) {
     return array(
+        'ignoreallpages' => '',
+        'ignoreallposts' => '',
         'exclude_elems' => 'blockquote, code, h, pre, q',
         'ignore' => 'about,',
         'ignorepost' => 'contact,',
