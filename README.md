@@ -29,3 +29,7 @@ Yes, I actually wrote tests for a WordPress Plugin. Don't judge me. To run
 them, simply run::
 
     phpunit
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/groovecoder/wp-promote-mdn/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
