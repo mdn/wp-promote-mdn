@@ -127,6 +127,16 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function test_max_links_0_disables_links()
+    {
+        $this->pm->options['maxlinks'] = 0;
+        $text = '<p>JavaScript and CSS</p>';
+        $this->assertEquals(
+            $text,
+            $this->pm->process_text( $text )
+        );
+    }
+
     public function test_max_single_term()
     {
         $this->pm->options['maxsingle'] = 1;
