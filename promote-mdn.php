@@ -31,7 +31,7 @@ class PromoteMDN {
         'maxsingleurl' => '1',
         'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1 ),
     );
-    public $tracking_querystring = '?utm_source=wordpress%%20blog&utm_medium=content%%20link&utm_campaign=promote%%20mdn';
+    public $tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
 
     function __construct( $options = null )
     {
