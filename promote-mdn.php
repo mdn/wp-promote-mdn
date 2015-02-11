@@ -78,6 +78,10 @@ class PromoteMDN {
         $maxsingle    = ( $options['maxsingle'] > 0 ) ? $options['maxsingle'] : 0 - 1;
         $maxsingleurl = ( $options['maxsingleurl'] > 0 ) ? $options['maxsingleurl'] : 0;
 
+        if ( $maxlinks == 0 ) {
+            return $text;
+        }
+
         $urls = array();
 
         $arrignore     = $this->explode_lower_trim( ',' , ( $options['ignore'] ) );
@@ -314,7 +318,7 @@ class PromoteMDN {
 
 
                 <h4><?php _e( 'Limits' , 'promote-mdn' ) ?></h4>
-                <?php _e( 'Max links to generate per post:' , 'promote-mdn' ) ?> <input type="text" name="maxlinks" size="2" value="<?php echo esc_html( $maxlinks ) ?>"/><br/>
+                <?php _e( 'Max links to generate per post:' , 'promote-mdn' ) ?> <input type="text" name="maxlinks" size="2" value="<?php echo esc_html( $maxlinks ) ?>"/><?php _e( '(0 to disable all links)' , 'promote-mdn' ) ?><br/>
                 <?php _e( 'Max links to generate for a single keyword/phrase:' , 'promote-mdn' ) ?> <input type="text" name="maxsingle" size="2" value="<?php echo esc_html( $maxsingle ) ?>"/><br/>
                 <?php _e( 'Max links to generate for a single URL:' , 'promote-mdn' ) ?> <input type="text" name="maxsingleurl" size="2" value="<?php echo esc_html( $maxsingleurl ) ?>"/>
 
