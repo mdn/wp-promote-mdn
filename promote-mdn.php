@@ -94,7 +94,6 @@ class PromoteMDN {
             }
         }
 
-        $reg_post = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))($name)/imsU';
         $reg      = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
         $text     = " $text ";
 
@@ -345,10 +344,10 @@ localUrlEl.onclick = function() {
         re = /([\w-]+)\/docs/;
     urlInput.value = urlInput.value.replace( re, '<?php echo esc_html( str_replace( '_', '-', WPLANG  ) ); ?>/docs' );
     reloadBtn.click();
-}
+};
 var ignoreAlls = jQuery('.ignore-all');
 ignoreAlls.change(function(){
-    if (jQuery('.ignore-all:checked').length == 2) {
+    if (jQuery('.ignore-all:checked').length === 2) {
         jQuery('#ignorepost').prop('disabled', true);
     } else {
         jQuery('#ignorepost').prop('disabled', false);
@@ -557,7 +556,7 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
         }
 
         public function notify_mozilla( $post_id ) {
-            if(    ( $_POST['post_status'] == 'publish' )
+            if(  ( $_POST['post_status'] == 'publish' )
                 && ( $_POST['original_post_status'] != 'publish' )
                 && ( $_POST['notify_mozilla'] == '1' ) ) {
                 $post = get_post($post_id);
