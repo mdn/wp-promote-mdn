@@ -239,7 +239,6 @@ class PromoteMDN {
 
         $action_url = $_SERVER['REQUEST_URI'];
 
-        $comment = $options['comment'] == 'on' ? 'checked' : '';
         $ignoreallpages = $options['ignoreallpages'] == 'on' ? 'checked' : '';
         $ignoreallposts = $options['ignoreallposts'] == 'on' ? 'checked' : '';
         $exclude_elems = $options['exclude_elems'];
@@ -373,7 +372,7 @@ ignoreAlls.change(function(){
 
     function admin_menu()
     {
-        add_options_page( 'Promote MDN Options', 'Promote MDN', 8, basename( __FILE__ ), array( &$this, 'handle_options' ) );
+        add_options_page( 'Promote MDN Options', 'Promote MDN', 'manage_options', basename( __FILE__ ), array( &$this, 'handle_options' ) );
     }
 
     function hide_href( $version ) {
@@ -523,7 +522,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 <?php
         }
 
-        public function update( $new_instance ) {
+        public function update( $new_instance, $old_instance ) {
             return $new_instance;
         }
     }
