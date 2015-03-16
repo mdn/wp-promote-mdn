@@ -143,7 +143,7 @@ class PromoteMDN {
                         }
                         $href = $url;
                         if ( $options['add_src_param'] == TRUE ) $href .= $this->tracking_querystring;
-                        $link = "<a $target title=\"%s\" href=\"$href\">%s</a>";
+                        $link = "<a $target title=\"%s\" href=\"$href\" class=\"promote-mdn\">%s</a>";
                         $regexp  = str_replace( '$name', $name, $reg );
                         $replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
                         $newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $maxsingle );
