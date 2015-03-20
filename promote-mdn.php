@@ -254,103 +254,103 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			$nonce = wp_create_nonce( 'promote-mdn' );
 			?>
 			<style type="text/css">
-			    #mainblock { width:600px; }
-			    .full-width { width: 100% }
-			    input { padding: .5em; }
-			    h4 { color: white; background: black; clear: both; padding: .5em; }
-			    pre { margin-bottom: -1em; }
-			    #use_local_url img { position: relative; top: 8px; }
-			    textarea { resize:vertical; }
-			    .dbx-content #top_banner { float: right; }
+				#mainblock { width:600px; }
+				.full-width { width: 100% }
+				input { padding: .5em; }
+				h4 { color: white; background: black; clear: both; padding: .5em; }
+				pre { margin-bottom: -1em; }
+				#use_local_url img { position: relative; top: 8px; }
+				textarea { resize:vertical; }
+				.dbx-content #top_banner { float: right; }
 			</style>
 
 			<div class="wrap">
 				<a href="https://github.com/groovecoder/wp-promote-mdn"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 				<div id="mainblock">
-			        <div class="dbx-content">
+					<div class="dbx-content">
 
-			<?php
-			$top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.', 'promote-mdn' );
-			?>
+						<?php
+						$top_img_title = __( 'MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, JavaScript and other Web standards and open technologies.', 'promote-mdn' );
+						?>
 						<div id="top_banner"><a href="https://developer.mozilla.org/web/?WT.mc_id=mdn37" title="<?php echo esc_html( $top_img_title ) ?>"><img src="https://mdn.mozillademos.org/files/7093/MDN_promoBanner_120x120px.png" id="logo" alt="<?php echo esc_html( $top_img_title ) ?>" /></a></div>
 						<p><?php _e( 'MDN is the best online resource - for web developers, by web developers.', 'promote-mdn' ) ?> </p>
 						<p><?php _e( 'Promote MDN:', 'promote-mdn' ) ?>
-			            <ul>
-			                <li><?php _e( 'Automatically links keywords and phrases in your posts and pages to MDN URLs.', 'promote-mdn' ) ?></li>
-			                <li><?php _e( 'Provides a widget with images and links to promote MDN.', 'promote-mdn' ) ?></li>
-			                <li><?php _e( 'Allows you to notify Mozilla DevEngage and Communications when publishing posts', 'promote-mdn' ) ?></li>
-			            </ul>
+						<ul>
+							<li><?php _e( 'Automatically links keywords and phrases in your posts and pages to MDN URLs.', 'promote-mdn' ) ?></li>
+							<li><?php _e( 'Provides a widget with images and links to promote MDN.', 'promote-mdn' ) ?></li>
+							<li><?php _e( 'Allows you to notify Mozilla DevEngage and Communications when publishing posts', 'promote-mdn' ) ?></li>
+						</ul>
 						</p>
 						<p><?php _e( 'Promote MDN is open source. <a href="https://github.com/groovecoder/wp-promote-mdn">Contribute on GitHub</a>', 'promote-mdn' ) ?></p>
 
 						<form name="PromoteMDN" action="<?php echo esc_html( $action_url ) ?>" method="post">
 							<input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ) ?>" />
-			                <input type="hidden" name="submitted" value="1" />
+							<input type="hidden" name="submitted" value="1" />
 
 
-			                <h4><?php _e( 'Settings', 'promote-mdn' ) ?></h4>
-			                <p><?php _e( 'Load keywords from URL:', 'promote-mdn' ) ?>
+							<h4><?php _e( 'Settings', 'promote-mdn' ) ?></h4>
+							<p><?php _e( 'Load keywords from URL:', 'promote-mdn' ) ?>
 								<input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ) ?>" style="width: 75%" />
 								<a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank"><?php _e( 'Preview', 'promote-mdn' ) ?></a>
 								<a id="use_local_url" class="button-secondary" href="#"  title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), WPLANG ) ) ?>"><?php _e( 'Switch to locale-specific list', 'promote-mdn' ) ?></a><br />
-			<?php _e( 'Reload keywords after (seconds):', 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
+								<?php _e( 'Reload keywords after (seconds):', 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
 								<button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now', 'promote-mdn' ) ?></button>
-			                </p>
-			                <input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds', 'promote-mdn' ) ?></label><br/>
-			                <input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url params (Helps MDN measure effectiveness)', 'promote-mdn' ) ?></label> <br/>
-			                <input type="checkbox" name="blanko" <?php echo esc_html( $blanko ) ?>/> <label for="blanko"><?php _e( 'Open links in new window', 'promote-mdn' ) ?></label> <br/>
+							</p>
+							<input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds', 'promote-mdn' ) ?></label><br/>
+							<input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url params (Helps MDN measure effectiveness)', 'promote-mdn' ) ?></label> <br/>
+							<input type="checkbox" name="blanko" <?php echo esc_html( $blanko ) ?>/> <label for="blanko"><?php _e( 'Open links in new window', 'promote-mdn' ) ?></label> <br/>
 
 
-			                <h4><?php _e( 'Exceptions', 'promote-mdn' ) ?></h4>
+							<h4><?php _e( 'Exceptions', 'promote-mdn' ) ?></h4>
 
-			                <input type="checkbox" name="ignoreallpages" class="ignore-all" <?php echo esc_html( $ignoreallpages ) ?>/> <label for="ignoreallpages"><?php _e( 'Do not add links to any <em>pages</em>.', 'promote-mdn' ) ?></label><br/>
-			                <input type="checkbox" name="ignoreallposts" class="ignore-all" <?php echo esc_html( $ignoreallposts ) ?>/> <label for="ignoreallposts"><?php _e( 'Do not add links to any <em>posts</em>.', 'promote-mdn' ) ?></label><br/>
-			                <p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):', 'promote-mdn' ) ?></p>
-			                <input type="text" name="ignorepost" id="ignorepost" value="<?php echo esc_html( $ignorepost ) ?>" class="full-width"/>
-			                <p><?php _e( 'Do not add links inside the following HTML elements (comma-separated, partial-matching):', 'promote-mdn' ) ?></p>
-			                <input type="text" name="exclude_elems" value="<?php echo esc_html( $exclude_elems ) ?>" class="full-width"/>
-			                <p><?php _e( 'Do not add links on the following phrases (comma-separated):', 'promote-mdn' ) ?></p>
-			                <input type="text" name="ignore" class="full-width" value="<?php echo esc_html( $ignore ) ?>"/>
+							<input type="checkbox" name="ignoreallpages" class="ignore-all" <?php echo esc_html( $ignoreallpages ) ?>/> <label for="ignoreallpages"><?php _e( 'Do not add links to any <em>pages</em>.', 'promote-mdn' ) ?></label><br/>
+							<input type="checkbox" name="ignoreallposts" class="ignore-all" <?php echo esc_html( $ignoreallposts ) ?>/> <label for="ignoreallposts"><?php _e( 'Do not add links to any <em>posts</em>.', 'promote-mdn' ) ?></label><br/>
+							<p><?php _e( 'Do not add links to the following posts or pages (comma-separated id, slug, name):', 'promote-mdn' ) ?></p>
+							<input type="text" name="ignorepost" id="ignorepost" value="<?php echo esc_html( $ignorepost ) ?>" class="full-width"/>
+							<p><?php _e( 'Do not add links inside the following HTML elements (comma-separated, partial-matching):', 'promote-mdn' ) ?></p>
+							<input type="text" name="exclude_elems" value="<?php echo esc_html( $exclude_elems ) ?>" class="full-width"/>
+							<p><?php _e( 'Do not add links on the following phrases (comma-separated):', 'promote-mdn' ) ?></p>
+							<input type="text" name="ignore" class="full-width" value="<?php echo esc_html( $ignore ) ?>"/>
 
 
-			                <h4><?php _e( 'Limits', 'promote-mdn' ) ?></h4>
-			<?php _e( 'Max links to generate per post:', 'promote-mdn' ) ?> <input type="text" name="maxlinks" size="2" value="<?php echo esc_html( $maxlinks ) ?>"/><?php _e( '(0 to disable all links)', 'promote-mdn' ) ?><br/>
+							<h4><?php _e( 'Limits', 'promote-mdn' ) ?></h4>
+							<?php _e( 'Max links to generate per post:', 'promote-mdn' ) ?> <input type="text" name="maxlinks" size="2" value="<?php echo esc_html( $maxlinks ) ?>"/><?php _e( '(0 to disable all links)', 'promote-mdn' ) ?><br/>
 							<?php _e( 'Max links to generate for a single keyword/phrase:', 'promote-mdn' ) ?> <input type="text" name="maxsingle" size="2" value="<?php echo esc_html( $maxsingle ) ?>"/><br/>
 							<?php _e( 'Max links to generate for a single URL:', 'promote-mdn' ) ?> <input type="text" name="maxsingleurl" size="2" value="<?php echo esc_html( $maxsingleurl ) ?>"/>
 
 
-			                <h4><?php _e( 'Custom Keywords', 'promote-mdn' ) ?></h4>
-			                <p><?php _e( 'Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,', 'promote-mdn' ) ?><br/>
-			                <pre>addons, amo, http://addons.mozilla.org/
-			sumo, http://support.mozilla.org/
-			                </pre>
-			                </p>
+							<h4><?php _e( 'Custom Keywords', 'promote-mdn' ) ?></h4>
+							<p><?php _e( 'Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,', 'promote-mdn' ) ?><br/>
+							<pre>addons, amo, http://addons.mozilla.org/
+																								sumo, http://support.mozilla.org/
+							</pre>
+							</p>
 
-			                <textarea class="full-width" name="customkey" id="customkey" rows="10" cols="90"  ><?php echo esc_html( $customkey ) ?></textarea>
-			                <em><?php _e( 'Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.', 'promote-mdn' ) ?></em>
-			                <div class="submit"><input type="submit" name="Submit" value="<?php _e( 'Update options', 'promote-mdn' ) ?>" class="button-primary" /></div>
-			            </form>
+							<textarea class="full-width" name="customkey" id="customkey" rows="10" cols="90"  ><?php echo esc_html( $customkey ) ?></textarea>
+							<em><?php _e( 'Note: These keywords will take priority over those loaded at the URL. If you have too many custom keywords here, you may not link to MDN at all.', 'promote-mdn' ) ?></em>
+							<div class="submit"><input type="submit" name="Submit" value="<?php _e( 'Update options', 'promote-mdn' ) ?>" class="button-primary" /></div>
+						</form>
 
-			        </div>
-			    </div>
+					</div>
+				</div>
 			</div>
 			<script type="text/javascript">
-			    var localUrlEl = document.getElementById("use_local_url");
-			    localUrlEl.onclick = function () {
-			      var urlInput = document.getElementById("customkey_url"),
-			              reloadBtn = document.getElementById("reload_now"),
-			              re = /([\w-]+)\/docs/;
-			      urlInput.value = urlInput.value.replace(re, '<?php echo esc_html( str_replace( '_', '-', WPLANG ) ); ?>/docs');
-			      reloadBtn.click();
-			    };
-			    var ignoreAlls = jQuery('.ignore-all');
-			    ignoreAlls.change(function () {
-			      if (jQuery('.ignore-all:checked').length === 2) {
-			        jQuery('#ignorepost').prop('disabled', true);
-			      } else {
-			        jQuery('#ignorepost').prop('disabled', false);
-			      }
-			    });
+				var localUrlEl = document.getElementById("use_local_url");
+				localUrlEl.onclick = function () {
+				  var urlInput = document.getElementById("customkey_url"),
+						  reloadBtn = document.getElementById("reload_now"),
+						  re = /([\w-]+)\/docs/;
+				  urlInput.value = urlInput.value.replace(re, '<?php echo esc_html( str_replace( '_', '-', WPLANG ) ); ?>/docs');
+				  reloadBtn.click();
+				};
+				var ignoreAlls = jQuery('.ignore-all');
+				ignoreAlls.change(function () {
+				  if (jQuery('.ignore-all:checked').length === 2) {
+					jQuery('#ignorepost').prop('disabled', true);
+				  } else {
+					jQuery('#ignorepost').prop('disabled', false);
+				  }
+				});
 			</script>
 			<?php
 		}
@@ -469,11 +469,11 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 			extract( $args );
 			if ( isset( $before_widget ) )
 				echo $before_widget;
-			if ( empty( $instance[ 'mdn_banner' ] ) ) {
+			if ( $instance[ 'choosen' ] !== 'new' ) {
 				if ( isset( $instance[ 'color' ] ) && isset( $instance[ 'text' ] ) )
 					$img = $img_array[ $instance[ 'color' ] . '_' . strtolower( $instance[ 'text' ] ) ];
 			} else {
-				$img = $img_new_array[$instance[ 'mdn_banner' ]];
+				$img = $img_new_array[ $instance[ 'mdn_banner' ] ];
 			}
 			?>
 			<section style="text-align: center;">
@@ -493,7 +493,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 				'orange' => __( 'Orange' ),
 			);
 			$texts = array( 'HTML', 'CSS', 'JavaScript', 'Web' );
-			$mdn_banners = array( 'Open Docs for an open Web [Square]', 'Better docs for a better Web [Banner]', 'Docs by developers, for developers[Banner]', 'Open Docs for an open Web [Banner]' );
+			$mdn_banners = array( 'Open Docs for an open Web [Square]', 'Better docs for a better Web [Banner]', 'Docs by developers, for developers [Banner]', 'Open Docs for an open Web [Banner]' );
 			$selected_color = 'grey';
 			$selected_text = 'Web';
 			$selected_mdn_banner = '';
@@ -503,19 +503,25 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 				$selected_text = $instance[ 'text' ];
 			if ( isset( $instance[ 'mdn_banner' ] ) )
 				$selected_mdn_banner = $instance[ 'mdn_banner' ];
+			$choosen = 'old';
+			if(isset( $instance[ 'choosen' ] ))
+				$choosen = $instance[ 'choosen' ];
+			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-old" name="' . $this->get_field_name( 'choosen' ) . '" value="old" ' . checked( $choosen === 'old', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">Old Banners</label>' . "\n";
+			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-new" name="' . $this->get_field_name( 'choosen' ) . '" value="new" ' . checked( $choosen === 'new', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">New Banners</label><br /><br />' . "\n";
 			?>
-			<section>
+			<fieldset id="<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner">
+				<legend>Old Banners</legend>
 				<label for="<?php echo esc_html( $this->get_field_id( 'color' ) ); ?>"><?php _e( 'Color:' ); ?></label>
 				<select id="<?php echo esc_html( $this->get_field_id( 'color' ) ); ?>" name="<?php echo esc_html( $this->get_field_name( 'color' ) ); ?>">
-			<?php
-			foreach ( $colors as $value => $color ) {
-				$selected = ( $value == $selected_color ) ? 'selected' : '';
-				?>
+					<?php
+					foreach ( $colors as $value => $color ) {
+						$selected = ( $value == $selected_color ) ? 'selected' : '';
+						?>
 						<option value="<?php echo esc_html( $value ) ?>" <?php echo esc_html( $selected ) ?>><?php echo esc_html( $color ) ?></option>
 						<?php
 					}
 					?>
-				</select>
+				</select><br/>
 				<label for="<?php echo esc_html( $this->get_field_id( 'text' ) ); ?>"><?php _e( 'Text:' ); ?></label>
 				<select id="<?php echo esc_html( $this->get_field_id( 'text' ) ); ?>" name="<?php echo esc_html( $this->get_field_name( 'text' ) ); ?>">
 					<?php
@@ -526,57 +532,78 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 						<?php
 					}
 					?>
-				</select><br/>
-				<label for="<?php echo esc_html( $this->get_field_id( 'mdn_banner' ) ); ?>"><?php _e( 'New MDN Banner (leave empty for not use it):' ); ?></label>
+				</select>
+			</fieldset>
+			<fieldset id="<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner">
+				<legend>New MDN banners</legend>
+				<label for="<?php echo esc_html( $this->get_field_id( 'mdn_banner' ) ); ?>"><?php _e( 'Banner:' ); ?></label>
 				<select id="<?php echo esc_html( $this->get_field_id( 'mdn_banner' ) ); ?>" name="<?php echo esc_html( $this->get_field_name( 'mdn_banner' ) ); ?>">
 					<option value="" <?php echo esc_html( $selected ) ?>></option>
-			<?php
-			foreach ( $mdn_banners as $text ) {
-				$name_mdn_banner = strtolower( str_replace( str_split( ',[] ' ), '', $text ) );
-				$selected = ( $name_mdn_banner == $selected_mdn_banner ) ? 'selected' : '';
-				?>
+					<?php
+					foreach ( $mdn_banners as $text ) {
+						$name_mdn_banner = strtolower( str_replace( str_split( ',[] ' ), '', $text ) );
+						$selected = ( $name_mdn_banner == $selected_mdn_banner ) ? 'selected' : '';
+						?>
 						<option value="<?php echo esc_html( $name_mdn_banner ) ?>" <?php echo esc_html( $selected ) ?>><?php echo esc_html( $text ) ?></option>
 						<?php
 					}
 					?>
 				</select>
-			</section>
-					<?php
-				}
-
-				public function update( $new_instance, $old_instance ) {
-					return $new_instance;
-				}
-
-			}
-
-			endif;
-
-		if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
-
-			class PromoteMDN_Notifier {
-
-				public function __construct() {
-					add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-					add_action( 'publish_post', array( $this, 'notify_mozilla' ) );
-				}
-
-				public function add_meta_box( $post_type ) {
-					$post_types = array( 'post' ); // limit meta box to certain types
-					if ( in_array( $post_type, $post_types ) ) {
-						add_meta_box(
-								'major-publishing-actions'
-								, __( 'Notify Mozilla', 'promote-mdn' )
-								, array( $this, 'render_meta_box_content' )
-								, $post_type
-								, 'side'
-								, 'high'
-						);
+			</fieldset>
+			<script>
+				jQuery(document).ready(function () {
+				  function check_radio_promote_mdn() {
+					if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ) ?>']:checked").val() === 'old') {
+					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
+					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').show();
+					} else if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ); ?>']:checked").val() === 'new') {
+					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').hide();
+					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').show();
 					}
-				}
+				  }
+				  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
+				  jQuery("#<?php echo $this->get_field_id( 'choosen' ) . '-old'; ?>,#<?php echo $this->get_field_id( 'choosen' ) . '-new'; ?>").click(function () {
+					check_radio_promote_mdn();
+				  });
+				  check_radio_promote_mdn();
+				});
+			</script>
+			<?php
+		}
 
-				public function render_meta_box_content( $post ) {
-					?>
+		public function update( $new_instance, $old_instance ) {
+			return $new_instance;
+		}
+
+	}
+
+	endif;
+
+if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
+
+	class PromoteMDN_Notifier {
+
+		public function __construct() {
+			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+			add_action( 'publish_post', array( $this, 'notify_mozilla' ) );
+		}
+
+		public function add_meta_box( $post_type ) {
+			$post_types = array( 'post' ); // limit meta box to certain types
+			if ( in_array( $post_type, $post_types ) ) {
+				add_meta_box(
+						'major-publishing-actions'
+						, __( 'Notify Mozilla', 'promote-mdn' )
+						, array( $this, 'render_meta_box_content' )
+						, $post_type
+						, 'side'
+						, 'high'
+				);
+			}
+		}
+
+		public function render_meta_box_content( $post ) {
+			?>
 			<input name="notify_mozilla" type="checkbox" value="1" /><?php echo esc_html( __( 'Notify Mozilla of this post', 'promote-mdn' ) ); ?>
 			<?php
 		}
