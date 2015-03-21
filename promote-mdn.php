@@ -28,8 +28,9 @@ class PromoteMDN {
         'blanko' => 'on',
         'add_src_param' => 'on',
         'allowfeed' => '',
+        'allowlinks' => 'on',
         'maxsingleurl' => '1',
-        'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1 ),
+        'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1, '1.6' => 1 ),
     );
     public $tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
 
@@ -51,6 +52,10 @@ class PromoteMDN {
         add_action( 'admin_menu' ,  array( &$this, 'admin_menu' ) );
         add_action( 'admin_notices' , array( &$this, 'admin_notices' ) );
         add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
+
+        if ( $this->options['allowcomments'] ) {
+            add_filter( 'comment_text' ,  array( &$this, 'process_text' ), 10 );
+        }
 
         // Load translated strings
         load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
@@ -230,6 +235,7 @@ class PromoteMDN {
                 $options['blanko']               = $_POST['blanko'];
                 $options['add_src_param']        = $_POST['add_src_param'];
                 $options['allowfeed']            = $_POST['allowfeed'];
+                $options['allowcomments']        = $_POST['allowcomments'];
 
                 update_option( $this->option_name, $options );
                 $settings_message = __( 'Plugin settings saved.', 'promote-mdn' );
@@ -254,6 +260,7 @@ class PromoteMDN {
         $blanko = $options['blanko'] == 'on' ? 'checked' : '';
         $add_src_param = $options['add_src_param'] == 'on' ? 'checked' : '';
         $allowfeed = $options['allowfeed'] == 'on' ? 'checked' : '';
+        $allowcomments = $options['allowcomments'] == 'on' ? 'checked' : '';
 
         $nonce = wp_create_nonce( 'promote-mdn' );
 ?>
@@ -301,6 +308,7 @@ class PromoteMDN {
                 <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now' , 'promote-mdn' ) ?></button>
                 </p>
                 <input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds' , 'promote-mdn' ) ?></label><br/>
+                <input type="checkbox" name="allowcomments" <?php echo esc_html( $allowcomments ) ?>/> <label for="allowcomments"><?php _e( 'Add links to comments' , 'promote-mdn' ) ?></label><br/>
                 <input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url params (Helps MDN measure effectiveness)' , 'promote-mdn' ) ?></label> <br/>
                 <input type="checkbox" name="blanko" <?php echo esc_html( $blanko ) ?>/> <label for="blanko"><?php _e( 'Open links in new window' , 'promote-mdn' ) ?></label> <br/>
 
@@ -368,6 +376,7 @@ ignoreAlls.change(function(){
         '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
         '1.5' => __( 'Security fixes.', 'promote-mdn' ),
         '1.6' => sprintf( __( 'You can now notify Mozilla Press and DevRel teams via email when you publish your posts!', 'promote-mdn' ), 'widgets.php' ),
+        '1.7' => sprintf( __( 'You can now include links in comments.', 'promote-mdn' ), 'widgets.php' ),
         );
     }
 
@@ -434,6 +443,13 @@ ignoreAlls.change(function(){
         $options['exclude_elems'] = 'blockquote, code, h, pre, q';
         $options['add_src_param'] = 'on';
         unset( $options['exclude_heading'] );
+        update_option( $this->option_name, $options );
+    }
+
+    function upgrade_17()
+    {
+        $options                  = get_option( $this->option_name );
+        $options['allowlinks'] = 'on';
         update_option( $this->option_name, $options );
     }
 }
