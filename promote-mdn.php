@@ -469,7 +469,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 			extract( $args );
 			if ( isset( $before_widget ) )
 				echo $before_widget;
-			if ( $instance[ 'choosen' ] !== 'new' ) {
+			if ( (isset($instance[ 'choosen' ]) && $instance[ 'choosen' ] === 'old') || !isset($instance[ 'choosen' ]) ) {
 				if ( isset( $instance[ 'color' ] ) && isset( $instance[ 'text' ] ) )
 					$img = $img_array[ $instance[ 'color' ] . '_' . strtolower( $instance[ 'text' ] ) ];
 			} else {
