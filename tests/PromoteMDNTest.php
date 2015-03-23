@@ -72,7 +72,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
     public function test_new_window()
     {
         $this->pm->options['blanko'] = '';
-        $linked_text_same_window     = '<p>I like <a  title="JavaScript" href="' . $this->js_href . '">JavaScript</a>.</p>';
+        $linked_text_same_window     = '<p>I like <a  title="JavaScript" href="' . $this->js_href . '" class="promote-mdn">JavaScript</a>.</p>';
         $this->assertEquals( $linked_text_same_window, $this->pm->process_text( $this->text ) );
 
         $this->pm->options['blanko'] = 'on';
@@ -162,7 +162,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
         $this->pm->options['maxsingleurl'] = 2;
         $this->assertEquals(
-            '<p>' . $this->js_linked . ' and <a target="_blank" title="JS" href="' . $this->js_href . '">JS</a></p>',
+            '<p>' . $this->js_linked . ' and <a target="_blank" title="JS" href="' . $this->js_href . '" class="promote-mdn">JS</a></p>',
             $this->pm->process_text( $text )
         );
     }
@@ -177,7 +177,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
         );
         $this->pm->options['customkey'] = 'groovecoder, http://groovecoder.com';
         $this->assertEquals(
-            '<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com' . $this->expected_tracking_querystring . '">groovecoder</a></p>',
+            '<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com' . $this->expected_tracking_querystring . '" class="promote-mdn">groovecoder</a></p>',
             $this->pm->process_text( $text )
         );
     }
