@@ -8,68 +8,113 @@ $page = '';
 // "mocks" for the wordpress stuff
 // these are mostly no-op functions to avoid "Undefined function" errors
 class WP_Widget {
-    public function __construct(){}
-    public function get_field_id( $field ) { return $field; }
-    public function get_field_name( $field ) { return $field; }
+
+	public function __construct() {
+		
+	}
+
+	public function get_field_id( $field ) {
+		return $field;
+	}
+
+	public function get_field_name( $field ) {
+		return $field;
+	}
+
 }
-function __( $str ) { return $str; }
-function _e( $str ) { return $str; }
-function add_filter( $hook_point, $hook_callback, $mode ) { return true; }
-function add_action( $hook_point, $hook_callback ) { return true; }
-function get_bloginfo( $name ) { return 'http://hacks.mozilla.org'; }
-function load_plugin_textdomain( $text_domain, $false, $where ) { return true; }
-function register_activation_hook( $file, $callback ) { return true; }
+
+function __( $str ) {
+	return $str;
+}
+
+function _e( $str ) {
+	return $str;
+}
+
+function add_filter( $hook_point, $hook_callback, $mode ) {
+	return true;
+}
+
+function add_action( $hook_point, $hook_callback ) {
+	return true;
+}
+
+function get_bloginfo( $name ) {
+	return 'http://hacks.mozilla.org';
+}
+
+function load_plugin_textdomain( $text_domain, $false, $where ) {
+	return true;
+}
+
+function register_activation_hook( $file, $callback ) {
+	return true;
+}
+
 function is_feed() {
-    global $feed;
-    if ( $feed ) return true;
-    return false;
+	global $feed;
+	if ( $feed )
+		return true;
+	return false;
 }
+
 function is_page( $arr_ignores = array() ) {
-    global $page;
-    // single-post is used to trigger post, not a page
-    if ( $page == 'single-post' ) return false;
-    if ( $page == 'is-page' ) return true;
-    if ( $arr_ignores == array() ) return true;
-    return in_array( $page, $arr_ignores );
+	global $page;
+	// single-post is used to trigger post, not a page
+	if ( $page == 'single-post' )
+		return false;
+	if ( $page == 'is-page' )
+		return true;
+	if ( $arr_ignores == array() )
+		return true;
+	return in_array( $page, $arr_ignores );
 }
+
 function is_single( $arr_ignores = array() ) {
-    global $page;
-    if ( $page == 'single-post' ) return true;
-    return in_array( $page, $arr_ignores );
+	global $page;
+	if ( $page == 'single-post' )
+		return true;
+	return in_array( $page, $arr_ignores );
 }
+
 function is_admin() {
-    return null;
+	return null;
 }
+
 function trailingslashit( $string ) {
-    return rtrim( $string, '/' ) . '/';
+	return rtrim( $string, '/' ) . '/';
 }
+
 function esc_html( $string ) {
-    return $string;
+	return $string;
 }
+
 function get_option( $name ) {
-    return array(
-        'ignoreallpages' => '',
-        'ignoreallposts' => '',
-        'exclude_elems' => 'blockquote, code, h, pre, q',
-        'ignore' => 'about,',
-        'ignorepost' => 'contact,',
-        'maxlinks' => 3,
-        'maxsingle' => 1,
-        'customkey' => '',
-        'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
-        'customkey_url_expire' => 86400,
-        'blanko' => 'on',
-        'add_src_param' => 'on',
-        'allowfeed' => '',
-        'maxsingleurl' => '1',
-        'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
-    );
+	return array(
+		'ignoreallpages' => '',
+		'ignoreallposts' => '',
+		'exclude_elems' => 'blockquote, code, h, pre, q',
+		'ignore' => 'about,',
+		'ignorepost' => 'contact,',
+		'maxlinks' => 3,
+		'maxsingle' => 1,
+		'customkey' => '',
+		'customkey_url' => 'https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1',
+		'customkey_url_expire' => 86400,
+		'blanko' => 'on',
+		'add_src_param' => 'on',
+		'allowfeed' => '',
+		'maxsingleurl' => '1',
+		'hide_notices' => array( '1.3' => 1, '1.4' => 1 ),
+	);
 }
+
 function update_option( $name, $options_array ) {
-    return true;
+	return true;
 }
+
 function get_transient( $key ) {
-    return 'JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
+	return 'JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
 DOM, https://developer.mozilla.org/docs/DOM
 WebGL, https://developer.mozilla.org/docs/WebGL
 WebSockets, WebSocket https://developer.mozilla.org/docs/WebSockets
@@ -88,4 +133,20 @@ IndexedDB, https://developer.mozilla.org/docs/IndexedDB
 Vibration API, https://developer.mozilla.org/docs/DOM/window.navigator.vibrate
 Geolocation, https://developer.mozilla.org/docs/Using_geolocation
 SVG, https://developer.mozilla.org/docs/SVG';
+}
+
+//original function from Wordpress
+function checked( $checked, $current = true, $echo = true ) {
+	return __checked_selected_helper( $checked, $current, $echo, 'checked' );
+}
+function __checked_selected_helper( $helper, $current, $echo, $type ) {
+	if ( ( string ) $helper === ( string ) $current )
+		$result = " $type='$type'";
+	else
+		$result = '';
+
+	if ( $echo )
+		echo $result;
+
+	return $result;
 }
