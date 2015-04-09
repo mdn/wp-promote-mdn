@@ -8,12 +8,12 @@ class WidgetTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->w = new PromoteMDN_Widget();
-        $this->i = array( 'text' => 'HTML', 'color' => 'red' );
+        $this->i = array( 'text' => 'HTML', 'color' => 'red', 'choosen' => 'old' );
     }
 
     public function test_update_returns()
     {
-        $this->assertEquals( $this->i, $this->w->update( $this->i ) );
+        $this->assertEquals( $this->i, $this->w->update( $this->i, '' ) );
     }
 
     public function test_form_defaults()
