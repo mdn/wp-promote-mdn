@@ -21,7 +21,7 @@ helps your readers discover and learn about web technologies on MDN.
 
 To help code on this plugin, go to [Promote MDN on Github](https://github.com/groovecoder/wp-promote-mdn/).
 
-Translations available: de_DE, es_ES, fr_FR, nl_NL, pl_PL, pt_BR.
+Translations available: de_DE, es_ES, fr_FR, nl_NL, pl_PL, pt_BR, it_IT.
 To help translate this plugin, go to the [MDN Verbatim](https://localize.mozilla.org/projects/mdn/) page.
 
 Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/)
