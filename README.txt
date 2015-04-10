@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: groovecoder, freediver
+Contributors: groovecoder, freediver, mte90
 Donate link: 
 Tags: mozilla, mdn, links
 Requires at least: 2.8
