@@ -2,7 +2,7 @@
 /*
   Plugin Name: Promote MDN
   Version: 1.6.0
-  Plugin URI: http://github.com/groovecoder/wp-promote-mdn
+  Plugin URI: http://github.com/mdn/wp-promote-mdn
   Author: Luke Crouch
   Author URI: http://groovecoder.com
   Description: Promote MDN automatically links keywords phrases to MDN docs
@@ -281,7 +281,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 							<li><?php _e( 'Allows you to notify Mozilla DevEngage and Communications when publishing posts', 'promote-mdn' ) ?></li>
 						</ul>
 						</p>
-						<p><?php _e( 'Promote MDN is open source. <a href="https://github.com/groovecoder/wp-promote-mdn">Contribute on GitHub</a>', 'promote-mdn' ) ?></p>
+						<p><?php _e( 'Promote MDN is open source. <a href="https://github.com/mdn/wp-promote-mdn">Contribute on GitHub</a>', 'promote-mdn' ) ?></p>
 
 						<form name="PromoteMDN" action="<?php echo esc_html( $action_url ) ?>" method="post">
 							<input type="hidden" id="_wpnonce" name="_wpnonce" value="<?php echo esc_html( $nonce ) ?>" />
