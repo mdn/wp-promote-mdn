@@ -322,7 +322,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 							<h4><?php _e( 'Custom Keywords', 'promote-mdn' ) ?></h4>
 							<p><?php _e( 'Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,', 'promote-mdn' ) ?><br/>
 							<pre>addons, amo, http://addons.mozilla.org/
-																								sumo, http://support.mozilla.org/
+																											sumo, http://support.mozilla.org/
 							</pre>
 							</p>
 
@@ -470,7 +470,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 			extract( $args );
 			if ( isset( $before_widget ) )
 				echo $before_widget;
-			if ( (isset($instance[ 'choosen' ]) && $instance[ 'choosen' ] === 'old') || !isset($instance[ 'choosen' ]) ) {
+			if ( (isset( $instance[ 'choosen' ] ) && $instance[ 'choosen' ] === 'old') || !isset( $instance[ 'choosen' ] ) ) {
 				if ( isset( $instance[ 'color' ] ) && isset( $instance[ 'text' ] ) )
 					$img = $img_array[ $instance[ 'color' ] . '_' . strtolower( $instance[ 'text' ] ) ];
 			} else {
@@ -505,7 +505,7 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 			if ( isset( $instance[ 'mdn_banner' ] ) )
 				$selected_mdn_banner = $instance[ 'mdn_banner' ];
 			$choosen = 'old';
-			if(isset( $instance[ 'choosen' ] ))
+			if ( isset( $instance[ 'choosen' ] ) )
 				$choosen = $instance[ 'choosen' ];
 			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-old" name="' . $this->get_field_name( 'choosen' ) . '" value="old" ' . checked( $choosen === 'old', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">Old Banners</label>' . "\n";
 			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-new" name="' . $this->get_field_name( 'choosen' ) . '" value="new" ' . checked( $choosen === 'new', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">New Banners</label><br /><br />' . "\n";
@@ -586,7 +586,7 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
 
 		public function __construct() {
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-			add_action( 'publish_post', array( $this, 'notify_mozilla' ) );
+			add_action( 'publish_post', array( $this, 'notify_mozilla' ),10 ,2 );
 		}
 
 		public function add_meta_box( $post_type ) {
@@ -616,15 +616,8 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
 				$author_email = $author->user_email;
 				$recipients = array( 'devrel@mozilla.com', 'press@mozilla.com' );
 				$email_subject = $author_email . ' published post "' . get_the_title( $post ) . '" to ' . get_bloginfo( 'name' );
-
-				ob_start();
-				?>
-				View post at: <?php echo get_permalink( $post ); ?> \n
-				Email author at: <?php echo $author_email; ?>
-				<?php
-				$message = ob_get_contents();
-
-				ob_end_clean();
+				$message = 'View post at:'.get_permalink( $post )."\n";
+				$message .= 'Email author at:'.$author_email."\n";
 
 				error_log( "Mail:" );
 				error_log( "Recipients: " . var_export( $recipients, true ) );
