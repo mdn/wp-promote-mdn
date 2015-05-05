@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: Promote MDN
-  Version: 1.6.0
+  Version: 1.7.0
   Plugin URI: http://github.com/mdn/wp-promote-mdn
   Author: Luke Crouch
   Author URI: http://groovecoder.com
@@ -362,6 +362,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 				'1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
 				'1.5' => __( 'Security fixes.', 'promote-mdn' ),
 				'1.6' => sprintf( __( 'You can now notify Mozilla Press and DevRel teams via email when you publish your posts!', 'promote-mdn' ), 'widgets.php' ),
+				'1.7' => sprintf( __( 'You can now use the new graphics for the Widget!', 'promote-mdn' ), 'widgets.php' ),
 			);
 		}
 
