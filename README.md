@@ -16,6 +16,13 @@ Development
 
 [Issues are tracked on GitHub](https://github.com/groovecoder/wp-promote-mdn/issues?state=open)
 
+How It Works
+------------
+
+The plugin automatically links keywords and phrases in WordPress posts and
+pages to pages on MDN. The keywords/phrases are loaded once per day from [a
+special page on MDN](https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1)
+
 Getting Started
 ---------------
 
