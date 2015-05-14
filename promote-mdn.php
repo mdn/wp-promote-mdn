@@ -31,7 +31,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			'add_src_param' => 'on',
 			'allowfeed' => '',
 			'maxsingleurl' => '1',
-			'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1 ),
+			'hide_notices' => array( '1.3' => 1, '1.4' => 1, '1.5' => 1, '1.6' => 1 ),
 		);
 		public $tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
 
@@ -52,6 +52,10 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			add_action( 'admin_menu', array( &$this, 'admin_menu' ) );
 			add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
 			add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
+
+			if ( $this->options[ 'allowcomments' ] ) {
+				add_filter( 'comment_text', array( &$this, 'process_text' ), 10 );
+			}
 
 			// Load translated strings
 			load_plugin_textdomain( 'promote-mdn', false, 'promote-mdn/languages/' );
@@ -227,6 +231,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 					$options[ 'blanko' ] = $_POST[ 'blanko' ];
 					$options[ 'add_src_param' ] = $_POST[ 'add_src_param' ];
 					$options[ 'allowfeed' ] = $_POST[ 'allowfeed' ];
+					$options[ 'allowcomments' ] = $_POST[ 'allowcomments' ];
 
 					update_option( $this->option_name, $options );
 					$settings_message = __( 'Plugin settings saved.', 'promote-mdn' );
@@ -250,6 +255,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			$blanko = $options[ 'blanko' ] == 'on' ? 'checked' : '';
 			$add_src_param = $options[ 'add_src_param' ] == 'on' ? 'checked' : '';
 			$allowfeed = $options[ 'allowfeed' ] == 'on' ? 'checked' : '';
+			$allowcomments = $options[ 'allowcomments' ] == 'on' ? 'checked' : '';
 
 			$nonce = wp_create_nonce( 'promote-mdn' );
 			?>
@@ -297,6 +303,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 								<button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now', 'promote-mdn' ) ?></button>
 							</p>
 							<input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds', 'promote-mdn' ) ?></label><br/>
+							<input type="checkbox" name="allowcomments" <?php echo esc_html( $allowcomments ) ?>/> <label for="allowcomments"><?php _e( 'Add links to comments', 'promote-mdn' ) ?></label><br/>
 							<input type="checkbox" name="add_src_param" <?php echo esc_html( $add_src_param ) ?>/> <label for="add_src_param"><?php _e( 'Include src url params (Helps MDN measure effectiveness)', 'promote-mdn' ) ?></label> <br/>
 							<input type="checkbox" name="blanko" <?php echo esc_html( $blanko ) ?>/> <label for="blanko"><?php _e( 'Open links in new window', 'promote-mdn' ) ?></label> <br/>
 
@@ -322,7 +329,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 							<h4><?php _e( 'Custom Keywords', 'promote-mdn' ) ?></h4>
 							<p><?php _e( 'Extra keywords to automaticaly link. Use comma to seperate keywords and add target url at the end. Use a new line for new url and set of keywords. e.g.,', 'promote-mdn' ) ?><br/>
 							<pre>addons, amo, http://addons.mozilla.org/
-																											sumo, http://support.mozilla.org/
+																																	sumo, http://support.mozilla.org/
 							</pre>
 							</p>
 
@@ -335,22 +342,22 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 				</div>
 			</div>
 			<script type="text/javascript">
-				var localUrlEl = document.getElementById("use_local_url");
-				localUrlEl.onclick = function () {
-				  var urlInput = document.getElementById("customkey_url"),
-						  reloadBtn = document.getElementById("reload_now"),
-						  re = /([\w-]+)\/docs/;
-				  urlInput.value = urlInput.value.replace(re, '<?php echo esc_html( str_replace( '_', '-', WPLANG ) ); ?>/docs');
-				  reloadBtn.click();
-				};
-				var ignoreAlls = jQuery('.ignore-all');
-				ignoreAlls.change(function () {
-				  if (jQuery('.ignore-all:checked').length === 2) {
-					jQuery('#ignorepost').prop('disabled', true);
-				  } else {
-					jQuery('#ignorepost').prop('disabled', false);
-				  }
-				});
+			    var localUrlEl = document.getElementById("use_local_url");
+			    localUrlEl.onclick = function () {
+			      var urlInput = document.getElementById("customkey_url"),
+			              reloadBtn = document.getElementById("reload_now"),
+			              re = /([\w-]+)\/docs/;
+			      urlInput.value = urlInput.value.replace(re, '<?php echo esc_html( str_replace( '_', '-', WPLANG ) ); ?>/docs');
+			      reloadBtn.click();
+			    };
+			    var ignoreAlls = jQuery('.ignore-all');
+			    ignoreAlls.change(function () {
+			      if (jQuery('.ignore-all:checked').length === 2) {
+			        jQuery('#ignorepost').prop('disabled', true);
+			      } else {
+			        jQuery('#ignorepost').prop('disabled', false);
+			      }
+			    });
 			</script>
 			<?php
 		}
@@ -362,7 +369,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 				'1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
 				'1.5' => __( 'Security fixes.', 'promote-mdn' ),
 				'1.6' => sprintf( __( 'You can now notify Mozilla Press and DevRel teams via email when you publish your posts!', 'promote-mdn' ), 'widgets.php' ),
-				'1.7' => sprintf( __( 'You can now use the new graphics for the Widget!', 'promote-mdn' ), 'widgets.php' ),
+				'1.7' => sprintf( __( 'You can now use the new graphics for the Widget and links in the comments!', 'promote-mdn' ), 'widgets.php' ),
 			);
 		}
 
@@ -426,6 +433,12 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			$options[ 'exclude_elems' ] = 'blockquote, code, h, pre, q';
 			$options[ 'add_src_param' ] = 'on';
 			unset( $options[ 'exclude_heading' ] );
+			update_option( $this->option_name, $options );
+		}
+
+		function upgrade_17() {
+			$options = get_option( $this->option_name );
+			$options[ 'allowlinks' ] = 'on';
 			update_option( $this->option_name, $options );
 		}
 
@@ -552,22 +565,22 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 				</select>
 			</fieldset>
 			<script>
-				jQuery(document).ready(function () {
-				  function check_radio_promote_mdn() {
-					if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ) ?>']:checked").val() === 'old') {
-					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
-					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').show();
-					} else if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ); ?>']:checked").val() === 'new') {
-					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').hide();
-					  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').show();
-					}
-				  }
-				  jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
-				  jQuery("#<?php echo $this->get_field_id( 'choosen' ) . '-old'; ?>,#<?php echo $this->get_field_id( 'choosen' ) . '-new'; ?>").click(function () {
-					check_radio_promote_mdn();
-				  });
-				  check_radio_promote_mdn();
-				});
+			    jQuery(document).ready(function () {
+			      function check_radio_promote_mdn() {
+			        if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ) ?>']:checked").val() === 'old') {
+			          jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
+			          jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').show();
+			        } else if (jQuery("input[name='<?php echo $this->get_field_name( 'choosen' ); ?>']:checked").val() === 'new') {
+			          jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_oldbanner').hide();
+			          jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').show();
+			        }
+			      }
+			      jQuery('#<?php echo $this->get_field_id( 'choosen' ); ?>_fieldset_newbanner').hide();
+			      jQuery("#<?php echo $this->get_field_id( 'choosen' ) . '-old'; ?>,#<?php echo $this->get_field_id( 'choosen' ) . '-new'; ?>").click(function () {
+			        check_radio_promote_mdn();
+			      });
+			      check_radio_promote_mdn();
+			    });
 			</script>
 			<?php
 		}
@@ -586,7 +599,7 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
 
 		public function __construct() {
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
-			add_action( 'publish_post', array( $this, 'notify_mozilla' ),10 ,2 );
+			add_action( 'publish_post', array( $this, 'notify_mozilla' ), 10, 2 );
 		}
 
 		public function add_meta_box( $post_type ) {
@@ -616,8 +629,8 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
 				$author_email = $author->user_email;
 				$recipients = array( 'devrel@mozilla.com', 'press@mozilla.com' );
 				$email_subject = $author_email . ' published post "' . get_the_title( $post ) . '" to ' . get_bloginfo( 'name' );
-				$message = 'View post at:'.get_permalink( $post )."\n";
-				$message .= 'Email author at:'.$author_email."\n";
+				$message = 'View post at:' . get_permalink( $post ) . "\n";
+				$message .= 'Email author at:' . $author_email . "\n";
 
 				error_log( "Mail:" );
 				error_log( "Recipients: " . var_export( $recipients, true ) );

@@ -25,6 +25,7 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase
             'blanko' => 'on',
             'allowfeed' => '',
             'maxsingleurl' => '1',
+			'allowcomments' => '',
         );
         $this->pm = new PromoteMDN( $options );
 
