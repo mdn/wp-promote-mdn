@@ -4,7 +4,7 @@ Donate link:
 Tags: mozilla, mdn, links
 Requires at least: 2.8
 Tested up to: 3.8
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,17 @@ Using locale-specific links will improve your readers' experience.
 2. Automatically linking 'HTML5', 'HTML', and 'JavaScript' keywords.
 
 == Changelog ==
+
+= 1.7 =
+
+* New MDN banners
+* New translation IT_it
+* Support for comments
+* Fixed notification to Mozilla DevEngage team
+* Fixed bad html code in widget
+* CSS class in the link
+* Removed deprecated code
+
 = 1.6 =
 * Option to notify Mozilla Press and DevRel when publishing post
 * Fix HTML bug in admin notices

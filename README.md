@@ -6,7 +6,7 @@ Features
 * Widget for sidebars with graphic/banner link
 * Automatic linking of key terms and phrases ([defined on MDN
   itself](https://developer.mozilla.org/en-US/docs/Template:Promote-MDN
-)) in posts and pages
+)) in posts, pages and comments
 * Ability to notify Mozilla Press and DevRel teams when publishing posts
 
 Development
@@ -26,6 +26,6 @@ Running Tests
 -------------
 
 Yes, I actually wrote tests for a WordPress Plugin. Don't judge me. To run
-them, simply run::
+them, simply run:
 
     phpunit
