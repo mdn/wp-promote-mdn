@@ -1,13 +1,13 @@
 <?php
 /*
-  Plugin Name: Promote MDN
-  Version: 1.7.0
-  Plugin URI: http://github.com/mdn/wp-promote-mdn
-  Author: Luke Crouch
-  Author URI: http://groovecoder.com
-  Description: Promote MDN automatically links keywords phrases to MDN docs
-  Text Domain: promote-mdn
- */
+Plugin Name: Promote MDN
+Version: 1.7.0
+Plugin URI: http://github.com/mdn/wp-promote-mdn
+Author: Luke Crouch
+Author URI: http://groovecoder.com
+Description: Promote MDN automatically links keywords phrases to MDN docs
+Text Domain: promote-mdn
+*/
 
 // Avoid name collisions.
 if ( !class_exists( 'PromoteMDN' ) ) :

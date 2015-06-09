@@ -4,18 +4,11 @@ Run tests
 1) phpunit
 
 Deploy HEAD to a wordpress instance to test:
-2) git archive --prefix=promote-mdn/ HEAD > wp-content/plugins/promote-mdn.tgz
-3) cd wp-content/plugins && tar zxvf promote-mdn.tgz
+2) git clone git@github.com:mdn/wp-promote-mdn.git
+3) cd wp-promote-mdn
 
 If successful:
 
 4) update version number in README.txt and promote-mdn.php
-5) git archive HEAD > promote-mdn/trunk/promote-mdn.tgz
-6) cd promote-mdn && tar zxvf promote-mdn.tgz
-7) svn ci -m "Release X code"
-8) svn cp trunk tags/X
-9) svn add tags/X
-10) svn ci -m "Release X tag"
-11) change "Stable tag: X" in README.txt
-12) svn add README.txt
-13) svn ci -m "Launching Release X"
+5) edit the username in deploy.sh
+6) launch deploy.sh (wait for the password request of SVN and GIT)
