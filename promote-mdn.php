@@ -401,12 +401,14 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			?>
 			<style>
 				.promote-mdn-notice {
-					background: url(https://developer.cdn.mozilla.net/media/redesign/img/MDNLogo.png) 0 0 no-repeat;
-					padding: 18px 20px 18px 62px !important;
 					display: inline-block;
-					color: #999;
-					font-family: arial;
-					font-size: 12px;
+				}
+				.promote-mdn-hide {
+				    float:right;
+				    text-transform: uppercase;
+				    line-height: 1.5;
+				    margin: 0.5em 0px;
+				    padding:2px;
 				}
 			</style>
 			<?php
@@ -424,7 +426,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 					if ( method_exists( $this, $upgrade_method ) )
 						$this->$upgrade_method();
 					?>
-					<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
+					<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a class="promote-mdn-hide" href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 					<?php
 				}
 			}
