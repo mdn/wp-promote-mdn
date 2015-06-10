@@ -36,9 +36,9 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 		public $tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
 
 		function __construct( $options = null ) {
-			if ( $options )
+			if ( $options ) {
 				$this->options = $options;
-			else {
+			} else {
 				$this->options = get_option( $this->option_name );
 				// if the options were cleared in the db, reinstall defaults
 				if ( $this->options == '' ) {
@@ -64,15 +64,15 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 		function process_text( $text ) {
 			$options = $this->options;
 			$links = 0;
-			if ( is_feed() && !$options[ 'allowfeed' ] )
+			if ( is_feed() && !$options[ 'allowfeed' ] ) {
 				return $text;
-
-			if ( is_page() && $options[ 'ignoreallpages' ] )
+			}
+			if ( is_page() && $options[ 'ignoreallpages' ] ){
 				return $text;
-
-			if ( is_single() && $options[ 'ignoreallposts' ] )
+			}
+			if ( is_single() && $options[ 'ignoreallposts' ] ){
 				return $text;
-
+			}
 			$arrignorepost = $this->explode_lower_trim( ',', ( $options[ 'ignorepost' ] ) );
 			if ( is_page( $arrignorepost ) || is_single( $arrignorepost ) ) {
 				return $text;
@@ -117,38 +117,44 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 						$i = 0;
 						$url = $chunks[ $total_chuncks - 1 ];
 						while ( $i < $total_chuncks - 1 ) {
-							if ( !empty( $chunks[ $i ] ) )
+							if ( !empty( $chunks[ $i ] ) ) {
 								$kw_array[ $chunks[ $i ] ] = $url;
+							}
 							$i++;
 						}
 					} else {
 						$pieces_array = explode( ',', $line, 2 );
-						if ( count( $pieces_array ) > 1 )
+						if ( count( $pieces_array ) > 1 ) {
 							list( $keyword, $url ) = array_map( 'trim', $pieces_array );
-						if ( !empty( $keyword ) )
+						}
+						if ( !empty( $keyword ) ) {
 							$kw_array[ $keyword ] = $url;
+						}
 					}
 				}
 				foreach ( $kw_array as $name => $url ) {
-					if ( in_array( strtolower( $name ), $arrignore ) )
+					if ( in_array( strtolower( $name ), $arrignore ) ) {
 						continue;
+					}
 					if ( (!$maxlinks || ( $links < $maxlinks ) ) && (!in_array( strtolower( $name ), $arrignore ) ) && (!$maxsingleurl || !isset( $urls[ $url ] ) || $urls[ $url ] < $maxsingleurl )
 					) {
-						if ( !isset( $options[ 'customkey_preventduplicatelink' ] ) )
+						if ( !isset( $options[ 'customkey_preventduplicatelink' ] ) ) {
 							$options[ 'customkey_preventduplicatelink' ] = FALSE;
+						}
 						if ( $options[ 'customkey_preventduplicatelink' ] == TRUE || stripos( $text, $name ) !== false ) {
 							$name = preg_quote( $name, '/' );
 
-							if ( $options[ 'customkey_preventduplicatelink' ] == TRUE )
+							if ( $options[ 'customkey_preventduplicatelink' ] == TRUE ) {
 								$name = str_replace( ',', '|', $name );
-
+							}
 							$target = '';
 							if ( $options[ 'blanko' ] ) {
 								$target = 'target="_blank"';
 							}
 							$href = $url;
-							if ( $options[ 'add_src_param' ] == TRUE )
+							if ( $options[ 'add_src_param' ] == TRUE ) {
 								$href .= $this->tracking_querystring;
+							}
 							$link = "<a $target title=\"%s\" href=\"$href\" class=\"promote-mdn\">%s</a>";
 							$regexp = str_replace( '$name', $name, $reg );
 							$replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
@@ -156,10 +162,11 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 							if ( $newtext != $text ) {
 								$links++;
 								$text = $newtext;
-								if ( !isset( $urls[ $url ] ) )
+								if ( !isset( $urls[ $url ] ) ) {
 									$urls[ $url ] = 1;
-								else
+								} else {
 									$urls[ $url ] ++;
+								}
 							}
 						}
 					}
@@ -199,8 +206,9 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			}
 			// return empty array for single empty string element
 			// for simpler if-checks
-			if ( count( $ret ) == 1 && $ret[ 0 ] == '' )
+			if ( count( $ret ) == 1 && $ret[ 0 ] == '' ) {
 				$ret = array();
+			}
 			return $ret;
 		}
 
@@ -380,8 +388,9 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 		function hide_href( $version ) {
 			$param_char = '?';
 			if ( isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
-				if ( strpos( $_SERVER[ 'REQUEST_URI' ], '?' ) !== false )
+				if ( strpos( $_SERVER[ 'REQUEST_URI' ], '?' ) !== false ) {
 					$param_char = '&';
+				}
 				return $_SERVER[ 'REQUEST_URI' ] . $param_char . 'hide=' . $version;
 			} else {
 				return 'hide=' . $version;
@@ -392,12 +401,14 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			?>
 			<style>
 				.promote-mdn-notice {
-					background: url(https://developer.cdn.mozilla.net/media/redesign/img/MDNLogo.png) 0 0 no-repeat;
-					padding: 18px 20px 18px 62px !important;
 					display: inline-block;
-					color: #999;
-					font-family: arial;
-					font-size: 12px;
+				}
+				.promote-mdn-hide {
+				    float:right;
+				    text-transform: uppercase;
+				    line-height: 1.5;
+				    margin: 0.5em 0px;
+				    padding:2px;
 				}
 			</style>
 			<?php
@@ -415,7 +426,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 					if ( method_exists( $this, $upgrade_method ) )
 						$this->$upgrade_method();
 					?>
-					<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
+					<div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a class="promote-mdn-hide" href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
 					<?php
 				}
 			}
@@ -424,8 +435,9 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 		// Set up everything
 		function install() {
 			$options = get_option( $this->option_name );
-			if ( !$options )
+			if ( !$options ) {
 				update_option( $this->option_name, $this->install_options );
+			}
 		}
 
 		function upgrade_14() {
@@ -481,11 +493,13 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 				'opendocsforanopenwebbanner' => 'https://mdn.mozillademos.org/files/7099/MDN_promoBanner_120x240px_v3.png',
 			);
 			extract( $args );
-			if ( isset( $before_widget ) )
+			if ( isset( $before_widget ) ) {
 				echo $before_widget;
+			}
 			if ( (isset( $instance[ 'choosen' ] ) && $instance[ 'choosen' ] === 'old') || !isset( $instance[ 'choosen' ] ) ) {
-				if ( isset( $instance[ 'color' ] ) && isset( $instance[ 'text' ] ) )
+				if ( isset( $instance[ 'color' ] ) && isset( $instance[ 'text' ] ) ) {
 					$img = $img_array[ $instance[ 'color' ] . '_' . strtolower( $instance[ 'text' ] ) ];
+				}
 			} else {
 				$img = $img_new_array[ $instance[ 'mdn_banner' ] ];
 			}
@@ -496,8 +510,9 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 				<a href="http://wordpress.org/extend/plugins/promote-mdn/" target="_blank"><?php _e( 'Get the WordPress plugin', 'promote-mdn' ) ?></a>
 			</section>
 			<?php
-			if ( isset( $after_widget ) )
+	if ( isset( $after_widget ) ) {
 				echo $after_widget;
+			}
 		}
 
 		public function form( $instance ) {
@@ -511,15 +526,19 @@ if ( !class_exists( 'PromoteMDN_Widget' ) ) :
 			$selected_color = 'grey';
 			$selected_text = 'Web';
 			$selected_mdn_banner = '';
-			if ( isset( $instance[ 'color' ] ) )
+			if ( isset( $instance[ 'color' ] ) ) {
 				$selected_color = $instance[ 'color' ];
-			if ( isset( $instance[ 'text' ] ) )
+			}
+			if ( isset( $instance[ 'text' ] ) ) {
 				$selected_text = $instance[ 'text' ];
-			if ( isset( $instance[ 'mdn_banner' ] ) )
+			}
+			if ( isset( $instance[ 'mdn_banner' ] ) ) {
 				$selected_mdn_banner = $instance[ 'mdn_banner' ];
+			}
 			$choosen = 'old';
-			if ( isset( $instance[ 'choosen' ] ) )
+			if ( isset( $instance[ 'choosen' ] ) ) {
 				$choosen = $instance[ 'choosen' ];
+			}
 			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-old" name="' . $this->get_field_name( 'choosen' ) . '" value="old" ' . checked( $choosen === 'old', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">Old Banners</label>' . "\n";
 			echo '<input type="radio" id="' . $this->get_field_id( 'choosen' ) . '-new" name="' . $this->get_field_name( 'choosen' ) . '" value="new" ' . checked( $choosen === 'new', true, false ) . '><label for="' . $this->get_field_id( 'choosen' ) . '-old">New Banners</label><br /><br />' . "\n";
 			?>
@@ -649,8 +668,9 @@ if ( class_exists( 'PromoteMDN' ) ) :
 	$in_phpunit = false;
 	if ( array_key_exists( 'argv', $GLOBALS ) ) {
 		foreach ( $GLOBALS[ 'argv' ] as $arg ) {
-			if ( stripos( $arg, 'phpunit' ) !== false )
+			if ( stripos( $arg, 'phpunit' ) !== false ) {
 				$in_phpunit = true;
+			}
 		}
 	}
 	if ( !$in_phpunit ) {
