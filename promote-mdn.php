@@ -53,7 +53,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			add_action( 'admin_notices', array( &$this, 'admin_notices' ) );
 			add_action( 'widgets_init', create_function( '', 'register_widget( "PromoteMDN_Widget" );' ) );
 
-			if ( $this->options[ 'allowcomments' ] ) {
+			if ( isset( $options[ 'allowcomments' ] ) && $this->options[ 'allowcomments' ] ) {
 				add_filter( 'comment_text', array( &$this, 'process_text' ), 10 );
 			}
 
