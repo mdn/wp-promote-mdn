@@ -78,7 +78,13 @@ if ( !class_exists( 'PromoteMDN' ) ) :
             if ( is_page( $arrignorepost ) || is_single( $arrignorepost ) ) {
                 return $text;
             }
-
+            if ( is_array( $options[ 'ignoreposttype' ] ) ) {
+                foreach ( $options[ 'ignoreposttype' ] as $post_type => $value ) {
+                    if ( get_post_type( get_the_ID() ) === $post_type ) {
+                        return $text;
+                    }
+                }
+            }
             $maxlinks = ( $options[ 'maxlinks' ] > 0 ) ? $options[ 'maxlinks' ] : 0;
             $maxsingle = ( $options[ 'maxsingle' ] > 0 ) ? $options[ 'maxsingle' ] : 0 - 1;
             $maxsingleurl = ( $options[ 'maxsingleurl' ] > 0 ) ? $options[ 'maxsingleurl' ] : 0;
@@ -315,7 +321,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
                                 <input type="text" name="customkey_url" id="customkey_url" value="<?php echo esc_html( $customkey_url ) ?>" style="width: 75%" />
                                 <a class="button-secondary" id="preview" href="<?php echo esc_html( $customkey_url ) ?>" target="_blank"><?php _e( 'Preview', 'promote-mdn' ) ?></a>
                                 <a id="use_local_url" class="button-secondary" href="#" title="<?php echo esc_html( sprintf( __( 'Use keywords and links specifically for %s', 'promote-mdn' ), get_locale() ) ) ?>"><?php _e( 'Switch to locale-specific list', 'promote-mdn' ) ?></a><br />
-            <?php _e( 'Reload keywords after (seconds):', 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
+                                <?php _e( 'Reload keywords after (seconds):', 'promote-mdn' ) ?> <input type="text" name="customkey_url_expire" size="10" value="<?php echo esc_html( $customkey_url_expire ) ?>"/>
                                 <button class="button-secondary" type="submit" name="reload_now" id="reload_now"><?php _e( 'Reload now', 'promote-mdn' ) ?></button>
                             </p>
                             <input type="checkbox" name="allowfeed" <?php echo esc_html( $allowfeed ) ?>/> <label for="allowfeed"><?php _e( 'Add links to RSS feeds', 'promote-mdn' ) ?></label><br/>
@@ -337,7 +343,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
                             unset( $post_types[ 'nav_menu_item' ] );
                             foreach ( $post_types as $post_type ) {
                                 ?>
-                                <input type="checkbox" name="ignoreposttype[<?php echo $post_type; ?>]" class="ignore-all" <?php echo esc_html( $ignoreposttype[ $post_type ] ) ?>/> <label for="ignoreposttyp;e"><?php echo sprintf( __( 'Do not add links to any <em>%s</em>.', 'promote-mdn' ), $post_type ); ?></label><br/>
+                                <input type="checkbox" name="ignoreposttype[<?php echo $post_type; ?>]" <?php echo esc_html( $ignoreposttype[ $post_type ] ) ?>/> <label for="ignoreposttyp;e"><?php echo sprintf( __( 'Do not add links to any <em>%s</em>.', 'promote-mdn' ), $post_type ); ?></label><br/>
                                 <?php
                             }
                             ?>
@@ -352,7 +358,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
                             <h4><?php _e( 'Limits', 'promote-mdn' ) ?></h4>
                             <?php _e( 'Max links to generate per post:', 'promote-mdn' ) ?> <input type="text" name="maxlinks" size="2" value="<?php echo esc_html( $maxlinks ) ?>"/><?php _e( '(0 to disable all links)', 'promote-mdn' ) ?><br/>
                             <?php _e( 'Max links to generate for a single keyword/phrase:', 'promote-mdn' ) ?> <input type="text" name="maxsingle" size="2" value="<?php echo esc_html( $maxsingle ) ?>"/><br/>
-            <?php _e( 'Max links to generate for a single URL:', 'promote-mdn' ) ?> <input type="text" name="maxsingleurl" size="2" value="<?php echo esc_html( $maxsingleurl ) ?>"/>
+                            <?php _e( 'Max links to generate for a single URL:', 'promote-mdn' ) ?> <input type="text" name="maxsingleurl" size="2" value="<?php echo esc_html( $maxsingleurl ) ?>"/>
 
 
                             <h4><?php _e( 'Custom Keywords', 'promote-mdn' ) ?></h4>
@@ -443,8 +449,9 @@ if ( !class_exists( 'PromoteMDN' ) ) :
                 if ( !array_key_exists( $version, $hide_notices ) ) {
                     // overload notice action to call upgrade methods as necessary
                     $upgrade_method = 'upgrade_' . str_replace( '.', '', $version );
-                    if ( method_exists( $this, $upgrade_method ) )
+                    if ( method_exists( $this, $upgrade_method ) ) {
                         $this->$upgrade_method();
+                    }
                     ?>
                     <div class="updated"><p class="promote-mdn-notice"><a href="options-general.php?page=promote-mdn.php"><?php _e( 'Promote MDN', 'promote-mdn' ) ?></a> <?php echo esc_html( $version ) ?> - <?php echo $notice ?></p><a class="promote-mdn-hide" href="<?php echo esc_html( $this->hide_href( $version ) ) ?>"><?php _e( 'hide', 'promote-mdn' ) ?></a></div>
                     <?php
