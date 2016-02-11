@@ -12,9 +12,9 @@ Features
 Development
 ===========
 
-[<img src="https://travis-ci.org/groovecoder/wp-promote-mdn.png?branch=master"/>](http://travis-ci.org/#!/groovecoder/wp-promote-mdn)[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/groovecoder/wp-promote-mdn/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[<img src="https://travis-ci.org/mdn/wp-promote-mdn.png?branch=master"/>](http://travis-ci.org/#!/mdn/wp-promote-mdn)[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mdn/wp-promote-mdn/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-[Issues are tracked on GitHub](https://github.com/groovecoder/wp-promote-mdn/issues?state=open)
+[Issues are tracked on GitHub](https://github.com/mdn/wp-promote-mdn/issues?state=open)
 
 How It Works
 ------------
