@@ -399,9 +399,6 @@ if ( !class_exists( 'PromoteMDN' ) ) :
         public function get_version_notices() {
             return array(
                 'new' => sprintf( __( 'Thanks for installing! Go to the <a href="%1$s">settings</a> page to configure, and the <a href="%2$s">widgets</a> page to add widget.', 'promote-mdn' ), 'options-general.php?page=promote-mdn.php', 'widgets.php' ),
-                '1.3' => sprintf( __( 'fr_FR translation, new sidebar <a href="%1$s">widget</a>, <a href="%2$s">setting</a> for a locale-specific URL for keywords.', 'promote-mdn' ), 'widgets.php', 'options-general.php?page=promote-mdn.php' ),
-                '1.4' => sprintf( __( 'You can exclude links from any HTML elements, not just headers; include a src url param on links; text and color options for the <a href="%s">widget</a>', 'promote-mdn' ), 'widgets.php' ),
-                '1.5' => __( 'Security fixes.', 'promote-mdn' ),
                 '1.6' => sprintf( __( 'You can now notify Mozilla Press and DevRel teams via email when you publish your posts!', 'promote-mdn' ), 'widgets.php' ),
                 '1.7' => sprintf( __( 'You can now use the new graphics for the Widget and links in the comments!', 'promote-mdn' ), 'widgets.php' ),
             );
