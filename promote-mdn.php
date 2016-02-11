@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Promote MDN
-Version: 1.7.0
+Version: 1.8.0
 Plugin URI: http://github.com/mdn/wp-promote-mdn
-Author: Luke Crouch
-Author URI: http://groovecoder.com
+Author: Luke Crouch and Daniele Scasciafratte
+Author URI: https://github.com/mdn/wp-promote-mdn
 Description: Promote MDN automatically links keywords phrases to MDN docs
 Text Domain: promote-mdn
 */
@@ -279,7 +279,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 			</style>
 
 			<div class="wrap">
-				<a href="https://github.com/groovecoder/wp-promote-mdn"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+				<a href="https://github.com/mdn/wp-promote-mdn"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 				<div id="mainblock">
 					<div class="dbx-content">
 
