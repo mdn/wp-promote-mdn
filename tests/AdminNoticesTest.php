@@ -22,21 +22,21 @@ class AdminNoticesTest extends PHPUnit_Framework_TestCase
             'blanko' => 'on',
             'allowfeed' => '',
             'maxsingleurl' => '1',
-			'allowcomments' => ''
+		'allowcomments' => ''
         );
         $this->pm = new PromoteMDN( $options );
     }
 
     public function test_none_hidden()
     {
-        $this->expectOutputRegex( '/<div class="updated">.*Thanks for installing/' );
+        $this->expectOutputRegex( '/Thanks for installing/' );
         $this->pm->admin_notices();
     }
 
     public function test_hide_new()
     {
         $this->pm->options['hide_notices']['new'] = true;
-        $this->expectOutputRegex( '/<div class="updated">.*(?!Thanks for installing)/' );
+        $this->expectOutputRegex( '/(?!Thanks for installing)/' );
         $this->pm->admin_notices();
     }
 }
