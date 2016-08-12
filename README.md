@@ -4,8 +4,8 @@ Features
 ========
 
 * Widget for sidebars with graphic/banner link
-* Automatic linking of key terms and phrases ([defined on MDN
-  itself](https://developer.mozilla.org/en-US/docs/Template:Promote-MDN
+* Automatic linking of key terms and phrases ([avalaible on this repo
+  itself](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt
 )) in posts, pages and comments
 * Ability to notify Mozilla Press and DevRel teams when publishing posts
 
@@ -21,7 +21,7 @@ How It Works
 
 The plugin automatically links keywords and phrases in WordPress posts and
 pages to pages on MDN. The keywords/phrases are loaded once per day from [a
-special page on MDN](https://developer.mozilla.org/en-US/docs/Template:Promote-MDN?raw=1)
+file on GitHub](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt).
 
 Getting Started
 ---------------
