@@ -158,3 +158,7 @@ function wp_remote_retrieve_body( $url ) {
 function wp_remote_get( $url, $array) {
   return $url;
 }
+
+function set_transient( $key, $customkey_url_value, $time ) {
+  return true;
+}
