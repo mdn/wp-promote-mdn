@@ -1,4 +1,4 @@
-(https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://img.shields.io/badge/License-GPL%20v2-blue.svg)
+[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://img.shields.io/badge/License-GPL%20v2-blue.svg)  
 wp-promote-mdn is a WordPress plugin to help promote [Mozilla Developer Network](https://developer.mozilla.org).
 
 Features
