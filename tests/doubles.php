@@ -150,3 +150,7 @@ function __checked_selected_helper( $helper, $current, $echo, $type ) {
 
 	return $result;
 }
+
+function wp_remote_retrieve_body( $url ) {
+	return get_transient( 1 );
+}
