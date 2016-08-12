@@ -1,3 +1,4 @@
+(https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://img.shields.io/badge/License-GPL%20v2-blue.svg)
 wp-promote-mdn is a WordPress plugin to help promote [Mozilla Developer Network](https://developer.mozilla.org).
 
 Features
@@ -12,9 +13,7 @@ Features
 Development
 ===========
 
-[<img src="https://travis-ci.org/mdn/wp-promote-mdn.png?branch=master"/>](http://travis-ci.org/#!/mdn/wp-promote-mdn)[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mdn/wp-promote-mdn/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
-[Issues are tracked on GitHub](https://github.com/mdn/wp-promote-mdn/issues?state=open)
+[<img src="https://travis-ci.org/mdn/wp-promote-mdn.png?branch=master"/>](http://travis-ci.org/#!/mdn/wp-promote-mdn)
 
 How It Works
 ------------

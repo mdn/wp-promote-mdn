@@ -1,12 +1,13 @@
 <?php
 /*
-  Plugin Name: Promote MDN
-  Version: 1.7.1
-  Plugin URI: http://github.com/mdn/wp-promote-mdn
-  Author: Luke Crouch and Daniele Scasciafratte
-  Author URI: https://github.com/mdn/wp-promote-mdn
-  Description: Promote MDN automatically links keywords phrases to MDN docs
-  Text Domain: promote-mdn
+ * Plugin Name: Promote MDN
+ * Version: 1.8
+ * Plugin URI: http://github.com/mdn/wp-promote-mdn
+ * Author: Luke Crouch and Daniele Scasciafratte
+ * Author URI: https://github.com/mdn/wp-promote-mdn
+ * Description: Promote MDN automatically links keywords phrases to MDN docs
+ * Text Domain: promote-mdn
+ * License:  GPL-2.0+
  */
 
 // Avoid name collisions.
