@@ -17,11 +17,11 @@ msgstr ""
 
 #: promote-mdn.php:210
 msgid "Reloaded values from the URL."
-msgstr ".URL قيم إعادة تحميل من"
+msgstr "قيم إعادة ال تحميل من العنوان"
 
 #: promote-mdn.php:227
 msgid "Plugin settings saved."
-msgstr ".إعدادات البرنامج المساعد حفظ"
+msgstr "حفظ إعدادات البرنامج المساعد"
 
 #: promote-mdn.php:263
 msgid ""
