@@ -80,7 +80,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 	if ( is_page( $arrignorepost ) || is_single( $arrignorepost ) ) {
 	  return $text;
 	}
-	if ( is_array( $options[ 'ignoreposttype' ] ) ) {
+	if ( isset($options[ 'ignoreposttype' ]) && is_array( $options[ 'ignoreposttype' ] ) ) {
 	  foreach ( $options[ 'ignoreposttype' ] as $post_type => $value ) {
 	    if ( get_post_type( get_the_ID() ) === $post_type ) {
 		return $text;
