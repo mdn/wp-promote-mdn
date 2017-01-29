@@ -39,9 +39,8 @@ if ( !class_exists( 'PromoteMDN' ) ) :
     public $tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
 
     function __construct( $options = null ) {
-	if ( $options ) {
-	  $this->options = $options;
-	} else {
+        $this->options = $options;
+	if ( !$options ) {
 	  $this->options = get_option( $this->option_name );
 	  // if the options were cleared in the db, reinstall defaults
 	  if ( $this->options == '' ) {
@@ -111,6 +110,7 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 	$text = " $text ";
 
 	if ( !empty( $options[ 'customkey_url' ] ) ) {
+	  $customkey_url_value = '';
 	  if ( false === ( $customkey_url_value = get_transient( 'promote_mdn_url_value' ) ) ) {
 	    $customkey_url_value = $this->reload_value( $options[ 'customkey_url' ] );
 	  }

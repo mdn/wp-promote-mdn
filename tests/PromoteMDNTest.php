@@ -79,7 +79,6 @@ class PromoteMDNTest extends PHPUnit_Framework_TestCase {
     public function test_new_window_doesnt_affect_existing_links() {
         $this->pm->options[ 'blanko' ] = 'on';
         $text = '<p>I already made a link to <a href="http://www.w3.org/Protocols/">w3</a>. Don\'t change it to open in a new window.</p>';
-        $linked_text_new_window = '<p>I like ' . $this->js_linked . '.</p>';
         $this->assertEquals( $text, $this->pm->process_text( $text ) );
     }
 
