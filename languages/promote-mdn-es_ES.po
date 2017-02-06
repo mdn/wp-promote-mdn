@@ -1,29 +1,29 @@
-# Copyright (C) 2012 
+# Copyright (C) 2017
 # This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-promote-mdn\n"
-"POT-Creation-Date: 2012-08-14 05:49:22+00:00\n"
-"PO-Revision-Date: 2012-08-19 14:31+0200\n"
-"Last-Translator: Inma <inma.barrios@mozilla-hispano.org>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/promote-mdn\n"
+"POT-Creation-Date: 2017-02-04 10:07-0400\n"
+"PO-Revision-Date: 2017-02-04 10:20-0400\n"
+"Last-Translator: Miguel Useche <migueluseche@mozilla-hispano.org>\n"
+"Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 2.1.6\n"
+"X-Generator: Poedit 1.8.11\n"
 
-#: promote-mdn.php:210
+#: promote-mdn.php:231
 msgid "Reloaded values from the URL."
 msgstr "Valores recargados desde la URL."
 
-#: promote-mdn.php:227
+#: promote-mdn.php:253
 msgid "Plugin settings saved."
-msgstr "Opciones de plugins guardadas."
+msgstr "Opciones del plugins guardadas."
 
-#: promote-mdn.php:263
+#: promote-mdn.php:301
 msgid ""
 "MDN is your Web Developer Toolbox for docs, demos and more on HTML, CSS, "
 "JavaScript and other Web standards and open technologies."
@@ -32,58 +32,108 @@ msgstr ""
 "demostraciones y mucho más en HTML, CSS, JavaScript y otros estándares web y "
 "tecnologías abiertas."
 
-#: promote-mdn.php:266
+#: promote-mdn.php:304
 msgid ""
 "MDN is the best online resource - for web developers, by web developers."
 msgstr ""
 "MDN es el mejor recurso en línea: para desarrolladores web, por "
 "desarrolladores web."
 
-#: promote-mdn.php:267
-msgid ""
-"Promote MDN automatically links keywords and phrases in your posts and pages "
-"to MDN URLs."
-msgstr ""
-"Enlaza automáticamente palabras clave y frases de tus publicaciones y "
-"páginas a las URL de MDN."
+# Promociona MDN:
+#: promote-mdn.php:305
+msgid "Promote MDN:"
+msgstr "Promociona MDN:"
 
-#: promote-mdn.php:274
+#: promote-mdn.php:307
+msgid ""
+"Automatically links keywords and phrases in your posts and pages to MDN URLs."
+msgstr ""
+"Automáticamente enlaza palabras claves y frases en tus entradas y páginas a "
+"URLs de MDN"
+
+#: promote-mdn.php:308
+msgid "Provides a widget with images and links to promote MDN."
+msgstr "Añade un widget con imágenes y enlaces para promover MDN."
+
+#: promote-mdn.php:309
+msgid ""
+"Allows you to notify Mozilla DevEngage and Communications when publishing "
+"posts"
+msgstr ""
+"Permite notificar a Mozilla DevEngage y Communications cuando se publican "
+"entradas"
+
+#: promote-mdn.php:312
+msgid ""
+"Promote MDN is open source. <a href=\"https://github.com/mdn/wp-promote-mdn"
+"\">Contribute on GitHub</a>"
+msgstr ""
+"Promueve MDN es de código abierto. <a href=\"https://github.com/mdn/wp-"
+"promote-mdn\">Contribuye en GitHub</a>"
+
+#: promote-mdn.php:319
 msgid "Settings"
 msgstr "Opciones"
 
-#: promote-mdn.php:275
-msgid "Load keywords from URL"
-msgstr "Cargar palabras clave desde URL"
+#: promote-mdn.php:320
+msgid "Load keywords from URL:"
+msgstr "Cargar palabras claves desde la URL:"
 
-#: promote-mdn.php:275
+#: promote-mdn.php:322
 msgid "Preview"
 msgstr "Previsualización"
 
-#: promote-mdn.php:277
+#: promote-mdn.php:323
+#, php-format
+msgid "Use keywords and links specifically for %s"
+msgstr "Usar palabras claves y enlaces específicamente para %s"
+
+#: promote-mdn.php:323
+msgid "Switch to locale-specific list"
+msgstr "Cambiar a lista local específica"
+
+#: promote-mdn.php:324
 msgid "Reload keywords after (seconds):"
 msgstr "Recargar palabras claves después de (segundos):"
 
-#: promote-mdn.php:278
+#: promote-mdn.php:325
 msgid "Reload now"
 msgstr "Recargar ahora"
 
-#: promote-mdn.php:280
+#: promote-mdn.php:327
 msgid "Add links to RSS feeds"
 msgstr "Agregar enlaces a canales RSS"
 
-#: promote-mdn.php:281
+#: promote-mdn.php:328
+msgid "Add links to comments"
+msgstr "Añadir enlaces a los comentarios"
+
+#: promote-mdn.php:329
+msgid "Include src url params (Helps MDN measure effectiveness)"
+msgstr "Incluir parámetros src en la url  (Ayuda a MDN medir efectividad)"
+
+#: promote-mdn.php:330
 msgid "Open links in new window"
 msgstr "Abrir enlaces en una nueva ventana"
 
-#: promote-mdn.php:284
+#: promote-mdn.php:333
 msgid "Exceptions"
 msgstr "Excepciones"
 
-#: promote-mdn.php:285
-msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
-msgstr "No agregar enlaces en etiquetas de encabezados (h1,h2,h3,h4,h5,h6)."
+#: promote-mdn.php:335
+msgid "Do not add links to any <em>pages</em>."
+msgstr "No añadir enlaces a ninguna <em>página</em>."
 
-#: promote-mdn.php:286
+#: promote-mdn.php:336
+msgid "Do not add links to any <em>posts</em>."
+msgstr "No añadir enlaces a ninguna <em>entrada</em>."
+
+#: promote-mdn.php:346
+#, php-format
+msgid "Do not add links to any <em>%s</em>."
+msgstr "No añadir enlaces a ningun <em>%s</em>."
+
+#: promote-mdn.php:350
 msgid ""
 "Do not add links to the following posts or pages (comma-separated id, slug, "
 "name):"
@@ -91,32 +141,44 @@ msgstr ""
 "No agregar enlaces a los siguientes entradas y páginas (id separados por "
 "comas, URL cortas, nombre):"
 
-#: promote-mdn.php:288
+#: promote-mdn.php:352
+msgid ""
+"Do not add links inside the following HTML elements (comma-separated, "
+"partial-matching):"
+msgstr ""
+"No añadir enlaces dentro de los siguientes elementos HTML (separados por "
+"coma, coincidencia parcial):"
+
+#: promote-mdn.php:354
 msgid "Do not add links on the following phrases (comma-separated):"
 msgstr "No agregar enlaces en las siguientes frases (separadas por comas):"
 
-#: promote-mdn.php:292
+#: promote-mdn.php:358
 msgid "Limits"
 msgstr "Límites"
 
-#: promote-mdn.php:293
+#: promote-mdn.php:359
 msgid "Max links to generate per post:"
 msgstr "Cantidad máxima de enlaces para generar por entrada:"
 
-#: promote-mdn.php:294
+#: promote-mdn.php:359
+msgid "(0 to disable all links)"
+msgstr "(0 para desactivar todos los enlaces)"
+
+#: promote-mdn.php:360
 msgid "Max links to generate for a single keyword/phrase:"
 msgstr ""
 "Cantidad máxima de enlaces para generar por una única palabra clave/frase:"
 
-#: promote-mdn.php:295
+#: promote-mdn.php:361
 msgid "Max links to generate for a single URL:"
 msgstr "Cantidad máxima de enlaces para generar por una única URL:"
 
-#: promote-mdn.php:298
+#: promote-mdn.php:364
 msgid "Custom Keywords"
 msgstr "Palabras claves personalizadas"
 
-#: promote-mdn.php:299
+#: promote-mdn.php:365
 msgid ""
 "Extra keywords to automaticaly link. Use comma to seperate keywords and add "
 "target url at the end. Use a new line for new url and set of keywords. e.g.,"
@@ -125,7 +187,7 @@ msgstr ""
 "palabras clave con comas y agrega al final la URL de destino. Usa un salto "
 "de línea para introducir cada URL y conjunto de palabras clave, p. ej.,"
 
-#: promote-mdn.php:306
+#: promote-mdn.php:371
 msgid ""
 "Note: These keywords will take priority over those loaded at the URL. If you "
 "have too many custom keywords here, you may not link to MDN at all."
@@ -134,6 +196,96 @@ msgstr ""
 "URL. Si tienes demasiadas palabras clave personalizadas, no podrás enlazar a "
 "MDN."
 
-#: promote-mdn.php:307
+#: promote-mdn.php:372
 msgid "Update options"
 msgstr "Actualizar opciones"
+
+#: promote-mdn.php:401
+#, php-format
+msgid ""
+"Thanks for installing! Go to the <a href=\"%1$s\">settings</a> page to "
+"configure, and the <a href=\"%2$s\">widgets</a> page to add widget."
+msgstr ""
+"¡Gracias por la instalación! Ve a página de <a href=\"%1$s\">opciones</a> "
+"para configurar, y a la página de <a href=\"%2$s\">widgets</a> para añadir "
+"un widget."
+
+#: promote-mdn.php:402
+msgid ""
+"You can now notify Mozilla Press and DevRel teams via email when you publish "
+"your posts!"
+msgstr ""
+"¡Ahora puedes notificar a Mozilla Press y al equipo de DevRel  por correo "
+"cuando publicas tus entradas!"
+
+#: promote-mdn.php:403
+msgid ""
+"You can now use the new graphics for the Widget and links in the comments!"
+msgstr ""
+"¡Ahora puedes usar los nuevos gráficos para el Widget y los enlaces en los "
+"comentarios!"
+
+#: promote-mdn.php:453 promote-mdn.php:484
+msgid "Promote MDN"
+msgstr "Promocionar MDN"
+
+#: promote-mdn.php:453
+msgid "hide"
+msgstr "ocultar"
+
+#: promote-mdn.php:485
+msgid "Sidebar image and links to MDN."
+msgstr "Imagen lateral y enlaces a MDN."
+
+#: promote-mdn.php:525
+msgid "Help Promote MDN!"
+msgstr "¡Ayuda a Promocionar MDN!"
+
+#: promote-mdn.php:526
+msgid "Get the WordPress plugin"
+msgstr "Obtén el plugin de Wordpress"
+
+#: promote-mdn.php:536
+msgid "Gray"
+msgstr "Gris"
+
+#: promote-mdn.php:537
+msgid "Red"
+msgstr "Rojo"
+
+#: promote-mdn.php:538
+msgid "Orange"
+msgstr "Naranja"
+
+#: promote-mdn.php:563
+msgid "Color:"
+msgstr "Color:"
+
+#: promote-mdn.php:574
+msgid "Text:"
+msgstr "Texto:"
+
+#: promote-mdn.php:588
+msgid "Banner:"
+msgstr "Pendón:"
+
+#: promote-mdn.php:645
+msgid "Notify Mozilla"
+msgstr "Notificar a Mozilla"
+
+#: promote-mdn.php:656
+msgid "Notify Mozilla of this post"
+msgstr "Notificar a Mozilla sobre esta entrada"
+
+#~ msgid ""
+#~ "Promote MDN automatically links keywords and phrases in your posts and "
+#~ "pages to MDN URLs."
+#~ msgstr ""
+#~ "Enlaza automáticamente palabras clave y frases de tus publicaciones y "
+#~ "páginas a las URL de MDN."
+
+#~ msgid "Load keywords from URL"
+#~ msgstr "Cargar palabras clave desde URL"
+
+#~ msgid "Do not add links in heading tags (h1,h2,h3,h4,h5,h6)."
+#~ msgstr "No agregar enlaces en etiquetas de encabezados (h1,h2,h3,h4,h5,h6)."

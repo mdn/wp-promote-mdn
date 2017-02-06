@@ -10,6 +10,10 @@
  * License: GPL-2.0+
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
 // Avoid name collisions.
 if ( !class_exists( 'PromoteMDN' ) ) :
 
@@ -228,28 +232,28 @@ if ( !class_exists( 'PromoteMDN' ) ) :
 	  check_admin_referer( 'promote-mdn' );
 
 	  if ( isset( $_POST[ 'reload_now' ] ) ) {
-	    $customkey_url = stripslashes( $_POST[ 'customkey_url' ] );
+	    $customkey_url = stripslashes( filter_input( INPUT_POST, 'customkey_url') );
 	    $options[ 'customkey_url' ] = $customkey_url;
 	    $reloaded_message = __( 'Reloaded values from the URL.', 'promote-mdn' );
 	    update_option( $this->option_name, $options );
 	    echo '<div class="updated fade"><p>' . $reloaded_message . '</p></div>';
 	  } else {
-	    $options[ 'ignoreallpages' ] = esc_html( $_POST[ 'ignoreallpages' ] );
-	    $options[ 'ignoreallposts' ] = esc_html( $_POST[ 'ignoreallposts' ] );
-	    $options[ 'ignoreposttype' ] = esc_html( $_POST[ 'ignoreposttype' ] );
-	    $options[ 'exclude_elems' ] = esc_html( $_POST[ 'exclude_elems' ] );
-	    $options[ 'ignore' ] = esc_html( $_POST[ 'ignore' ] );
-	    $options[ 'ignorepost' ] = esc_html( $_POST[ 'ignorepost' ] );
-	    $options[ 'maxlinks' ] = ( int ) $_POST[ 'maxlinks' ];
-	    $options[ 'maxsingle' ] = ( int ) $_POST[ 'maxsingle' ];
-	    $options[ 'maxsingleurl' ] = ( int ) $_POST[ 'maxsingleurl' ];
-	    $options[ 'customkey' ] = esc_html( $_POST[ 'customkey' ] );
-	    $options[ 'customkey_url' ] = esc_html( $_POST[ 'customkey_url' ] );
-	    $options[ 'customkey_url_expire' ] = esc_html( $_POST[ 'customkey_url_expire' ] );
-	    $options[ 'blanko' ] = esc_html( $_POST[ 'blanko' ] );
-	    $options[ 'add_src_param' ] = esc_html( $_POST[ 'add_src_param' ] );
-	    $options[ 'allowfeed' ] = esc_html( $_POST[ 'allowfeed' ] );
-	    $options[ 'allowcomments' ] = esc_html( $_POST[ 'allowcomments' ] );
+	    $options[ 'ignoreallpages' ] = esc_html( filter_input( INPUT_POST, 'ignoreallpages') );
+	    $options[ 'ignoreallposts' ] = esc_html( filter_input( INPUT_POST, 'ignoreallposts') );
+	    $options[ 'ignoreposttype' ] = esc_html( filter_input( INPUT_POST, 'ignoreposttype') );
+	    $options[ 'exclude_elems' ] = esc_html( filter_input( INPUT_POST, 'exclude_elems') );
+	    $options[ 'ignore' ] = esc_html( filter_input( INPUT_POST, 'ignore') );
+	    $options[ 'ignorepost' ] = esc_html( filter_input( INPUT_POST, 'ignorepost') );
+	    $options[ 'maxlinks' ] = ( int ) filter_input( INPUT_POST, 'maxlinks');
+	    $options[ 'maxsingle' ] = ( int ) filter_input( INPUT_POST, 'maxsingle');
+	    $options[ 'maxsingleurl' ] = ( int ) filter_input( INPUT_POST, 'maxsingleurl');
+	    $options[ 'customkey' ] = esc_html( filter_input( INPUT_POST, 'customkey') );
+	    $options[ 'customkey_url' ] = esc_html( filter_input( INPUT_POST, 'customkey_url') );
+	    $options[ 'customkey_url_expire' ] = esc_html( filter_input( INPUT_POST, 'customkey_url_expire') );
+	    $options[ 'blanko' ] = esc_html( filter_input( INPUT_POST, 'blanko') );
+	    $options[ 'add_src_param' ] = esc_html( filter_input( INPUT_POST, 'add_src_param') );
+	    $options[ 'allowfeed' ] = esc_html( filter_input( INPUT_POST, 'allowfeed') );
+	    $options[ 'allowcomments' ] = esc_html( filter_input( INPUT_POST, 'allowcomments') );
 
 	    update_option( $this->option_name, $options );
 	    $settings_message = __( 'Plugin settings saved.', 'promote-mdn' );
@@ -644,7 +648,10 @@ if ( !class_exists( 'PromoteMDN_Notifier' ) ) :
     }
 
     public function notify_mozilla( $post_id ) {
-	if ( ( $_POST[ 'post_status' ] == 'publish' ) && ( $_POST[ 'original_post_status' ] != 'publish' ) && ( $_POST[ 'notify_mozilla' ] == '1' ) ) {
+	if ( ( filter_input( INPUT_POST, 'post_status') == 'publish' ) && 
+	 ( filter_input( INPUT_POST, 'original_post_status') != 'publish' ) && 
+	 ( filter_input( INPUT_POST, 'notify_mozilla') == '1' ) 
+	) {
 	  $post = get_post( $post_id );
 	  $author = get_userdata( $post->post_author );
 	  $author_email = $author->user_email;
