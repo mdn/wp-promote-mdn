@@ -19,7 +19,7 @@ Automatically links your WordPress blog with MDN.
 MDN is the best online resource for web developers, by web developers. Promote MDN
 helps your readers discover and learn about web technologies on MDN.
 
-To help code on this plugin, go to [Promote MDN on Github](https://github.com/mdn/roovecoder/wp-promote-mdn/).
+To help code on this plugin, go to [Promote MDN on Github](https://github.com/mdn/wp-promote-mdn/).
 
 Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/)
 
