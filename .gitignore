@@ -1,4 +1,41 @@
-.DS_Store
-*.zip
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
 *.swp
-report/
+*.vi
+*~
+*.sass-cache
+*.lock
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+.netbeans.xml
+nbproject
+*.sublime-project
+*.sublime-workspace
+node_modules
+composer
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+intermediate
+.idea
+cache
+vendor
+/public/includes/lib/
+/admin/includes/lib/
+/includes/lib/
+/composer/
+

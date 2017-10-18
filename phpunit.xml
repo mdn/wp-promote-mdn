@@ -1,7 +1,0 @@
-<phpunit verbose="true">
-    <testsuites>
-        <testsuite name="Promote MDN">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>

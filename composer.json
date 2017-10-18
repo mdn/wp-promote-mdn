@@ -1,0 +1,42 @@
+{
+  "require": {
+    "php": ">=5.3",
+    "composer\/installers": "1.x",
+    "mnsami\/composer-custom-directory-installer": "1.1.*",
+    "wpbp\/widgets-helper": "1.0.3",
+    "webdevstudios\/cmb2": "2.2.5.3",
+    "yoast\/i18n-module": "3.0.0",
+    "yoast\/whip": "1.1.0"
+  },
+  "repositories": {
+    "3": {
+      "type": "composer",
+      "url": "https:\/\/wpackagist.org"
+    }
+  },
+  "config": {
+    "vendor-dir": "composer\/"
+  },
+  "require-dev": {
+    "lucatume\/wp-browser": "^1.21",
+    "phpro\/grumphp": "^0.12.0"
+  },
+  "minimum-stability": "dev",
+  "extra": {
+    "installer-paths": {
+      ".\/public\/includes\/lib\/{$name}": [
+        "wpbp\/widgets-helper"
+      ],
+      ".\/admin\/includes\/lib\/{$name}": [
+        "webdevstudios\/cmb2",
+        "yoast\/i18n-module",
+        "yoast\/whip"
+      ]
+    }
+  },
+  "autoload": {
+    "files": [
+      ".\/admin\/includes\/lib\/cmb2\/init.php"
+    ]
+  }
+}

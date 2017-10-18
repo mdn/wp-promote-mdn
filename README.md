@@ -35,3 +35,4 @@ Yes, I actually wrote tests for a WordPress Plugin. Don't judge me. To run
 them, simply run:
 
     phpunit
+ 
