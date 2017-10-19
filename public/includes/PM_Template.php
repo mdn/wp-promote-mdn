@@ -4,7 +4,7 @@
  * 
  * @package   Promote_MDN
  * @author    Luke Crouch and Daniele Scasciafratte <mte90net@gmail.com>
- * @copyright 2017 Your Name or Company Name
+ * @copyright 2017 Mozilla
  * @license   GPL 2.0+
  * @link      https://github.com/mdn/wp-promote-mdn
  */

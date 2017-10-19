@@ -4,7 +4,7 @@
  * 
  * @package   Promote_MDN
  * @author    Luke Crouch and Daniele Scasciafratte <mte90net@gmail.com>
- * @copyright 2017 Your Name or Company Name
+ * @copyright 2017 Mozilla
  * @license   GPL 2.0+
  * @link      https://github.com/mdn/wp-promote-mdn
  */
@@ -78,22 +78,10 @@ class Pm_Enqueue_Admin {
 	 */
 	public function add_plugin_admin_menu() {
 		/*
-		 * Add a settings page for this plugin to the Settings menu
-		 *
-		 * @TODO:
-		 *
-		 * - Change 'manage_options' to the capability you see fit
-		 *   For reference: http://codex.wordpress.org/Roles_and_Capabilities
-		  $this->admin_view_page = add_options_page(
-		  __( 'Page Title', PM_TEXTDOMAIN ), PM_NAME, 'manage_options', PM_TEXTDOMAIN, array( $this, 'display_plugin_admin_page' )
-		  );
-		 * 
-		 */
-		/*
 		 * Add a settings page for this plugin to the main menu
 		 * 
 		 */
-		$this->admin_view_page = add_menu_page( __( 'Page Title', PM_TEXTDOMAIN ), PM_NAME, 'manage_options', PM_TEXTDOMAIN, array( $this, 'display_plugin_admin_page' ), 'dashicons-hammer', 90 );
+		$this->admin_view_page = add_menu_page( PM_NAME, PM_NAME, 'manage_options', PM_TEXTDOMAIN, array( $this, 'display_plugin_admin_page' ), 'dashicons-hammer', 90 );
 	}
 	/**
 	 * Render the settings page for this plugin.
