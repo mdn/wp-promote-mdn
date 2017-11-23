@@ -2,7 +2,6 @@
 #mdndev, irc://irc.mozilla.org/mdndev
 ARIA, https://developer.mozilla.org/docs/Accessibility/ARIA
 at-rule, @-rule, https://developer.mozilla.org/docs/Web/CSS/At-rule
-B2G, Firefox OS, Boot to Gecko, https://developer.mozilla.org/docs/Mozilla/Firefox_OS
 border-image, https://developer.mozilla.org/docs/Web/CSS/border-image
 border-image-outset, https://developer.mozilla.org/docs/Web/CSS/border-image-outset
 border-image-repeat, https://developer.mozilla.org/docs/Web/CSS/border-image-repeat
@@ -15,8 +14,8 @@ CSS Animations, CSS3 Animations, CSS Animation, CSS3 Animation, https://develope
 CSS Flexbox, flexbox, flexible box, flexible boxes, https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_flexible_boxes
 CSS Gradients, CSS3 Gradients, CSS Gradient, CSS3 Gradient, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
 CSS Reference, https://developer.mozilla.org/docs/Web/CSS/CSS_Reference
-CSS Transforms, CSS3 Transforms, CSS Transform, CSS3 Transforms, CSS 3D Transforms, CSS3 3D Transforms, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transform
-CSS Transitions, CSS3 Transitions, CSS Transitions, CSS3 Transitions, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
+CSS Transforms, CSS3 Transforms, CSS Transform https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transform
+CSS Transitions, CSS3 Transitions, C https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
 CSS, https://developer.mozilla.org/docs/Web/CSS
 CSS3, https://developer.mozilla.org/docs/Web/CSS/CSS3
 DOM, https://developer.mozilla.org/docs/DOM
@@ -24,7 +23,6 @@ ECMA, https://developer.mozilla.org/docs/Glossary/ECMA
 ECMAScript, https://developer.mozilla.org/docs/Glossary/ECMAScript
 Emscripten, https://developer.mozilla.org/docs/Emscripten
 FileReader, https://developer.mozilla.org/docs/Web/API/FileReader
-Firefox Marketplace, Marketplace, https://developer.mozilla.org/Marketplace
 DevTools, Firefox Developer Tools, Developer Tools, https://developer.mozilla.org/en-US/docs/Tools
 Gecko, https://developer.mozilla.org/docs/Mozilla/Gecko
 Geolocation, https://developer.mozilla.org/docs/Using_geolocation
@@ -50,10 +48,8 @@ LocalStorage, local storage, https://developer.mozilla.org/Web/API/Window/localS
 MathML, https://developer.mozilla.org/en-US/docs/Web/MathML
 MDN, Mozilla Developer Network, devmo, https://developer.mozilla.org/
 Media queries, https://developer.mozilla.org/docs/Web/CSS/Media_queries
-Mozilla Developer Program, MDP, https://developer.mozilla.org/docs/Mozilla/Developer_Program
 Mozilla, https://www.mozilla.org/
 mozilla-central, https://developer.mozilla.org/docs/mozilla-central
-Persona, BrowserID, https://developer.mozilla.org/Persona
 Promises, Promise, https://developer.mozilla.org/Web/JavaScript/Reference/Global_Objects/Promise
 pseudo-class, pseudo-classes, https://developer.mozilla.org/docs/Web/CSS/pseudo-classes
 pseudo-element, pseudo-elements, https://developer.mozilla.org/docs/Web/CSS/Pseudo-elements
@@ -68,7 +64,6 @@ Web apps, https://developer.mozilla.org/docs/Apps
 Web Audio API, WebAudio, https://developer.mozilla.org/docs/Web/API/Web_Audio_API/Using_Web_Audio_API
 WebAssembly, https://developer.mozilla.org/docs/WebAssembly
 Web Components, WebComponents, Web Component, https://developer.mozilla.org/Web/Web_Components
-WebIDE, https://developer.mozilla.org/docs/Tools/WebIDE
 Web Notifications API, Web Notifications,https://developer.mozilla.org/Web/API/Notifications_API
 Web Workers, WebWorkers, https://developer.mozilla.org/Web/API/Web_Workers_API
 WebAPI, https://developer.mozilla.org/docs/WebAPI
@@ -77,5 +72,3 @@ WebRTC, https://developer.mozilla.org/docs/WebRTC
 WebSockets, WebSocket, https://developer.mozilla.org/docs/WebSockets
 WebVR, WebVR API, https://developer.mozilla.org/en-US/docs/Web/API/WebVR_API
 XMLHttpRequest, XHR, https://developer.mozilla.org/Web/API/XMLHttpRequest
-XPCOM, https://developer.mozilla.org/docs/Mozilla/XPCOM
-XUL, https://developer.mozilla.org/docs/XUL
