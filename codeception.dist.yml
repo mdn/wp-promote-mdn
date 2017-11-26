@@ -25,7 +25,7 @@ modules:
             url: 'http://demo.dev'
             tablePrefix: wp_
         WPLoader:
-            wpRootFolder: '/home/travis/build/mdn/wp-promote-mdn'
+            wpRootFolder: '/home/travis/build/wordpress'
             dbName: wordpress_unit_tests
             dbHost: 127.0.0.1
             dbUser: root

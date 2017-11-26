@@ -30,7 +30,7 @@ addons:
 
 env:
   global:
-    - WP_FOLDER="/home/travis/build/mdn/wp-promote-mdn/wordpress"
+    - WP_FOLDER="/home/travis/build/wordpress"
     - WP_URL="http://demo.dev"
     - WP_DOMAIN="demo.dev"
     - DB_NAME="wordpress_unit_tests"
@@ -67,6 +67,8 @@ install:
   - wp core install --url="$WP_URL" --title="Promote MDN" --admin_user="$WP_ADMIN_USERNAME" --admin_password="$WP_ADMIN_PASSWORD" --admin_email=admin@wp.dev
   # export a dump of the just installed database to the _data folder
   - wp db export $TRAVIS_BUILD_DIR/tests/_data/dump.sql
+  - cd /home/travis/build/
+  - ln -s ./wp-promote-mdn $WP_FOLDER/wp-content/plugins/wp-promote-mdn
 
 script:
   - codecept run wpunit
