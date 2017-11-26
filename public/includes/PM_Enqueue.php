@@ -16,7 +16,7 @@ class Pm_Enqueue {
 	 * Initialize the class
 	 */
 	public function initialize() {
-		if ( !apply_filters( 'plugin_name_pm_enqueue_initialize', true ) ) {
+		if ( !apply_filters( 'promote_mdn_enqueue_initialize', true ) ) {
 			return;
 		}
 	}
@@ -24,4 +24,4 @@ class Pm_Enqueue {
 }
 $pm_enqueue = new Pm_Enqueue();
 $pm_enqueue->initialize();
-do_action( 'plugin_name_pm_enqueue_instance', $pm_enqueue );
+do_action( 'promote_mdn_enqueue_instance', $pm_enqueue );

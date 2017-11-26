@@ -1,78 +1,114 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userids)
-Donate link: http://example.com/
-Tags: comments, spam (maximum 12)
-Requires at least: 4.6
-Tested up to: 4.7
-Stable tag: 1.0.0
+Contributors: mte90, groovecoder
+Donate link: 
+Tags: mozilla, mdn, links, html5, javascript, glossary, documentation, docs, development, developer, glossary
+Requires at least: 4.7
+Tested up to: 4.9
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+
+Automatically links your WordPress blog with MDN.
+
 == Description ==
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-A few notes about the sections above:
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+
+* Automatically links [special keywords and phrases](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt) to MDN.
+* Provides a widget with images and links to promote MDN
+* Shortcode `promote_mdn_newsletter` to register to Mozilla newsletter
+
+MDN is the best online resource for web developers, by web developers. Promote MDN
+helps your readers discover and learn about web technologies on MDN.
+
+To help code on this plugin, go to [Promote MDN on Github](https://github.com/mdn/wp-promote-mdn/).
+
+Based on freediver's [SEO Smart Links](http://wordpress.org/extend/plugins/seo-automatic-links/)
+
 == Installation ==
-This section describes how to install the plugin and get it working.
-e.g.
-= Using The WordPress Dashboard =
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Search for 'promote-mdn'
-3. Click 'Install Now'
-4. Activate the plugin on the Plugin dashboard
-= Uploading in WordPress Dashboard =
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Navigate to the 'Upload' area
-3. Select `promote-mdn.zip` from your computer
-4. Click 'Install Now'
-5. Activate the plugin in the Plugin dashboard
-= Using FTP =
-1. Download `promote-mdn.zip`
-2. Extract the `promote-mdn` directory to your computer
-3. Upload the `promote-mdn` directory to the `/wp-content/plugins/` directory
-4. Activate the plugin in the Plugin dashboard
+1. Go to "Plugins -> Add new"
+2. Search for "Promote MDN"
+3. Click "Install"
+
+or manually:
+
+1. Upload `promote-mdn/` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Configure the plugin through the 'Settings' -> 'Promote MDN' page
 
 == Frequently Asked Questions ==
-= A question that someone might have =
-An answer to that question.
-= What about foo bar? =
-Answer to foo bar dilemma.
+
+= Why? =
+
+MDN makes the best docs on the web, for the web.
+
+= What are locale-specific links? =
+
+By default, most links will go to a locale-agnostic url which will redirect
+to a translated page if one is avaialble. Ideally we want to avoid redirects.
+So, locale-specific links are maintained by the MDN community for some locales.
+
+Using locale-specific links will improve your readers' experience.
+
 == Screenshots ==
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+
+1. Settings, exceptions, limits, custom keywords
+
 == Changelog ==
+
+= 1.8.0 = 
+
+* Definition file it's on GitHub to improve the list of links easily
+
+= 1.7.1 =
+
+* Disable also for custom post types
+* Updated Italian language
+
+= 1.7 =
+
+* New MDN banners
+* New translation IT_it
+* Support for comments
+* Fixed notification to Mozilla DevEngage team
+* Fixed bad html code in widget
+* CSS class in the link
+* Removed deprecated code
+
+= 1.6 =
+* Option to notify Mozilla Press and DevRel when publishing post
+* Fix HTML bug in admin notices
+* Update GA campaign tracking parameters
+* Update logos to redesign
+https://github.com/groovecoder/wp-promote-mdn/compare/596cea7...0edcb0e
+
+= 1.5 =
+* Security fixes
+
+= 1.4 =
+* Exclude links from any HTML elements
+* src url param to help MDN measure effectiveness
+* Color & Text options for widget
+* See [GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=2&page=1&state=closed)
+
+= 1.3 =
+* New Sidebar Widget
+* Install/upgrade notifications in admin pages
+* Use locale-specific URL for keywords/phrases links
+* Add French translation
+* See [GitHub Milestone](https://github.com/groovecoder/wp-promote-mdn/issues?milestone=1&page=1&state=closed)
+
+= 1.2 =
+* Internationalization and initial translations - Polish, Dutch, German, Portuguese (Brazil)
+
+= 1.1 =
+* Add "Reload now" button and send Cache-Control: no-cache, must-revalidate to MDN
+
 = 1.0 =
-* A change since the previous version.
-* Another change.
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+* Initial version based on SEO Smart Links.
+
 == Upgrade Notice ==
+= 1.3 =
+Be sure to click the "Use keywords and links specifically for ..." button if you
+run a site in language besides English.
+
 = 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-== Arbitrary section ==
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-== Updates ==
-The basic structure of this plugin was cloned from the [WordPress-Plugin-Boilerplate](https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate) project.
+To make it work.

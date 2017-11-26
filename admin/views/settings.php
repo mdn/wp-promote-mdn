@@ -21,6 +21,7 @@
 		'name' => __( 'Reload keywords after (seconds)', PM_TEXTDOMAIN ),
 		'id' => 'recurrence',
 		'type' => 'radio_inline',
+		'default' => 'daily',
 		'options' => array(
 			'hourly' => __( 'Hourly', PM_TEXTDOMAIN ),
 			'daily' => __( 'Daily', PM_TEXTDOMAIN ),
@@ -60,7 +61,7 @@
 		'type' => 'checkbox',
 	) );
 	$cmb->add_field( array(
-		'name' => __( 'Do not add links to any <em>pages</em>.', PM_TEXTDOMAIN ),
+		'name' => __( 'Do not add links to any <em>posts</em>.', PM_TEXTDOMAIN ),
 		'id' => 'ignoreallposts',
 		'type' => 'checkbox',
 	) );
@@ -127,5 +128,4 @@
 	) );
 	cmb2_metabox_form( PM_TEXTDOMAIN . '_options', PM_TEXTDOMAIN . '-settings' );
 	?>
-	<!-- @TODO: Provide other markup for your options page here. -->
 </div>

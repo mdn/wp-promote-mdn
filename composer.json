@@ -1,43 +1,47 @@
 {
+  "name": "mozilla/promote-mdn",
+  "description": "WordPress plugin automatically links keywords and phrases to MDN.",
+  "license": "GPL-2.0+",
   "require": {
     "php": ">=5.3",
-    "composer\/installers": "1.x",
-    "mnsami\/composer-custom-directory-installer": "1.1.*",
-    "wpbp\/widgets-helper": "1.0.3",
-    "wpbp\/cronplus": "1.0.3",
-    "webdevstudios\/cmb2": "2.2.5.3",
-    "yoast\/i18n-module": "3.0.0",
-    "yoast\/whip": "1.1.0"
+    "composer/installers": "1.x",
+    "mnsami/composer-custom-directory-installer": "1.1.*",
+    "wpbp/widgets-helper": "1.0.*",
+    "webdevstudios/cmb2": "2.2.5.*",
+    "nathanielks/wp-admin-notice": "dev-master",
+    "yoast/i18n-module": "3.0.*",
+    "yoast/whip": "1.1.*"
   },
-  "repositories": {
-    "3": {
+  "repositories": [
+    {
+      "url": "git@github.com:nathanielks/wordpress-admin-notice.git",
+      "type": "git"
+    },
+    {
       "type": "composer",
-      "url": "https:\/\/wpackagist.org"
+      "url": "https://wpackagist.org"
     }
-  },
+  ],
   "config": {
-    "vendor-dir": "composer\/"
+    "vendor-dir": "composer/"
   },
   "require-dev": {
-    "lucatume\/wp-browser": "^1.21",
-    "phpro\/grumphp": "^0.12.0"
+    "lucatume/wp-browser": "^1.21",
+    "phpro/grumphp": "^0.12.0",
+    "lucatume/function-mocker": "~1.0"
   },
   "minimum-stability": "dev",
   "extra": {
     "installer-paths": {
-      ".\/public\/includes\/lib\/{$name}": [
-        "wpbp\/widgets-helper"
+      "./public/includes/lib/{$name}": [
+        "wpbp/widgets-helper"
       ],
-      ".\/admin\/includes\/lib\/{$name}": [
-        "webdevstudios\/cmb2",
-        "yoast\/i18n-module",
-        "yoast\/whip"
+      "./admin/includes/lib/{$name}": [
+        "webdevstudios/cmb2",
+        "nathanielks/wp-admin-notice",
+        "yoast/i18n-module",
+        "yoast/whip"
       ]
     }
-  },
-  "autoload": {
-    "files": [
-      ".\/admin\/includes\/lib\/cmb2\/init.php"
-    ]
   }
 }

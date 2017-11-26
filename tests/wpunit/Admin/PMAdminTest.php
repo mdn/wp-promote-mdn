@@ -10,7 +10,7 @@ class PNTestAdmin extends \Codeception\TestCase\WPTestCase {
     $this->root_dir = dirname( dirname( dirname( __FILE__ ) ) );
   }
   public static function setUpBeforeClass() {
-    require_once(  dirname(__FILE__)  . '/../../../../admin/Promote_MDN_Admin.php' );
+    require_once(  dirname(__FILE__)  . '/../../../admin/Promote_MDN_Admin.php' );
     add_action( 'plugins_loaded', array( 'Promote_MDN_Admin', 'get_instance' ) );
   }
   public function tearDown() {

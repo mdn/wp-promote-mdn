@@ -4,11 +4,10 @@ wp-promote-mdn is a WordPress plugin to help promote [Mozilla Developer Network]
 Features
 ========
 
-* Widget for sidebars with graphic/banner link
-* Automatic linking of key terms and phrases ([avalaible on this repo
-  itself](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt
+* Widget for sidebars with banner link
+* Automatic linking of key terms and phrases ([avalaible on this repo itself](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt
 )) in posts, pages and comments
-* Ability to notify Mozilla Press and DevRel teams when publishing posts
+* Shortcode `promote_mdn_newsletter` for the newsletter box
 
 Development
 ===========
@@ -26,13 +25,11 @@ Getting Started
 ---------------
 
 1. Clone the repo into your `wp-content/plugins` directory
-2. Make changes
+2. run `computer update`
+3. Make changes
 
 Running Tests
 -------------
 
-Yes, I actually wrote tests for a WordPress Plugin. Don't judge me. To run
-them, simply run:
-
-    phpunit
+    codeception run wpunit
  

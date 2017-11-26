@@ -29,7 +29,9 @@ class Promote_MDN {
 	 */
 	public static function initialize() {
 		require_once( PM_PLUGIN_ROOT . 'public/includes/PM_Extras.php' );
-		require_once( PM_PLUGIN_ROOT . 'public/widgets/sample.php' );
+		require_once( PM_PLUGIN_ROOT . 'public/includes/PM_Enqueue.php' );
+		require_once( PM_PLUGIN_ROOT . 'public/includes/PM_Content.php' );
+		require_once( PM_PLUGIN_ROOT . 'public/widgets/widget.php' );
 	}
 	
 	/**

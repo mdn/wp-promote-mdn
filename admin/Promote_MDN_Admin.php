@@ -30,6 +30,7 @@ class Promote_MDN_Admin {
 		if ( !apply_filters( 'plugin_name_pm_admin_initialize', true ) ) {
 			return;
 		}
+		require_once( PM_PLUGIN_ROOT . 'admin/includes/lib/cmb2/init.php' );
 		/*
 		 * @TODO :
 		 *
@@ -39,10 +40,6 @@ class Promote_MDN_Admin {
 		  }
 		 */
 		require_once( PM_PLUGIN_ROOT . 'admin/includes/PM_Enqueue_Admin.php' );
-		/*
-		 * Load CMB
-		 */
-		require_once( PM_PLUGIN_ROOT . 'admin/includes/PM_CMB.php' );
 		/*
 		 * All the extras functions
 		 */

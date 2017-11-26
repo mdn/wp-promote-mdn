@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin_name
  * 
@@ -8,10 +9,12 @@
  * @license   GPL 2.0+
  * @link      https://github.com/mdn/wp-promote-mdn
  */
+
 /**
  * This class contain all the snippet or extra that improve the experience on the backend
  */
 class Pm_Extras_Admin {
+
 	/**
 	 * Initialize the snippet
 	 */
@@ -26,8 +29,18 @@ class Pm_Extras_Admin {
 		whip_wp_check_versions( array(
 			'php' => '>=5.6',
 		) );
-			}
-				}
+	}
+
+	public function missing_fields( $object_id, $cmb_id, $updated, $object ) {
+		add_action( 'cmb2_save_options-page_fields', array( $this, 'missing_fields' ), 4, 9999 );
+		$options = get_option( PM_TEXTDOMAIN . '-settings' );
+		if ( !$options ) {
+			new WP_Admin_Notice( __( 'Promote MDN is not configured yet!', PM_TEXTDOMAIN ), 'error' );
+		}
+	}
+
+}
+
 $pm_extras_admin = new Pm_Extras_Admin();
 $pm_extras_admin->initialize();
 do_action( 'plugin_name_pm_extras_admin_instance', $pm_extras_admin );

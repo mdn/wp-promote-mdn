@@ -1,7 +1,72 @@
+sudo: required
 language: php
 php:
+  - 7.0
+  - 5.6
   - 5.5
   - 5.4
-  - 5.3
-notifications:
-  irc: "irc.mozilla.org#mdndev"
+#notifications:
+#irc: "irc.mozilla.org#mdndev"
+matrix:
+  fast_finish: true
+  
+services:
+  - mysql
+  
+cache:
+  apt: true
+#  directories:
+#    - composer
+
+addons:
+  apt:
+    packages:
+      - libjpeg-dev
+      - libpng12-dev
+      - php5-fpm
+      - php5-mysql
+  hosts:
+    - demo.dev
+
+env:
+  global:
+    - WP_FOLDER="/home/travis/build/mdn/wp-promote-mdn/wordpress"
+    - WP_URL="http://demo.dev"
+    - WP_DOMAIN="demo.dev"
+    - DB_NAME="wordpress_unit_tests"
+    - WP_TABLE_PREFIX="wp_"
+    - WP_ADMIN_USERNAME="admin"
+    - WP_ADMIN_PASSWORD="admin"
+  matrix:
+    - WP_VERSION=latest
+
+before_install:
+  # create the databases that will be used in the tests
+  - mysql -e "create database IF NOT EXISTS wordpress_unit_tests;" -uroot
+  # set up folders
+  - mkdir -p $WP_FOLDER
+  - mkdir tools
+  # install wp-cli in the `tools` folder
+  - wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -P $(pwd)/tools/
+  - chmod +x tools/wp-cli.phar && mv tools/wp-cli.phar tools/wp
+  # append the `tools` folder to the PATH
+  - export PATH=$PATH:$(pwd)/tools
+  # prepend the `vendor/bin` folder the PATH
+  - export PATH=vendor/bin:$PATH
+  - export PATH=composer/bin:$PATH
+
+install:
+  - sed -i '30d' composer.json
+  - composer config github-oauth.github.com ${GH_TOKEN}
+  - composer global require hirak/prestissimo
+  - composer install --prefer-dist
+  # install WordPress in the `wordpress` folder
+  - cd $WP_FOLDER
+  - wp core download --version=$WP_VERSION
+  - wp config create --dbname="$DB_NAME" --dbuser="root" --dbpass="" --dbhost="127.0.0.1" --dbprefix="$WP_TABLE_PREFIX"
+  - wp core install --url="$WP_URL" --title="Promote MDN" --admin_user="$WP_ADMIN_USERNAME" --admin_password="$WP_ADMIN_PASSWORD" --admin_email=admin@wp.dev
+  # export a dump of the just installed database to the _data folder
+  - wp db export $TRAVIS_BUILD_DIR/tests/_data/dump.sql
+
+script:
+  - codecept run wpunit

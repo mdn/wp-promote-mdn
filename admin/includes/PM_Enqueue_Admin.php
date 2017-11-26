@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Promote_MDN
  * 
@@ -8,17 +9,20 @@
  * @license   GPL 2.0+
  * @link      https://github.com/mdn/wp-promote-mdn
  */
+
 /**
  * This class contain the Enqueue stuff for the backend
  */
 class Pm_Enqueue_Admin {
-		/**
+
+	/**
 	 * Slug of the plugin screen.
 	 *
 	 * @var string
 	 */
 	protected $admin_view_page = null;
-		/**
+
+	/**
 	 * Initialize the class
 	 */
 	public function initialize() {
@@ -34,8 +38,8 @@ class Pm_Enqueue_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 	}
-	
-		/**
+
+	/**
 	 * Register and enqueue admin-specific style sheet.
 	 *
 	 * @since 2.0.0
@@ -51,7 +55,8 @@ class Pm_Enqueue_Admin {
 			wp_enqueue_style( PM_TEXTDOMAIN . '-settings-styles', plugins_url( 'admin/assets/css/settings.css', PM_PLUGIN_ABSOLUTE ), array( 'dashicons' ), PM_VERSION );
 		}
 	}
-			/**
+
+	/**
 	 * Register and enqueue admin-specific JavaScript.
 	 *
 	 * @since 2.0.0
@@ -62,14 +67,14 @@ class Pm_Enqueue_Admin {
 		if ( !isset( $this->admin_view_page ) ) {
 			return;
 		}
-		
+
 		$screen = get_current_screen();
 		if ( $this->admin_view_page === $screen->id ) {
 			wp_enqueue_script( PM_TEXTDOMAIN . '-settings-script', plugins_url( 'admin/assets/js/settings.js', PM_PLUGIN_ABSOLUTE ), array( 'jquery', 'jquery-ui-tabs' ), PM_VERSION );
 		}
 	}
-		
-		/**
+
+	/**
 	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
 	 *
 	 * @since 2.0.0
@@ -81,8 +86,9 @@ class Pm_Enqueue_Admin {
 		 * Add a settings page for this plugin to the main menu
 		 * 
 		 */
-		$this->admin_view_page = add_menu_page( PM_NAME, PM_NAME, 'manage_options', PM_TEXTDOMAIN, array( $this, 'display_plugin_admin_page' ), 'dashicons-hammer', 90 );
+		$this->admin_view_page = add_menu_page( PM_NAME, PM_NAME, 'manage_options', PM_TEXTDOMAIN, array( $this, 'display_plugin_admin_page' ), 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( PM_PLUGIN_ROOT.'admin/assets/img/logo.svg' ) ), 90 );
 	}
+
 	/**
 	 * Render the settings page for this plugin.
 	 *
@@ -93,6 +99,7 @@ class Pm_Enqueue_Admin {
 	public function display_plugin_admin_page() {
 		include_once( PM_PLUGIN_ROOT . 'admin/views/admin.php' );
 	}
+
 	/**
 	 * Add settings action link to the plugins page.
 	 *
@@ -109,8 +116,9 @@ class Pm_Enqueue_Admin {
 				), $links
 		);
 	}
-	
+
 }
+
 $pm_enqueue_admin = new Pm_Enqueue_Admin();
 $pm_enqueue_admin->initialize();
 do_action( 'plugin_name_pm_enqueue_admin_instance', $pm_enqueue_admin );

@@ -13,23 +13,23 @@ modules:
         WPBrowser:
             url: 'http://demo.dev'
             adminUsername: admin
-            adminPassword: password
+            adminPassword: admin
             adminUrl: /wp-admin
         WPDb:
-            dsn: 'mysql:host=192.168.50.4;dbname=wordpress_unit_tests'
-            user: wp
-            password: wp
+            dsn: 'mysql:host=127.0.0.1;dbname=wordpress_unit_tests'
+            user: root
+            password: 
             dump: tests/_data/dump.sql
             populate: true
             cleanup: true
             url: 'http://demo.dev'
             tablePrefix: wp_
         WPLoader:
-            wpRootFolder: /var/www/VVV/www/demo/htdocs/
+            wpRootFolder: '/home/travis/build/mdn/wp-promote-mdn'
             dbName: wordpress_unit_tests
-            dbHost: 192.168.50.4
-            dbUser: wp
-            dbPassword: wp
+            dbHost: 127.0.0.1
+            dbUser: root
+            dbPassword: 
             wpDebug: true
             dbCharset: utf8
             dbCollate: ''
@@ -49,5 +49,5 @@ modules:
             restart: true
             wait: 2
             adminUsername: admin
-            adminPassword: password
+            adminPassword: admin
             adminUrl: /wp-admin

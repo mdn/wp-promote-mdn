@@ -29,6 +29,7 @@ define( 'PM_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
 define( 'PM_PLUGIN_ABSOLUTE',  __FILE__  );
 
 require_once( PM_PLUGIN_ROOT . 'composer/autoload.php' );
+require_once( PM_PLUGIN_ROOT . 'includes/functions.php' );
 require_once( PM_PLUGIN_ROOT . 'public/Promote_MDN.php' );
 require_once( PM_PLUGIN_ROOT . 'includes/PM_ActDeact.php' );
 require_once( PM_PLUGIN_ROOT . 'includes/PM_Uninstall.php' );
