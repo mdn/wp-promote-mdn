@@ -3,10 +3,8 @@ language: php
 php:
   - 7.0
   - 5.6
-  - 5.5
-  - 5.4
-#notifications:
-#irc: "irc.mozilla.org#mdndev"
+notifications:
+irc: "irc.mozilla.org#mdndev"
 matrix:
   fast_finish: true
   
