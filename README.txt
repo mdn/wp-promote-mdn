@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: mte90, groovecoder
 Donate link: 
-Tags: mozilla, mdn, links, html5, javascript, glossary, documentation, docs, development, developer, glossary
+Tags: mozilla, mdn, links, html5, javascript, glossary, documentation, docs, development, developer, glossary, html
 Requires at least: 4.7
 Tested up to: 4.9
 Stable tag: 2.0.0
@@ -51,8 +51,13 @@ Using locale-specific links will improve your readers' experience.
 == Screenshots ==
 
 1. Settings, exceptions, limits, custom keywords
+2. Widget settings
 
 == Changelog ==
+
+= 2.0.0 = 
+
+* New version written from scratch with improvements
 
 = 1.8.0 = 
 
@@ -104,11 +109,3 @@ https://github.com/groovecoder/wp-promote-mdn/compare/596cea7...0edcb0e
 
 = 1.0 =
 * Initial version based on SEO Smart Links.
-
-== Upgrade Notice ==
-= 1.3 =
-Be sure to click the "Use keywords and links specifically for ..." button if you
-run a site in language besides English.
-
-= 1.0 =
-To make it work.
