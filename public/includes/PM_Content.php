@@ -29,10 +29,8 @@ class Pm_Content {
 		}
 	}
 
-	function process_text( $text ) {
+	function return_text( $text ) {
 		$options = $this->options;
-		$tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
-		$links = 0;
 		if ( is_feed() && (!isset( $options[ 'allowfeed' ] ) || $options[ 'allowfeed' ] === 0 ) ) {
 			return $text;
 		}
@@ -42,9 +40,11 @@ class Pm_Content {
 		if ( is_single() && isset( $options[ 'ignoreallposts' ] ) && $options[ 'ignoreallposts' ] === 'on' ) {
 			return $text;
 		}
-		if ( isset( $options[ 'ignorepost' ] ) ) {
-			$arrignorepost = $this->explode_lower_trim( ',', ( $options[ 'ignorepost' ] ) );
-			foreach ( $arrignorepost as $arrignore ) {
+		if ( $options[ 'maxlinks' ] == 0 ) {
+			return $text;
+		}
+		if ( isset( $options[ 'ignorepost' ] ) && is_array( $options[ 'ignorepost' ] ) ) {
+			foreach ( $options[ 'ignorepost' ] as $arrignore ) {
 				if ( is_page( $arrignore ) || is_single( $arrignore ) ) {
 					return $text;
 				}
@@ -57,147 +57,67 @@ class Pm_Content {
 				}
 			}
 		}
-		$maxlinks = ( isset( $options[ 'maxlinks' ] ) && $options[ 'maxlinks' ] > 0 ) ? $options[ 'maxlinks' ] : 0;
-		$maxsingle = ( isset( $options[ 'maxsingle' ] ) && $options[ 'maxsingle' ] > 0 ) ? $options[ 'maxsingle' ] : 0 - 1;
-		$maxsingleurl = ( isset( $options[ 'maxsingleurl' ] ) && $options[ 'maxsingleurl' ] > 0 ) ? $options[ 'maxsingleurl' ] : 0;
-		if ( $maxlinks == 0 ) {
-			return $text;
+		return false;
+	}
+
+	function process_text( $text ) {
+		$options = $this->options;
+		$check = $this->return_text( $text );
+		if ( gettype( $check ) === 'string' ) {
+			return $check;
 		}
+		$tracking_querystring = '?utm_source=wordpress%%20blog&amp;utm_medium=content%%20link&amp;utm_campaign=promote%%20mdn';
+		$links = 0;
+
 		$urls = array();
-		if ( isset( $options[ 'ignore' ] ) ) {
-			$arrignore = $this->explode_lower_trim( ',', ( $options[ 'ignore' ] ) );
-		}
-		if ( isset( $options[ 'exclude_elems' ] ) ) {
-			$exclude_elems = $this->explode_lower_trim( ',', ( $options[ 'exclude_elems' ] ) );
-			if ( $exclude_elems ) {
-				// add salt to elements
-				foreach ( $exclude_elems as $el ) {
-					$re = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
-					$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_insertspecialchars($matches[2]) . $matches[3];' ), $text );
-				}
+		if ( isset( $options[ 'exclude_elems' ] ) && is_array( $options[ 'exclude_elems' ] ) ) {
+			// add salt to elements
+			foreach ( $options[ 'exclude_elems' ] as $el ) {
+				$re = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
+				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_insertspecialchars($matches[2]) . $matches[3];' ), $text );
 			}
 		}
 		$reg = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
 		$text = " $text ";
-		if ( !empty( $options[ 'url' ] ) ) {
-			$url_value = get_transient( 'promote_mdn_url_value' );
-			if ( false === $url_value ) {
-				$url_value = $this->reload_value( $options[ 'url' ] );
-			}
-			//customkey is popolated on the fly with the data of the url
-			if ( !isset( $options[ 'customkey' ] ) ) {
-				$options[ 'customkey' ] = $url_value;
-			} else {
-				$options[ 'customkey' ] .= "\n" . $url_value;
-			}
-		}
 		// custom keywords
 		if ( !empty( $options[ 'customkey' ] ) ) {
-			$kw_array = array();
-			foreach ( explode( "\n", $options[ 'customkey' ] ) as $line ) {
-				$chunks = array_map( 'trim', explode( ',', $line ) );
-				$total_chuncks = count( $chunks );
-				if ( $total_chuncks > 2 ) {
-					$i = 0;
-					$url = $chunks[ $total_chuncks - 1 ];
-					while ( $i < $total_chuncks - 1 ) {
-						if ( !empty( $chunks[ $i ] ) ) {
-							$kw_array[ $chunks[ $i ] ] = $url;
-						}
-						$i++;
-					}
-				} else {
-					$pieces_array = explode( ',', $line, 2 );
-					if ( count( $pieces_array ) > 1 ) {
-						list( $keyword, $url ) = array_map( 'trim', $pieces_array );
-					}
-					if ( !empty( $keyword ) ) {
-						$kw_array[ $keyword ] = $url;
-					}
-				}
-			}
-			foreach ( $kw_array as $name => $url ) {
-				if ( in_array( strtolower( $name ), $arrignore ) ) {
+			foreach ( $options[ 'customkey' ] as $name => $url ) {
+				if ( in_array( strtolower( $name ), $options[ 'ignore' ] ) ) {
 					continue;
 				}
-				if ( (!$maxlinks || ( $links < $maxlinks ) ) && (!in_array( strtolower( $name ), $arrignore ) ) && (!$maxsingleurl || !isset( $urls[ $url ] ) || $urls[ $url ] < $maxsingleurl )
-				) {
-					if ( !isset( $options[ 'customkey_preventduplicatelink' ] ) ) {
-						$options[ 'customkey_preventduplicatelink' ] = FALSE;
-					}
-					if ( $options[ 'customkey_preventduplicatelink' ] == TRUE || stripos( $text, $name ) !== false ) {
+				if ( strpos( 'GoogleAnalyticsObject', $url ) ) {
+					continue;
+				}
+				if ( $options[ 'add_src_param' ] == true ) {
+					$url .= $tracking_querystring;
+				}
+				if ( !isset( $urls[ $url ] ) ) {
+					$urls[ $url ] = 0;
+				}
+				if ( $links < $options[ 'maxlinks' ] && (!$options[ 'maxsingleurl' ] || $urls[ $url ] < $options[ 'maxsingleurl' ] )				) {
+					if ( stripos( $text, $name ) !== false ) {
 						$name = preg_quote( $name, '/' );
-						if ( $options[ 'customkey_preventduplicatelink' ] == TRUE ) {
-							$name = str_replace( ',', '|', $name );
-						}
-						$target = ' ';
-						if ( isset( $options[ 'blanko' ] ) ) {
-							$target = ' target="_blank"';
-						}
-						$href = $url;
-						if ( $options[ 'add_src_param' ] == TRUE ) {
-							$href .= $tracking_querystring;
-						}
-						if ( strpos( 'GoogleAnalyticsObject', $href ) === false ) {
-							$link = "<a$target title=\"%s\" href=\"$href\" class=\"promote-mdn\">%s</a>";
-							$regexp = str_replace( '$name', $name, $reg );
-							$replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
-							$newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $maxsingle );
-							if ( $newtext != $text ) {
-								$links++;
-								$text = $newtext;
-								if ( !isset( $urls[ $url ] ) ) {
-									$urls[ $url ] = 1;
-								} else {
-									$urls[ $url ] ++;
-								}
-							}
+						$link = "<a" . $options[ 'blanko' ] . " title=\"%s\" href=\"$url\" class=\"promote-mdn\">%s</a>";
+						$regexp = str_replace( '$name', $name, $reg );
+						$replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
+						$newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $options[ 'maxsingle' ] );
+						if ( $newtext != $text ) {
+							$links++;
+							$text = $newtext;
+							$urls[ $url ] ++;
 						}
 					}
 				}
 			}
 		}
-		if ( isset( $options[ 'exclude_elems' ] ) && $exclude_elems ) {
+		if ( isset( $options[ 'exclude_elems' ] ) && is_array( $options[ 'exclude_elems' ] ) ) {
 			// remove salt from elements
-			foreach ( $exclude_elems as $el ) {
+			foreach ( $options[ 'exclude_elems' ] as $el ) {
 				$re = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
 				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_removespecialchars($matches[2]) . $matches[3];' ), $text );
 			}
 		}
 		return trim( $text );
-	}
-
-	function explode_lower_trim( $separator, $text ) {
-		$arr = explode( $separator, $text );
-		$ret = array();
-		foreach ( $arr as $e ) {
-			if ( !empty( $e ) ) {
-				$ret[] = strtolower( trim( $e ) );
-			}
-		}
-		// return empty array for single empty string element
-		// for simpler if-checks
-		if ( count( $ret ) == 1 && $ret[ 0 ] == '' ) {
-			$ret = array();
-		}
-		return $ret;
-	}
-
-	function reload_value( $url ) {
-		$body = wp_remote_retrieve_body(
-				wp_remote_get(
-						$url, array(
-			'headers' =>
-			array( 'cache-control' => 'no-cache, must-revalidate' )
-						)
-				)
-		);
-		$url_value = strip_tags( $body );
-		if ( !isset( $this->options[ 'recurrence' ] ) ) {
-			$this->options[ 'recurrence' ] = 'daily';
-		}
-		set_transient( 'promote_mdn_url_value', $url_value, $this->options[ 'recurrence' ] );
-		return $url_value;
 	}
 
 }

@@ -15,10 +15,11 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 		$this->root_dir = dirname( dirname( dirname( __FILE__ ) ) );
 		include_once($this->root_dir . '/_support/functions.php');
 		FunctionMocker::replace( 'get_transient', 'pmdn_get_transient' );
+		FunctionMocker::replace( 'promote_mdn_settings', 'pmdn_settings' );
 		$this->pm = pmdn_content();
-		$this->js_href = 'https://developer.mozilla.org/docs/JavaScript' . $this->pm->options[ 'tracking_querystring' ];
+		$this->js_href = 'https://developer.mozilla.org/docs/JavaScript' . pmdn_settings()[ 'tracking_querystring' ];
 		$this->js_linked = '<a target="_blank" title="JavaScript" href="' . $this->js_href . '" class="promote-mdn">JavaScript</a>';
-		$this->css_href = 'https://developer.mozilla.org/docs/CSS' . $this->pm->options[ 'tracking_querystring' ];
+		$this->css_href = 'https://developer.mozilla.org/docs/CSS' . pmdn_settings()[ 'tracking_querystring' ];
 		$this->css_linked = '<a target="_blank" title="CSS" href="' . $this->css_href . '" class="promote-mdn">CSS</a>';
 		$this->text = '<p>I like JavaScript.</p>';
 		$this->linked_text = '<p>I like ' . $this->js_linked . '.</p>';
@@ -56,21 +57,21 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 
 	public function test_new_window() {
 		$this->pm->options[ 'blanko' ] = '';
-		$linked_text_same_window = '<p>I like <a target="_blank" title="JavaScript" href="' . $this->js_href . '" class="promote-mdn">JavaScript</a>.</p>';
+		$linked_text_same_window = '<p>I like <a title="JavaScript" href="' . $this->js_href . '" class="promote-mdn">JavaScript</a>.</p>';
 		$this->assertEquals( $linked_text_same_window, $this->pm->process_text( $this->text ) );
-		$this->pm->options[ 'blanko' ] = 'on';
+		$this->pm->options[ 'blanko' ] = ' target="_blank"';
 		$linked_text_new_window = '<p>I like ' . $this->js_linked . '.</p>';
 		$this->assertEquals( $linked_text_new_window, $this->pm->process_text( $this->text ) );
 	}
 
 	public function test_new_window_doesnt_affect_existing_links() {
-		$this->pm->options[ 'blanko' ] = 'on';
+		$this->pm->options[ 'blanko' ] = ' target="_blank"';
 		$text = '<p>I already made a link to <a href="http://www.w3.org/Protocols/">w3</a>. Don\'t change it to open in a new window.</p>';
 		$this->assertEquals( $text, $this->pm->process_text( $text ) );
 	}
 
 	public function test_exclude_heading() {
-		$this->pm->options[ 'exclude_elems' ] = 'h,';
+		$this->pm->options[ 'exclude_elems' ] = array( 'h' );
 		$text = '<h2>The Code</h2><h3>JavaScript</h3>';
 		$this->assertEquals( $text, $this->pm->process_text( $text ) );
 		$this->pm->options[ 'exclude_elems' ] = '';
@@ -86,7 +87,7 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertEquals(
 				'<h2>The Code</h2><pre>' . $this->js_linked . '</pre>', $this->pm->process_text( $text )
 		);
-		$this->pm->options[ 'exclude_elems' ] = 'h, pre, code';
+		$this->pm->options[ 'exclude_elems' ] = array( 'h', 'pre', 'code' );
 		$this->assertEquals( $text, $this->pm->process_text( $text ) );
 	}
 
@@ -137,19 +138,16 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 	public function test_custom_key() {
 		$this->pm->options[ 'customkey' ] = '';
 		$text = '<p>JavaScript and groovecoder</p>';
+		$this->pm->options[ 'customkey' ] = array( 'groovecoder' => 'http://groovecoder.com' );
 		$this->assertEquals(
-				'<p>' . $this->js_linked . ' and groovecoder</p>', $this->pm->process_text( $text )
-		);
-		$this->pm->options[ 'customkey' ] = 'groovecoder, http://groovecoder.com';
-		$this->assertEquals(
-				'<p>' . $this->js_linked . ' and <a target="_blank" title="groovecoder" href="http://groovecoder.com' . $this->pm->options[ 'tracking_querystring' ] . '" class="promote-mdn">groovecoder</a></p>', $this->pm->process_text( $text )
+				'<p>JavaScript and <a target="_blank" title="groovecoder" href="http://groovecoder.com' . $this->pm->options[ 'tracking_querystring' ] . '" class="promote-mdn">groovecoder</a></p>', $this->pm->process_text( $text )
 		);
 	}
 
 	public function test_ignore_term() {
-		$this->pm->options[ 'ignore' ] = '';
+		$this->pm->options[ 'ignore' ] = array( '' );
 		$this->assertEquals( $this->linked_text, $this->pm->process_text( $this->text ) );
-		$this->pm->options[ 'ignore' ] = 'JavaScript, ';
+		$this->pm->options[ 'ignore' ] = array( 'javascript' );
 		$this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
 	}
 
@@ -157,7 +155,7 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 		FunctionMocker::replace( 'is_page', function () {
 			return 'about';
 		} );
-		$this->pm->options[ 'ignorepost' ] = 'about, ';
+		$this->pm->options[ 'ignorepost' ] = array( 'about' );
 		$this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
 	}
 
@@ -178,8 +176,8 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 		$this->assertEquals( $this->linked_text, $this->pm->process_text( $this->text ) );
 		FunctionMocker::replace( 'is_single', function () {
 			return 'other-post';
-		}  );
-		$this->pm->options[ 'ignorepost' ] = 'other-post,';
+		} );
+		$this->pm->options[ 'ignorepost' ] = array( 'other-post' );
 		$this->assertEquals( $this->text, $this->pm->process_text( $this->text ) );
 	}
 

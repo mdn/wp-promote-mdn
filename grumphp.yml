@@ -16,4 +16,5 @@ parameters:
                 - 'die('
                 - 'print_r('
                 - 'var_dump('
+                - 'codecept_debug('
             triggered_by: [php]
