@@ -13,6 +13,7 @@ Automatically links your WordPress blog with MDN.
 == Description ==
 
 * Automatically links [special keywords and phrases](https://raw.githubusercontent.com/mdn/wp-promote-mdn/def-list/terms.txt) to MDN.
+* Custom terms by settings
 * Provides a widget with images and links to promote MDN
 * Shortcode `promote_mdn_newsletter` to register to Mozilla newsletter
 
@@ -57,7 +58,11 @@ Using locale-specific links will improve your readers' experience.
 
 = 2.0.0 = 
 
-* New version written from scratch with improvements
+* New version written from scratch
+* Updated the codebase to WordPress standard
+* Clean up and optimized code
+* Shortcode added
+* Removed unused code
 
 = 1.8.0 = 
 

@@ -25,7 +25,7 @@ Getting Started
 ---------------
 
 1. Clone the repo into your `wp-content/plugins` directory
-2. run `computer update`
+2. run `composer update`
 3. Make changes
 
 Running Tests
