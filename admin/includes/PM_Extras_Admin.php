@@ -29,13 +29,14 @@ class Pm_Extras_Admin {
 		whip_wp_check_versions( array(
 			'php' => '>=5.6',
 		) );
+		add_action( 'cmb2_save_options-page_fields', array( $this, 'missing_fields' ), 4, 9999 );
 	}
 
 	public function missing_fields( $object_id, $cmb_id, $updated, $object ) {
-		add_action( 'cmb2_save_options-page_fields', array( $this, 'missing_fields' ), 4, 9999 );
 		$options = get_option( PM_TEXTDOMAIN . '-settings' );
 		if ( !$options ) {
-			new WP_Admin_Notice( __( 'Promote MDN is not configured yet!', PM_TEXTDOMAIN ), 'error' );
+			$notice = new WP_Admin_Notice( __( 'Promote MDN is not configured yet!', PM_TEXTDOMAIN ), 'error' );
+			$notice->output();
 		}
 	}
 
