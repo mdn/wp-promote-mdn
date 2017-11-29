@@ -1,39 +1,39 @@
 #mdn, irc://irc.mozilla.org/mdn
-#mdndev, irc://irc.mozilla.org/mdndev
 ARIA, https://developer.mozilla.org/docs/Accessibility/ARIA
-at-rule, @-rule, https://developer.mozilla.org/docs/Web/CSS/At-rule
-border-image, https://developer.mozilla.org/docs/Web/CSS/border-image
-border-image-outset, https://developer.mozilla.org/docs/Web/CSS/border-image-outset
-border-image-repeat, https://developer.mozilla.org/docs/Web/CSS/border-image-repeat
-border-image-source, https://developer.mozilla.org/docs/Web/CSS/border-image-source
-border-image-width, https://developer.mozilla.org/docs/Web/CSS/border-image-width
+Accessibility, https://developer.mozilla.org/docs/Learn/Accessibility
+AJAX, https://developer.mozilla.org/docs/Glossary/AJAX
+ASCII, https://developer.mozilla.org/docs/Glossary/ASCII
 Canvas API, https://developer.mozilla.org/Web/API/Canvas_API
-CacheStorage, https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage
+CacheStorage, https://developer.mozilla.org/docs/Web/API/CacheStorage
 Closures, https://developer.mozilla.org/Web/JavaScript/Closures
-CSS Animations, CSS3 Animations, CSS Animation, CSS3 Animation, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_animations
-CSS Flexbox, flexbox, flexible box, flexible boxes, https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_flexible_boxes
-CSS Gradients, CSS3 Gradients, CSS Gradient, CSS3 Gradient, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
+Cross browser, https://developer.mozilla.org/docs/Learn/Tools_and_testing/Cross_browser_testing
+CSP, https://developer.mozilla.org/docs/Glossary/CSP
+CSS Animations, CSS Animation, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_animations
+CSS Flexbox, flexbox, flexible box, flexible boxes, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_flexible_boxes
+CSS Gradients, CSS Gradient, https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
 CSS Reference, https://developer.mozilla.org/docs/Web/CSS/CSS_Reference
-CSS Transforms, CSS3 Transforms, CSS Transform https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transform
-CSS Transitions, CSS3 Transitions, C https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
+CSS Transforms, CSS Transform https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transform
+CSS Transitions,  https://developer.mozilla.org/docs/Web/CSS/Using_CSS_transitions
 CSS, https://developer.mozilla.org/docs/Web/CSS
 CSS3, https://developer.mozilla.org/docs/Web/CSS/CSS3
 DOM, https://developer.mozilla.org/docs/DOM
+Django, https://developer.mozilla.org/docs/Learn/Server-side/Django
 ECMA, https://developer.mozilla.org/docs/Glossary/ECMA
 ECMAScript, https://developer.mozilla.org/docs/Glossary/ECMAScript
 Emscripten, https://developer.mozilla.org/docs/Emscripten
-FileReader, https://developer.mozilla.org/docs/Web/API/FileReader
-DevTools, Firefox Developer Tools, Developer Tools, https://developer.mozilla.org/en-US/docs/Tools
+DevTools, Firefox Developer Tools, Developer Tools, https://developer.mozilla.org/docs/Tools
 Gecko, https://developer.mozilla.org/docs/Mozilla/Gecko
 Geolocation, https://developer.mozilla.org/docs/Using_geolocation
 HTML, https://developer.mozilla.org/docs/Web/HTML
 HTML5, https://developer.mozilla.org/html5
-HTTP access control, CORS, https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
+HTTP, https://developer.mozilla.org/en-US/docs/Web/HTTP
+CORS, https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
 iframe, https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe
 IndexedDB, https://developer.mozilla.org/docs/IndexedDB
 JavaScript, JS, JS Documentation, JS Reference, https://developer.mozilla.org/docs/JavaScript
+JavaScript Debugger, JS Debugger, https://developer.mozilla.org/en-US/docs/Tools/Debugger
+jQuery, https://developer.mozilla.org/docs/Glossary/jQuery
 JS Array, https://developer.mozilla.org/docs/JavaScript/Reference/Global_Objects/Array
-JavacScript Debugger, JS Debugger, https://developer.mozilla.org/en-US/docs/Tools/Debugger
 JS Function, https://developer.mozilla.org/docs/JavaScript/Reference/Global_Objects/Function
 JS Number, https://developer.mozilla.org/docs/JavaScript/Reference/Global_Objects/Number
 JS RegExp, https://developer.mozilla.org/docs/JavaScript/Reference/Global_Objects/RegExp
@@ -43,26 +43,30 @@ JSON, https://developer.mozilla.org/docs/JSON
 Kuma, https://developer.mozilla.org/docs/Project:Getting_started_with_Kuma
 KumaScript, https://developer.mozilla.org/docs/Project:Introduction_to_KumaScript
 L20n, https://developer.mozilla.org/docs/L20n
-linear-gradient, linear-gradient(, https://developer.mozilla.org/docs/Web/CSS/linear-gradient
 LocalStorage, local storage, https://developer.mozilla.org/Web/API/Window/localStorage
 MathML, https://developer.mozilla.org/en-US/docs/Web/MathML
-MDN, Mozilla Developer Network, devmo, https://developer.mozilla.org/
+manifest.json, https://developer.mozilla.org/Add-ons/WebExtensions/manifest.json
+MDN, Mozilla Developer Network, https://developer.mozilla.org/
 Media queries, https://developer.mozilla.org/docs/Web/CSS/Media_queries
 Mozilla, https://www.mozilla.org/
 mozilla-central, https://developer.mozilla.org/docs/mozilla-central
+Nodejs, Node.js, https://developer.mozilla.org/docs/Glossary/Node.js
+PHP, https://developer.mozilla.org/docs/Glossary/PHP
+PWA, Progressive Web Apps, Progressive Web App, https://developer.mozilla.org/docs/Glossary/Progressive_web_apps
 Promises, Promise, https://developer.mozilla.org/Web/JavaScript/Reference/Global_Objects/Promise
 pseudo-class, pseudo-classes, https://developer.mozilla.org/docs/Web/CSS/pseudo-classes
 pseudo-element, pseudo-elements, https://developer.mozilla.org/docs/Web/CSS/Pseudo-elements
+Python, https://developer.mozilla.org/docs/Glossary/Python
 Push API, https://developer.mozilla.org/Web/API/Push_API
-radial-gradient, radial-gradient(, https://developer.mozilla.org/docs/Web/CSS/radial-gradient
-repeating-linear-gradient, repeating-linear-gradient(, https://developer.mozilla.org/docs/Web/CSS/repeating-linear-gradient
-repeating-radial-gradient, repeating-radial-gradient(, https://developer.mozilla.org/docs/Web/CSS/repeating-radial-gradient
+Ruby, https://developer.mozilla.org/docs/Glossary/Ruby
 Service Worker API, Service Workers, Service Worker, https://developer.mozilla.org/Web/API/Service_Worker_API
 SVG, https://developer.mozilla.org/docs/SVG
-Vibration API, https://developer.mozilla.org/docs/WebAPI/Vibration
-Web apps, https://developer.mozilla.org/docs/Apps
+URL, https://developer.mozilla.org/docs/Learn/Common_questions/What_is_a_URL
+user agent, https://developer.mozilla.org/docs/Glossary/User_agent
+W3C, https://developer.mozilla.org/docs/Glossary/W3C
 Web Audio API, WebAudio, https://developer.mozilla.org/docs/Web/API/Web_Audio_API/Using_Web_Audio_API
 WebAssembly, https://developer.mozilla.org/docs/WebAssembly
+WebExtension, WebExtensions, https://developer.mozilla.org/Add-ons/WebExtensions
 Web Components, WebComponents, Web Component, https://developer.mozilla.org/Web/Web_Components
 Web Notifications API, Web Notifications,https://developer.mozilla.org/Web/API/Notifications_API
 Web Workers, WebWorkers, https://developer.mozilla.org/Web/API/Web_Workers_API
@@ -70,5 +74,5 @@ WebAPI, https://developer.mozilla.org/docs/WebAPI
 WebGL, WebGL2 https://developer.mozilla.org/docs/WebGL
 WebRTC, https://developer.mozilla.org/docs/WebRTC
 WebSockets, WebSocket, https://developer.mozilla.org/docs/WebSockets
-WebVR, WebVR API, https://developer.mozilla.org/en-US/docs/Web/API/WebVR_API
+WebVR, WebVR API, https://developer.mozilla.org/docs/Web/API/WebVR_API
 XMLHttpRequest, XHR, https://developer.mozilla.org/Web/API/XMLHttpRequest
