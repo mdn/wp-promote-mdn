@@ -101,9 +101,6 @@ class Pm_ActDeact {
 	 * @return void
 	 */
 	private static function single_activate() {
-		$plugin = Promote_MDN::get_instance();
-		$plugin_slug = $plugin->get_plugin_slug();
-		// @TODO: Define activation functionality here
 		// Clear the permalinks
 		flush_rewrite_rules();
 	}
@@ -115,7 +112,6 @@ class Pm_ActDeact {
 	 * @return void
 	 */
 	private static function single_deactivate() {
-		// @TODO: Define deactivation functionality here
 		// Clear the permalinks
 		flush_rewrite_rules();
 	}
