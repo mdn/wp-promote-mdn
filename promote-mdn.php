@@ -1,15 +1,14 @@
 <?php
 /**
-   * @package   Promote_MDN
+ * @package   Promote_MDN
  * @author    Luke Crouch and Daniele Scasciafratte <mte90net@gmail.com>
  * @copyright 2017 Mozilla
  * @license   GPL 2.0+
  * @link      https://github.com/mdn/wp-promote-mdn
  *
  * Plugin Name:       Promote MDN
- * Plugin URI:        @TODO
- * Description:       @TODO
- * Version:           2.0.0
+ * Description:       Automatically links your WordPress blog with MDN.
+ * Version:           2.0.1
  * Author:            Luke Crouch and Daniele Scasciafratte
  * Author URI:        https://github.com/mdn/wp-promote-mdn
  * Text Domain:       promote-mdn
@@ -22,7 +21,7 @@
 if ( !defined( 'WPINC' ) ) {
 	die;
 }
-define( 'PM_VERSION', '2.0.0' );
+define( 'PM_VERSION', '2.0.1' );
 define( 'PM_TEXTDOMAIN', 'promote-mdn' );
 define( 'PM_NAME', 'Promote MDN' );
 define( 'PM_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );

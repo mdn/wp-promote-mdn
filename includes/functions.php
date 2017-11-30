@@ -115,10 +115,10 @@ function promote_mdn_reload_value( $url ) {
 			)
 	);
 	$url_value = strip_tags( $body );
-	$options = promote_mdn_settings();
+    $options = get_option( PM_TEXTDOMAIN . '-settings' );
 	if ( !isset( $options[ 'recurrence' ] ) ) {
 		$options[ 'recurrence' ] = 'daily';
 	}
-	set_transient( 'promote_mdn_url_value', $url_value, $this->options[ 'recurrence' ] );
+	set_transient( 'promote_mdn_url_value', $url_value, $options[ 'recurrence' ] );
 	return $url_value;
 }

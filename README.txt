@@ -4,7 +4,7 @@ Donate link:
 Tags: mozilla, mdn, links, html5, javascript, glossary, documentation, docs, development, developer, glossary, html
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ Using locale-specific links will improve your readers' experience.
 2. Widget settings
 
 == Changelog ==
+
+= 2.0.1 = 
+
+* Fixed a loop on pages
 
 = 2.0.0 = 
 
