@@ -21,6 +21,7 @@ Django, https://developer.mozilla.org/docs/Learn/Server-side/Django
 ECMA, https://developer.mozilla.org/docs/Glossary/ECMA
 ECMAScript, https://developer.mozilla.org/docs/Glossary/ECMAScript
 Emscripten, https://developer.mozilla.org/docs/Emscripten
+Fetch, Fetch API, https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 DevTools, Firefox Developer Tools, Developer Tools, https://developer.mozilla.org/docs/Tools
 Gecko, https://developer.mozilla.org/docs/Mozilla/Gecko
 Geolocation, https://developer.mozilla.org/docs/Using_geolocation
