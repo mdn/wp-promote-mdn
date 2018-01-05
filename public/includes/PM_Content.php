@@ -70,13 +70,9 @@ class Pm_Content {
 		$links = 0;
 
 		$urls = array();
-		if ( isset( $options[ 'exclude_elems' ] ) && is_array( $options[ 'exclude_elems' ] ) ) {
-			// add salt to elements
-			foreach ( $options[ 'exclude_elems' ] as $el ) {
-				$re = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
-				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_insertspecialchars($matches[2]) . $matches[3];' ), $text );
-			}
-		}
+
+		$text = $this->exclude_elems( $text );
+
 		$reg = '/(?!(?:[^<\[]+[>\-\=\?\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
 		$text = " $text ";
 		// custom keywords
@@ -110,6 +106,12 @@ class Pm_Content {
 				}
 			}
 		}
+
+		$text = $this->exclude_elems( $text );
+		return trim( $text );
+	}
+
+	function exclude_elems( $text ) {
 		if ( isset( $options[ 'exclude_elems' ] ) && is_array( $options[ 'exclude_elems' ] ) ) {
 			// remove salt from elements
 			foreach ( $options[ 'exclude_elems' ] as $el ) {
@@ -117,7 +119,7 @@ class Pm_Content {
 				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_removespecialchars($matches[2]) . $matches[3];' ), $text );
 			}
 		}
-		return trim( $text );
+		return $text;
 	}
 
 }
