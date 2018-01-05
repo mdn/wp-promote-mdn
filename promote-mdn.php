@@ -8,7 +8,7 @@
  *
  * Plugin Name:       Promote MDN
  * Description:       Automatically links your WordPress blog with MDN.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            Luke Crouch and Daniele Scasciafratte
  * Author URI:        https://github.com/mdn/wp-promote-mdn
  * Text Domain:       promote-mdn
@@ -21,7 +21,7 @@
 if ( !defined( 'WPINC' ) ) {
 	die;
 }
-define( 'PM_VERSION', '2.0.1' );
+define( 'PM_VERSION', '2.0.2' );
 define( 'PM_TEXTDOMAIN', 'promote-mdn' );
 define( 'PM_NAME', 'Promote MDN' );
 define( 'PM_PLUGIN_ROOT', plugin_dir_path( __FILE__ ) );
