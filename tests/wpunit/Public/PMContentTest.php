@@ -2,7 +2,7 @@
 
 use tad\FunctionMocker\FunctionMocker;
 
-class PNContentTest extends \Codeception\TestCase\WPTestCase {
+class PMContentTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
 	 * @var string
@@ -44,6 +44,14 @@ class PNContentTest extends \Codeception\TestCase\WPTestCase {
 		$this->pm->options[ 'add_src_param' ] = false;
 		$linked_text = $this->pm->process_text( $this->text );
 		$this->assertEquals( $linked_text, $linked_text );
+	}
+
+	public function test_fix105() {
+		$this->pm->options[ 'customkey' ] = array( 'url' => 'https://developer.mozilla.org/docs/Learn/Common_questions/What_is_a_URL' );
+		$original = '<div class="shariff" data-backend-url="https://a-blog-url/wp-content/plugins/shariff-sharing/backend/index.php" data-temp="/tmp" data-ttl="60" data-service="gft" data-image="" data-url="https://a-blog-url/" data-services=\'["googleplus","facebook","twitter","whatsapp","info"]\'></div>';
+		$linked_text = $this->pm->process_text( $original );
+		$this->assertEquals( $original, $linked_text );
+		$this->pm->options[ 'customkey' ] = '';
 	}
 
 	public function test_feed() {

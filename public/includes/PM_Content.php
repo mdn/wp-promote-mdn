@@ -2,7 +2,7 @@
 
 /**
  * Promote_MDN
- * 
+ *
  * @package   Promote_MDN
  * @author    Luke Crouch and Daniele Scasciafratte <mte90net@gmail.com>
  * @copyright 2017 Mozilla
@@ -77,7 +77,7 @@ class Pm_Content {
 				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_insertspecialchars($matches[2]) . $matches[3];' ), $text );
 			}
 		}
-		$reg = '/(?!(?:[^<\[]+[>\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
+		$reg = '/(?!(?:[^<\[]+[>\-\=\?\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
 		$text = " $text ";
 		// custom keywords
 		if ( !empty( $options[ 'customkey' ] ) ) {
