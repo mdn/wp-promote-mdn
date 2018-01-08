@@ -70,9 +70,9 @@ class Pm_Content {
 
 		$urls = array();
 
-		$text = $this->exclude_elems( $text );
-
-		$reg = '/(?!(?:[^<\[]+[>\-\=\?\]]|[^>\]]+<\/a>))\b($name)\b/imsU';
+		$exclude_elems = $this->exclude_elems();
+		$reg = '/(?!(?:[^<\[]+[>\-\=\?\]]|[^>\]]+(<\/a>' . $exclude_elems . ')))\b($name)\b/imsU';
+		
 		$text = " $text ";
 		// custom keywords
 		if ( !empty( $this->options[ 'customkey' ] ) ) {
@@ -89,12 +89,12 @@ class Pm_Content {
 				if ( !isset( $urls[ $url ] ) ) {
 					$urls[ $url ] = 0;
 				}
-				if ( $links < $this->options[ 'maxlinks' ] && (!$this->options[ 'maxsingleurl' ] || $urls[ $url ] < $this->options[ 'maxsingleurl' ] )				) {
+				if ( $links < $this->options[ 'maxlinks' ] && (!$this->options[ 'maxsingleurl' ] || $urls[ $url ] < $this->options[ 'maxsingleurl' ] ) ) {
 					if ( stripos( $text, $name ) !== false ) {
 						$name = preg_quote( $name, '/' );
 						$link = "<a" . $this->options[ 'blanko' ] . " title=\"%s\" href=\"$url\" class=\"promote-mdn\">%s</a>";
 						$regexp = str_replace( '$name', $name, $reg );
-						$replace = 'return sprintf(\'' . $link . '\', $matches[1], $matches[1]);';
+						$replace = 'return sprintf(\'' . $link . '\', $matches[0], $matches[0]);';
 						$newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $this->options[ 'maxsingle' ] );
 						if ( $newtext != $text ) {
 							$links++;
@@ -106,19 +106,30 @@ class Pm_Content {
 			}
 		}
 
-		$text = $this->exclude_elems( $text );
 		return trim( $text );
 	}
 
-	function exclude_elems( $text ) {
-		if ( isset( $this->options[ 'exclude_elems' ] ) && is_array( $this->options[ 'exclude_elems' ] ) ) {
-			// remove salt from elements
-			foreach ( $this->options[ 'exclude_elems' ] as $el ) {
-				$re = sprintf( '|(<%s.*?>)(.*?)(</%s.*?>)|si', $el, $el );
-				$text = preg_replace_callback( $re, create_function( '$matches', 'return $matches[1] . wp_removespecialchars($matches[2]) . $matches[3];' ), $text );
+	function exclude_elems( $regex = '', $elems = array() ) {
+		$regex = '';
+		$new_elems = array();
+		if ( empty( $elems ) ) {
+			$elems = $this->options[ 'exclude_elems' ];
+		}
+		if ( isset( $elems ) && is_array( $elems ) ) {
+			foreach ( $elems as $el ) {
+				if ( $el === 'h' ) {
+					for ( $i = 1; $i <= 6; $i++ ) {
+						$new_elems[] = 'h' . $i;
+					}
+				} elseif ( !empty( $el ) ) {
+					$regex .= '|<\/' . $el . '>';
+				}
 			}
 		}
-		return $text;
+		if ( !empty( $new_elems ) ) {
+			$regex = $this->exclude_elems( $regex, $new_elems );
+		}
+		return $regex;
 	}
 
 }
