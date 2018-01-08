@@ -89,7 +89,6 @@ class PMContentTest extends \Codeception\TestCase\WPTestCase {
 	}
 
 	public function test_exclude_other_elements() {
-		$this->pm = pmdn_content();
 		$text = '<h2>The Code</h2><pre>JavaScript</pre>';
 		$this->pm->options[ 'exclude_elems' ] = '';
 		$this->assertEquals(

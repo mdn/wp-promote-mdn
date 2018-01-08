@@ -77,10 +77,7 @@ class Pm_Content {
 		// custom keywords
 		if ( !empty( $this->options[ 'customkey' ] ) ) {
 			foreach ( $this->options[ 'customkey' ] as $name => $url ) {
-				if ( in_array( strtolower( $name ), $this->options[ 'ignore' ] ) ) {
-					continue;
-				}
-				if ( strpos( 'GoogleAnalyticsObject', $url ) ) {
+				if ( in_array( strtolower( $name ), $this->options[ 'ignore' ] ) || strpos( 'GoogleAnalyticsObject', $url ) ) {
 					continue;
 				}
 				if ( $this->options[ 'add_src_param' ] == true ) {
@@ -127,7 +124,7 @@ class Pm_Content {
 			}
 		}
 		if ( !empty( $new_elems ) ) {
-			$regex = $this->exclude_elems( $regex, $new_elems );
+			$regex .= $this->exclude_elems( $regex, $new_elems );
 		}
 		return $regex;
 	}
