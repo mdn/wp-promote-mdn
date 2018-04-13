@@ -14,6 +14,8 @@
  * This class contain the Content stuff for the frontend
  */
 class Pm_Content {
+	
+	public $link = '';
 
 	/**
 	 * Initialize the class
@@ -89,10 +91,9 @@ class Pm_Content {
 				if ( $links < $this->options[ 'maxlinks' ] && (!$this->options[ 'maxsingleurl' ] || $urls[ $url ] < $this->options[ 'maxsingleurl' ] ) ) {
 					if ( stripos( $text, $name ) !== false ) {
 						$name = preg_quote( $name, '/' );
-						$link = "<a" . $this->options[ 'blanko' ] . " title=\"%s\" href=\"$url\" class=\"promote-mdn\">%s</a>";
+						$this->link = "<a" . $this->options[ 'blanko' ] . " title=\"%s\" href=\"$url\" class=\"promote-mdn\">%s</a>";
 						$regexp = str_replace( '$name', $name, $reg );
-						$replace = 'return sprintf(\'' . $link . '\', $matches[0], $matches[0]);';
-						$newtext = preg_replace_callback( $regexp, create_function( '$matches', $replace ), $text, $this->options[ 'maxsingle' ] );
+						$newtext = preg_replace_callback( $regexp, array( $this, 'replace_link' ), $text, $this->options[ 'maxsingle' ] );
 						if ( $newtext != $text ) {
 							$links++;
 							$text = $newtext;
@@ -127,6 +128,10 @@ class Pm_Content {
 			$regex .= $this->exclude_elems( $regex, $new_elems );
 		}
 		return $regex;
+	}
+
+	public function replace_link( $matches ) {
+		return sprintf( $this->link, $matches[0], $matches[0]);
 	}
 
 }
