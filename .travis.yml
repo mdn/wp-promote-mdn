@@ -70,5 +70,5 @@ install:
   - cd /home/travis/build/mdn/wp-promote-mdn
 
 script:
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require lucatume/wp-browser:2.0.*
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.1" ]]; then composer require lucatume/wp-browser:2.0.* --dev
   - codecept run wpunit
