@@ -72,7 +72,7 @@ class Pm_Content {
 
 		$exclude_elems = $this->exclude_elems();
 		$reg = '/(?!(?:[^<\[]+[>\-\=\?\]]|[^>\]]+(<\/a>' . $exclude_elems . ')))\b($name)\b/imsU';
-		
+
 		$text = " $text ";
 		// custom keywords
 		if ( !empty( $this->options[ 'customkey' ] ) ) {
@@ -80,7 +80,7 @@ class Pm_Content {
 				if ( in_array( strtolower( $name ), $this->options[ 'ignore' ] ) || strpos( 'GoogleAnalyticsObject', $url ) ) {
 					continue;
 				}
-				if ( $this->options[ 'add_src_param' ] == true ) {
+				if ( isset( $this->options[ 'add_src_param' ] ) && $this->options[ 'add_src_param' ] == true ) {
 					$url .= $tracking_querystring;
 				}
 				if ( !isset( $urls[ $url ] ) ) {
